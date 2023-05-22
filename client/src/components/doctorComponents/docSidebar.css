@@ -1,0 +1,10 @@
+.docham{
+    display: none;
+    top:88px!important ;
+}
+
+@media (max-width:770px){
+    .docham{
+        display: block;
+    }
+}

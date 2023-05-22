@@ -1,0 +1,47 @@
+.banner {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  
+  .banner-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .hero-text {
+    position: absolute;
+    top: 70%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    
+    }   
+  
+  .text-bold {
+    font-weight: bold;
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 5px;
+  }
+  
+  .find {
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 4px;
+    width: 120px;
+  }
+  
+  @media (max-width: 768px) {
+    .text-bold {
+        margin-left: 25%;
+        font-size:10px;
+    }
+    
+    .find {
+    margin-left: 20%;
+      font-size: 10px;
+      width: 80px;
+    }
+  }
+  
