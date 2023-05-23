@@ -1,10 +1,10 @@
-.ham{
-    display: none;
-    top:88px!important ;
+.ham {
+  display: none;
+  top: 88px !important ;
 }
 
-@media (max-width:770px){
-    .ham{
-        display: block;
-    }
+@media (max-width: 770px) {
+  .ham {
+    display: block;
+  }
 }

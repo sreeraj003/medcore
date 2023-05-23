@@ -7,7 +7,6 @@ function RequireAdmin() {
   const { admin } = useAuth();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
-  console.log(admin);
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -17,7 +16,7 @@ function RequireAdmin() {
   }, []);
   if (isLoading) {
     return <Loader />;
-  }else{
+  } else {
     return admin ? <Outlet /> : <Navigate to="/admin/login" state={{ from: location }} replace />;
   }
 

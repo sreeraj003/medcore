@@ -1,81 +1,85 @@
 
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import axios from 'axios';
 import { useEffect } from 'react';
-import Doctor from './Routes/Doctor';
-import User from "./Routes/User"
-import Admin from './Routes/Admin';
+import Doctor from './Routes/doctor';
+import User from "./Routes/user"
+import Admin from './Routes/admin';
 import useAuth from './hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { setDoctorData } from './redux/doctorData';
 import { setUserData } from './redux/userData';
+
 import { setAdminData } from './redux/adminData';
 
 function App() {
 
-  const {setUser,setDoctor,setAdmin} = useAuth()
-   const dispatch = useDispatch()
+  const { setUser, setDoctor, setAdmin } = useAuth()
+  const dispatch = useDispatch()
 
-  useEffect(()=>{
+  useEffect(() => {
 
     datacall()
-    async function datacall(){
+    async function datacall() {
       const userToken = localStorage.getItem('userToken')
       const doctorToken = localStorage.getItem('doctorToken')
       const adminToken = localStorage.getItem('adminToken')
-      if(userToken){
+      if (userToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
         await axios.get(import.meta.env.VITE_BASE_URL + `userData`)
-        .then(res=>{
-          if(res.data){
-            if(res.data!=='unauthorized'){
-              dispatch(setUserData(res.data))
+          .then(res => {
+            if (res.data) {
+              if (res.data !== 'unauthorized') {
+                dispatch(setUserData(res.data))
+              }
+              setUser(true)
             }
-            setUser(true)
-          }
-        })
-      }else{
+          })
+      } else {
         setUser(false)
       }
-      if(doctorToken){
+      if (doctorToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${doctorToken}`;
         await axios.get(import.meta.env.VITE_BASE_URL + `doctor/doctorData`)
-        .then(res=>{
-          if(res.data){
-            if(res.data!=='unauthorized'){
-              dispatch(setDoctorData(res.data))
+          .then(res => {
+            if (res.data) {
+              if (res.data !== 'unauthorized') {
+                dispatch(setDoctorData(res.data))
+              }
+              setDoctor(true)
             }
-            setDoctor(true)
-          }
-        })
-      }else{
+          })
+      } else {
         setDoctor(false)
       }
-      if(adminToken){
+      if (adminToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${adminToken}`;
         await axios.get(import.meta.env.VITE_BASE_URL + `admin/adminData`)
-        .then(res=>{
-          if(res.data){
-            if(res.data!=='unauthorized'){
-              dispatch(setAdminData(res.data))
+          .then(res => {
+            if (res.data) {
+              if (res.data !== 'unauthorized') {
+                dispatch(setAdminData(res.data))
+              }
+              setAdmin(true)
             }
-            setAdmin(true)
-          }
-        })
-      }else{
-       setAdmin(false)
+          })
+      } else {
+        setAdmin(false)
       }
     }
-  },[])
+  }, [])
 
   return (
+    <>
       <Router>
         <Routes>
-          <Route path='/admin/*' element={<Admin/>}/>
-          <Route path='/doctor/*' element={<Doctor/>}/>
-          <Route path='/*' element={<User/>}/>
+          <Route path='/admin/*' element={<Admin />} />
+          <Route path='/doctor/*' element={<Doctor />} />
+          <Route path='/*' element={<User />} />
         </Routes>
       </Router>
+    </>
+
   )
 }
 

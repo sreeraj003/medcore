@@ -10,29 +10,29 @@ const Sidebar = () => {
   const [nav, setNav] = useState(false)
   const history = useNavigate()
 
-  const handleDashboard = ()=>{
+  const handleDashboard = () => {
     setNav(!nav)
     history('/admin/')
   }
-  
+
   const handleDoctor = () => {
     setNav(!nav)
     history('/admin/doctors')
   }
-  
+
   const handlePatient = () => {
     setNav(!nav)
     history('/admin/patients')
   }
-  
+
   const handleDepartment = () => {
     setNav(!nav)
     history('/admin/departments')
   }
-  
-  const handlePayments = () =>{
+
+  const handlePayments = () => {
     setNav(!nav)
-      history('/admin/payments')
+    history('/admin/payments')
   }
   return (
     <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white z-10'>
@@ -53,11 +53,11 @@ const Sidebar = () => {
             </h2>
             <nav >
               <div className='flex flex-col  text-dark'>
-                <div className='text-xl py-4 flex' onClick={handleDashboard}  ><MdPerson size={25} className='mr-4' /> Dashboard</div>
-                <div className='text-xl py-4 flex' onClick={handleDoctor}><FaStethoscope size={25} className='mr-4' /> Doctors</div>
-                <div className='text-xl py-4 flex' onClick={handlePatient}><MdSick size={25} className='mr-4' /> Patients</div>
-                <div className='text-xl py-4 flex' onClick={handleDepartment}><BiBuildings size={25} className='mr-4' /> Department</div>
-                <div className='text-xl py-4 flex' onClick={handlePayments}><BsCashCoin size={25} className='mr-4' /> Payments</div>
+                <div className='text-xl py-4 flex' onClick={handleDashboard}><button className='btn'><MdPerson size={25} className='mr-4' /> Dashboard</button></div>
+                <div className='text-xl py-4 flex' onClick={handleDoctor}><button className='btn'><FaStethoscope size={25} className='mr-4' /> Doctors</button></div>
+                <div className='text-xl py-4 flex' onClick={handlePatient}><button className='btn'><MdSick size={25} className='mr-4' /> Patients</button></div>
+                <div className='text-xl py-4 flex' onClick={handleDepartment}><button className='btn'><BiBuildings size={25} className='mr-4' /> Department</button></div>
+                <div className='text-xl py-4 flex' onClick={handlePayments}><button className='btn'><BsCashCoin size={25} className='mr-4' /> Payments</button></div>
               </div>
             </nav>
           </div>

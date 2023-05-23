@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaStethoscope } from 'react-icons/fa';
 import { BiNotepad } from 'react-icons/bi';
 import './docSidebar.css'
-import { MdPerson, MdOutlineSick,MdCalendarMonth } from 'react-icons/md';
+import { MdPerson, MdOutlineSick, MdCalendarMonth } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
@@ -11,36 +11,36 @@ import { IoIosPeople } from 'react-icons/io';
 
 const DocSidebar = () => {
 
-  const doctor = useSelector(state=>state.doctor.data)
+  const doctor = useSelector(state => state.doctor.data)
   const [nav, setNav] = useState(false)
   const history = useNavigate()
 
-  const handleDashboard = ()=>{
+  const handleDashboard = () => {
     setNav(!nav)
     history('/doctor/')
   }
-  
+
   const handleAppointments = () => {
     setNav(!nav)
     history('/doctor/appointments')
   }
-  
+
   const handlePatient = () => {
     setNav(!nav)
     history('/doctor/patients')
   }
-  
+
   const handlePrescriptions = () => {
     setNav(!nav)
     history('/doctor/prescriptions')
   }
-  
-  const handleSchedule = () =>{
+
+  const handleSchedule = () => {
     setNav(!nav)
-      history('/doctor/schedule')
+    history('/doctor/schedule')
   }
 
-  const handleAdmins = () =>{
+  const handleAdmins = () => {
     setNav(!nav)
     history('/doctor/admins')
   }
@@ -68,7 +68,7 @@ const DocSidebar = () => {
                 <div className='text-xl py-4 flex' onClick={handlePatient}><MdOutlineSick size={25} className='mr-4' /> Patients</div>
                 <div className='text-xl py-4 flex' onClick={handlePrescriptions}><BiNotepad size={25} className='mr-4' /> Prescriptions</div>
                 <div className='text-xl py-4 flex' onClick={handleSchedule}><MdCalendarMonth size={25} className='mr-4' /> My Schedule</div>
-                <div className='text-xl py-4 flex' onClick={handleAdmins}><IoIosPeople size={25} className='mr-4' /> Admins</div>                            
+                <div className='text-xl py-4 flex' onClick={handleAdmins}><IoIosPeople size={25} className='mr-4' /> Admins</div>
               </div>
             </nav>
           </div>

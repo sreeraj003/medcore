@@ -1,10 +1,10 @@
-.docham{
-    display: none;
-    top:88px!important ;
+.docham {
+  display: none;
+  top: 88px !important ;
 }
 
-@media (max-width:770px){
-    .docham{
-        display: block;
-    }
+@media (max-width: 770px) {
+  .docham {
+    display: block;
+  }
 }

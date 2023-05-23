@@ -18,7 +18,7 @@ function RequireDoctor() {
 
   if (isLoading) {
     return <Loader />;
-  }else{
+  } else {
     return doctor ? <Outlet /> : <Navigate to="/doctor/login" state={{ from: location }} replace />;
   }
 
