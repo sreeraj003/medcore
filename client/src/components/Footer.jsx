@@ -1,16 +1,16 @@
-import {FaInstagram,FaFacebook} from 'react-icons/fa'
+import { FaInstagram, FaFacebook } from 'react-icons/fa'
 function Footer() {
 
   return (
     <>
-    <div className="bg-success  footer fixed text-white text-center">
-      <div>
-        Follow us on
+      <div className="bg-success footer text-white text-center">
+        <div>
+          Follow us on
+        </div>
+        <FaInstagram />
+
+        <FaFacebook />
       </div>
-      <FaInstagram/>
-  
-      <FaFacebook/>
-    </div>
     </>
   )
 }

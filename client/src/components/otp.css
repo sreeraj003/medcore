@@ -1,9 +1,9 @@
-.otp{
-    height: 81vh;
-    text-align: center;
+.otp {
+  height: 81vh;
+  text-align: center;
 }
-.form{
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+.form {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }

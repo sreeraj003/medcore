@@ -6,27 +6,28 @@ import { useSelector } from 'react-redux';
 
 function SetProfile() {
     const navigate = useNavigate()
-    const docData = useSelector(state=>state.doctor.data)
+
+    const docData = useSelector(state => state.doctor.data)
 
     const [name, setName] = useState(docData.name)
     const [age, setAge] = useState(docData.age)
-    const [qualification, setQualification] = useState('')
-    const [gender, setGender] = useState('')
-    const [fee, setFee] = useState(0)
+    const [qualification, setQualification] = useState(docData.qualification)
+    const [gender, setGender] = useState(docData.gender)
+    const [fee, setFee] = useState(docData.fee)
     const [contact, setContact] = useState(docData.contact)
-    const [department, setDepartment] = useState('')
-    const [address, setAddress] = useState('')
-    const [selectedImages, setSelectedImages] = useState([]);
+    const [department, setDepartment] = useState(docData.department)
+    const [address, setAddress] = useState(docData.address)
+    const [selectedImages, setSelectedImages] = useState(docData.documents);
+    const [profile, setProfile] = useState(docData.image)
+    const [preview, setPreview] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
+    const [prChange, setPrchange] = useState(false)
+    const [docChange, setDocChange] = useState(false)
 
-  
 
     async function handleSubmit(e) {
         e.preventDefault()
-        if (!name || !age || !gender || !fee || !contact || !department || !address || !qualification || !selectedImages) {
-            setErrorMsg('Please fill all the required fields...!')
-            return
-        }
+
         const formData = new FormData();
         // formData.append('name','name')
         formData.append('name', name);
@@ -37,10 +38,21 @@ function SetProfile() {
         formData.append('contact', contact);
         formData.append('department', department);
         formData.append('address', address);
+        formData.append("images", profile)
+        formData.append("prChange", prChange)
 
-        for (let i = 0; i < selectedImages.length; i++) {
-            formData.append('images', selectedImages[i]);
+        if (docChange) {
+            for (let i = 0; i < selectedImages.length; i++) {
+                formData.append('images', selectedImages[i]);
+            }
         }
+
+        if (!name || !age || !gender || !fee || !contact || !department || !address || !selectedImages) {
+            setErrorMsg('Please fill all the required fields...!')
+            return
+        }
+
+
         try {
             const doctorToken = localStorage.getItem('doctorToken');
             await axios.post(
@@ -59,13 +71,13 @@ function SetProfile() {
             })
 
         } catch (error) {
-            console.error(error);
             console.log(error)
         }
     }
 
     const imageChange = (e) => {
         const images = e.target.files;
+        setDocChange(true)
         setSelectedImages(images);
     };
 
@@ -74,12 +86,27 @@ function SetProfile() {
             <div className="row">
                 <form className="mx-auto w-75 setProfile" encType='multipart/form-data'>
                     <div className="text-center text-bold mb-3 mt-3">SET PROFILE</div>
+                    <div className="text-center  mb-3 mt-3">
+                        {
+                            preview ?
+                                <img width={'200px'} src={preview} alt="" />
+                                : docData.image ?
+                                    <img width={'200px'} src={import.meta.env.VITE_BASE_URL + `images/${docData.image}`} alt="profile" />
+                                    :
+                                    <img width={'200px'} src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg" alt="dedf" />
+                        }
+                        <br /><input className='form-control w-25 m-auto mt-3' type="file" onChange={(e) => {
+                            setProfile(e.target.files[0])
+                            setPrchange(true)
+                            setPreview(URL.createObjectURL(e.target.files[0]))
+                        }} />
+                    </div>
                     <div className="row">
                         <div className="col-lg-6">
                             {errorMsg ?
                                 <div className="alert alert-danger" role="alert">
                                     {errorMsg}
-                                </div>: ''
+                                </div> : ''
                             }
                             <label htmlFor="name">Name<span className='text-danger'>*</span></label>
                             <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className="form-control mb-2 form-control-sm" placeholder="Name..." />
@@ -123,7 +150,8 @@ function SetProfile() {
                             <label htmlFor="address">Address<span className='text-danger'>*</span></label>
                             <textarea id="address" value={address} onChange={(e) => setAddress(e.target.value)} className="form-control h-25  mb-2 form-control-sm" placeholder="Address..." />
 
-                            <label htmlFor="doc" className='mt-2'>Documents<span className='text-danger'>*</span></label><br />
+                            <br /><br /><p>Please upload your medical qualifications so that your profile can be verified</p>
+                            <label htmlFor="doc" className='mt-2'>Documents</label><br />
                             <input type="file" name='images' multiple onChange={imageChange} />
 
                         </div>

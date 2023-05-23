@@ -11,9 +11,9 @@ import { setAdminData } from '../redux/adminData'
 import useAuth from '../context/hooks/useAuth'
 import { validateEmail } from './validator'
 
-Login.Proptype = {
-    value: Proptype.string
-}
+// Login.Proptype = {
+//     value: Proptype.string
+// }
 
 function Login({ value }) {
     const { setUser, setDoctor, setAdmin } = useAuth()
@@ -59,7 +59,6 @@ function Login({ value }) {
                     email,
                     password
                 }).then((res) => {
-                    console.log(res);
                     if (res.data === 'unauthorized') {
                         setErrorMsg('invalid email or password')
                     } else {
@@ -74,7 +73,6 @@ function Login({ value }) {
                     email,
                     password
                 }).then((res) => {
-                    console.log(res);
                     if (res.data === 'unauthorized') {
                         setErrorMsg('invalid email or password')
                     } else {
@@ -125,9 +123,9 @@ function Login({ value }) {
                                     style={{ "paddingLeft": "2.5rem", "paddingRight": "2.5rem" }} onClick={handleSubmit}>Login</button>
                                 <p className="small fw-bold mt-2 pt-1 mb-0"> Create an account? <span className='text-primary'>
                                     {
-                                       value === 'doctor'? <Link to={'/doctor/signup'}>Register</Link>
-                                       :value === "admin" ?<Link to={'/admin/signup'}>Register</Link>
-                                       :<Link to={'/signup'}>Register</Link>
+                                        value === 'doctor' ? <Link to={'/doctor/signup'}>Register</Link>
+                                            : value === "admin" ? ''
+                                                : <Link to={'/signup'}>Register</Link>
                                     }
                                 </span> </p>
                             </div>

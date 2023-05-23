@@ -1,35 +1,34 @@
-.medcore{
-    width: 200px;
+.medcore {
+  width: 200px;
 }
-.doc_nav:hover{
-    color: white!important;
+.doc_nav:hover {
+  color: white !important;
 }
-.navbar{
-    box-shadow:0 3px 60px -20px rgba(0, 0, 0, 0.3);   
+.navbar {
+  box-shadow: 0 3px 60px -20px rgba(0, 0, 0, 0.3);
 }
-.doc{
-    padding: 4px;
-    height: fit-content;
-    margin-top:4% ;
+.doc {
+  padding: 4px;
+  height: fit-content;
+  margin-top: 4%;
 }
-.btn{
-    font-size: 20px;
+.btn {
+  font-size: 20px;
 }
-.link{
-    text-decoration: none;
-    color: inherit;
+.link {
+  text-decoration: none;
+  color: inherit;
 }
-@media (max-width: 768px) {    
-    .doc {
-        font-size: 13px;
-        margin-top: 8%;
-
-    }
+@media (max-width: 768px) {
+  .doc {
+    font-size: 13px;
+    margin-top: 8%;
   }
-@media  (max-width: 400px){
-    .doc{
-        font-size: 15px;
-        margin-top: 8%;
-        height: 30px;
-    }
+}
+@media (max-width: 400px) {
+  .doc {
+    font-size: 15px;
+    margin-top: 8%;
+    height: 30px;
+  }
 }
