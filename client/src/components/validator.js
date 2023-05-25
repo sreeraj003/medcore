@@ -31,3 +31,10 @@ export const validateMobileNumber = (mobileNumber) => {
   const mobileRegex = /^\d{10}$/;
   return mobileRegex.test(mobileNumber);
 };
+
+
+export const validateCapitalLetter = (input) => {
+  var firstCharacter = input.charAt(0);
+  var regex = /^[A-Z]$/;
+  return regex.test(firstCharacter);
+}

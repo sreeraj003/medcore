@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const objectid = mongoose.Types.ObjectId
 const doctorSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -31,10 +31,14 @@ const doctorSchema = new mongoose.Schema({
     required: true,
   },
   department: {
-    type: String,
+    type:objectid,
   },
   qualification: {
     type: String,
+  },
+  isApproved:{
+    type:Boolean,
+    default:false
   },
   isBlocked: {
     type: Boolean,

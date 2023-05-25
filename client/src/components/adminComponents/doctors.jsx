@@ -1,4 +1,4 @@
-import AdminSideBar from "./adminSideBar"
+import AdminSideBar from "./AdminSideBar"
 import DataTables from "../dataTables"
 
 import axios from "axios"
@@ -68,11 +68,11 @@ function Doctors() {
             <AdminSideBar />
           </div>
           <div className="col-md-9 ">
-            <div className='row mt-4 me-2' >
-              <div className="col-12 me-4">
+            <div className='row mt-4  ps-2 pe-3' >
+              <div className="col-12 m-1">
                 {
                   selectedDoc ? <ViewDoc doctor={selectedDoc} setSelectedDoc={setSelectedDoc} /> :
-                    <DataTables columns={columns} data={doctorsList} />
+                    <DataTables columns={columns} title='Doctor' data={doctorsList} />
                 }
               </div>
             </div>
