@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import axios from 'axios';
 import { useEffect } from 'react';
 import Doctor from './Routes/doctor';
-import User from "./Routes/user"
+import User from "./Routes/User"
 import Admin from './Routes/admin';
 import useAuth from './hooks/useAuth';
 import { useDispatch } from 'react-redux';
@@ -71,6 +71,7 @@ function App() {
 
   return (
     <>
+    <div style={{minHeight:"95vh"}}>
       <Router>
         <Routes>
           <Route path='/admin/*' element={<Admin />} />
@@ -78,6 +79,7 @@ function App() {
           <Route path='/*' element={<User />} />
         </Routes>
       </Router>
+    </div>
     </>
 
   )

@@ -35,7 +35,7 @@ const Sidebar = () => {
     history('/admin/payments')
   }
   return (
-    <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white z-10'>
+    <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white z-10' style={{zIndex:"10"}}>
 
       {!nav ?
         <div className=' sm:flex items-center  ham bg-dark ms-0 mt-0 text-[18px]'>

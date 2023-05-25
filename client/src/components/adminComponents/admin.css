@@ -1,9 +1,7 @@
 .side {
   display: block;
 }
-.container {
-  min-height: 2000px;
-}
+
 .dataButton {
   background-color: rgb(110, 99, 229);
   margin: 50px;

@@ -12,20 +12,21 @@ function ViewDoc({ doctor, setSelectedDoc }) {
                             <div className='text-center '>
                                 {
                                     doctor.image ?
-                                        <img width={'200px'} src={import.meta.env.VITE_BASE_URL + `images/${doctor.documents[0]}`} alt="sdf" />
+                                        <img width={'200px'} src={import.meta.env.VITE_BASE_URL + `images/${doctor.image}`} alt="sdf" />
                                         :
                                         <img width={'200px'} src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg" alt="dedf" />
                                 }
                                 <h1>{doctor.name}</h1>
                                 <div className="row">
-
                                     <div className="col-lg-6 text-start ">
                                         <b>Email</b>:{doctor.email} <br />
                                         <b>Contact</b>:{doctor.contact}<br />
                                         <b>Age</b>:{doctor.age}<br />
                                         <b>Gender</b>:{doctor.gender}<br />
+                                        <b>Is-Approved</b>:{!doctor.isApproved ? "Not Approved" : "Approved"} <br />
                                     </div>
                                     <div className="col-lg-6 text-start">
+                                        <b>Consultation fee</b>:{doctor.fee}<br />
                                         <b>Department</b>:{doctor.department}<br />
                                         <b>Qualification</b>:{doctor.qualification}<br />
                                     </div>

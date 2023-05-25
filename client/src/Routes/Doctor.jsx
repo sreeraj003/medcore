@@ -24,10 +24,8 @@ function Doctor() {
         <Route element={<RequireDoctor />} >
           <Route path='/' element={<DoctorHome value={doctor} />} />
           <Route path='/setprofile' element={<SetProfile />} />
-
         </Route>
       </Routes>
-      <Footer />
     </>
   )
 }

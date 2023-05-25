@@ -1,7 +1,7 @@
 import { FaCoins, FaIdCard } from 'react-icons/fa';
 import './admin.css'
 import { MdNoteAlt } from 'react-icons/md';
-import AdminSideBar from './adminSideBar';
+import AdminSideBar from './AdminSideBar';
 function AdminHome() {
 
   return (

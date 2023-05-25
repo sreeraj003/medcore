@@ -4,7 +4,10 @@ const bcrypt = require("bcrypt");
 const randomstring = require("randomstring");
 const { dateTime } = require("../config/dateAndTime");
 const mailSender = require("../config/nodeMailer");
-const { createTokens, validateToken } = require("../middlewares/jwt");
+const { createTokens } = require("../middlewares/jwt");
+const Doctor = require('../model/doctorModel')
+const mongoose=  require("mongoose");
+const Department = require('../model/departmentModel')
 
 async function securePassword(password) {
   try {
@@ -104,7 +107,29 @@ const userData = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req._id.id });
     res.json(userData);
-  } catch (error) {}
+  } catch (error) {
+    
+  }
+};
+
+const findDoctors = async (req, res) => {
+  try {
+    const docs = await Doctor.aggregate([
+      {
+        $lookup: {
+          from: 'departments',
+          localField:'department',
+          foreignField: '_id', 
+          as: 'doctorData', 
+        },
+      },
+    ]);
+    const deps = await Department.find({isBlocked:false})
+    
+    res.json({docs,deps});
+  } catch (error) {
+    res.json("error")
+  }
 };
 
 module.exports = {
@@ -112,4 +137,5 @@ module.exports = {
   verify,
   login,
   userData,
+  findDoctors
 };
