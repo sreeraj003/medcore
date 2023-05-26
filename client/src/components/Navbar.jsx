@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import Sidebar from "./adminComponents/sidebar"
 import DocSidebar from './doctorComponents/docSidebar';
@@ -11,11 +11,12 @@ import { setDoctorData } from '../redux/doctorData';
 import { setAdminData } from '../redux/adminData';
 import { useDispatch } from 'react-redux';
 
-// eslint-disable-next-line react/prop-types
+
 function Navbar({ value }) {
 
     const { setUser, setDoctor, setAdmin } = useAuth()
 
+    const history = useNavigate()
     const dispatch = useDispatch()
 
     const handleLogout = () => {
@@ -49,6 +50,7 @@ function Navbar({ value }) {
                     </>
                         : ''
                 }
+
                 <div className='d-flex navMine'>
                     {
                         value === "doctor" ?
@@ -56,9 +58,11 @@ function Navbar({ value }) {
                             : value === 'admin' ?
                                 <div></div>
                                 :
-                                <button className="btn doc btn-outline-success ">Find Doctor</button>
+                                <button className="btn doc btn-outline-success" onClick={() => history('/findDoctor')}>Find Doctor</button>
                     }
+
                     <div>{'   '}</div>
+
                     <div className="dropdown">
                         {
                             value === 'admin' ?
@@ -66,10 +70,11 @@ function Navbar({ value }) {
                                     <Link onClick={handleLogout}> <button className='btn btn-outline-success'>Logout</button> </Link>
                                     : ''
                                 :
-                                <a className="btn me-0" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a className="btn me-0 ms-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <IoIosContact size={40} />
                                 </a>
                         }
+
                         {
                             !value && user ?
                                 <ul className="dropdown-menu right-0" style={{ marginLeft: '-90px', width: '100px', textAlign: 'center' }}>

@@ -1,8 +1,8 @@
-  
 
-  return (
-    <div>fdfd</div>
-  );
+
+return (
+  <div>fdfd</div>
+);
 
 
 export default Scrollable;

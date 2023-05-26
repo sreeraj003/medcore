@@ -5,9 +5,8 @@ const randomstring = require("randomstring");
 const { dateTime } = require("../config/dateAndTime");
 const mailSender = require("../config/nodeMailer");
 const { createTokens } = require("../middlewares/jwt");
-const Doctor = require('../model/doctorModel')
-const mongoose=  require("mongoose");
-const Department = require('../model/departmentModel')
+const Doctor = require("../model/doctorModel");
+const Department = require("../model/departmentModel");
 
 async function securePassword(password) {
   try {
@@ -106,29 +105,83 @@ const login = async (req, res) => {
 const userData = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req._id.id });
+    console.log(userData);
     res.json(userData);
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 };
 
 const findDoctors = async (req, res) => {
   try {
     const docs = await Doctor.aggregate([
       {
+        $match: {
+          isBlocked: false,
+          isVerified: true,
+        },
+      },
+      {
         $lookup: {
-          from: 'departments',
-          localField:'department',
-          foreignField: '_id', 
-          as: 'doctorData', 
+          from: "departments",
+          localField: "department",
+          foreignField: "_id",
+          as: "doctorData",
         },
       },
     ]);
-    const deps = await Department.find({isBlocked:false})
-    
-    res.json({docs,deps});
+    const deps = await Department.find({ isBlocked: false });
+
+    res.json({ docs, deps });
   } catch (error) {
-    res.json("error")
+    res.json("error");
+  }
+};
+
+const departments = async (req, res) => {
+  try {
+    const dep = await Department.find({});
+    res.json(dep);
+  } catch (error) {
+    res.json("error");
+  }
+};
+
+const setProfile = async (req, res) => {
+  try {
+    const { name, age, address, contact, gender } = req.body;
+    console.log(req.file);
+    if (req.file) {
+      const fileName = req.file.filename;
+      const updatedData = await User.findOneAndUpdate(
+        { _id: req._id.id },
+        {
+          $set: {
+            userName: name,
+            age: age,
+            address: address,
+            contact: contact,
+            gender: gender,
+            image: fileName,
+          },
+        }
+      );
+    } else {
+      const updatedData = await User.findOneAndUpdate(
+        { _id: req._id.id },
+        {
+          $set: {
+            userName: name,
+            age: age,
+            address: address,
+            contact: contact,
+            gender: gender,
+          },
+        }
+      );
+    }
+    const userData = await User.findOne({ _id: req._id.id });
+    res.json(userData);
+  } catch (error) {
+    res.json("error");
   }
 };
 
@@ -137,5 +190,7 @@ module.exports = {
   verify,
   login,
   userData,
-  findDoctors
+  findDoctors,
+  departments,
+  setProfile,
 };

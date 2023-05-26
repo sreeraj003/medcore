@@ -6,7 +6,7 @@ const { dateTime } = require("../config/dateAndTime");
 const mailSender = require("../config/nodeMailer");
 const { createDoctorTokens } = require("../middlewares/jwt");
 const Departments = require("../model/departmentModel");
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 async function securePassword(password) {
   try {
@@ -113,7 +113,7 @@ const doctorData = async (req, res) => {
 
 const setProfile = async (req, res) => {
   try {
-    let profileData
+    let profileData;
     const {
       name,
       age,
@@ -130,24 +130,7 @@ const setProfile = async (req, res) => {
       if (prChange === "true") {
         const profile = fileName.shift();
         if (fileName == "") {
-           profileData = await Doctor.findByIdAndUpdate(
-            { _id: req._id.id },
-            {
-              $set: {
-                name: name,
-                age: age,
-                contact: contact,
-                qualification: qualification,
-                department:department,
-                gender: gender,
-                fee: fee,
-                address: address,
-                image: profile,
-              },
-            }
-          );
-        } else {
-           profileData = await Doctor.findByIdAndUpdate(
+          profileData = await Doctor.findByIdAndUpdate(
             { _id: req._id.id },
             {
               $set: {
@@ -160,14 +143,30 @@ const setProfile = async (req, res) => {
                 fee: fee,
                 address: address,
                 image: profile,
-               
               },
-              $addToSet: { documents: { $each: fileName } }
+            }
+          );
+        } else {
+          profileData = await Doctor.findByIdAndUpdate(
+            { _id: req._id.id },
+            {
+              $set: {
+                name: name,
+                age: age,
+                contact: contact,
+                qualification: qualification,
+                department: department,
+                gender: gender,
+                fee: fee,
+                address: address,
+                image: profile,
+              },
+              $addToSet: { documents: { $each: fileName } },
             }
           );
         }
       } else {
-         profileData = await Doctor.findByIdAndUpdate(
+        profileData = await Doctor.findByIdAndUpdate(
           { _id: req._id.id },
           {
             $set: {
@@ -179,14 +178,13 @@ const setProfile = async (req, res) => {
               gender: gender,
               fee: fee,
               address: address,
-            
             },
-            $addToSet: { documents: { $each: fileName } }
+            $addToSet: { documents: { $each: fileName } },
           }
         );
       }
     } else {
-       profileData = await Doctor.findByIdAndUpdate(
+      profileData = await Doctor.findByIdAndUpdate(
         { _id: req._id.id },
         {
           $set: {
@@ -202,7 +200,10 @@ const setProfile = async (req, res) => {
         }
       );
     }
-    const ProfileData = await Doctor.findById({_id:req._id.id},{password:0})
+    const ProfileData = await Doctor.findById(
+      { _id: req._id.id },
+      { password: 0 }
+    );
     res.json(ProfileData);
   } catch (error) {
     console.log(error);
@@ -218,16 +219,19 @@ const departments = async (req, res) => {
   }
 };
 
-const deleteImage = async(req,res) => {
+const deleteImage = async (req, res) => {
   try {
-    const deleteData = req.params.deleteData
-    const doc = await Doctor.findOneAndUpdate({_id:req._id.id},{$pull:{documents:deleteData}})
-    const docData = await Doctor.find({_id:req._id.id},{password:0})
-    res.json(docData)
+    const deleteData = req.params.deleteData;
+    const doc = await Doctor.findOneAndUpdate(
+      { _id: req._id.id },
+      { $pull: { documents: deleteData } }
+    );
+    const docData = await Doctor.find({ _id: req._id.id }, { password: 0 });
+    res.json(docData);
   } catch (error) {
-    res.json('error')
+    res.json("error");
   }
-}
+};
 
 module.exports = {
   signup,
@@ -236,5 +240,5 @@ module.exports = {
   doctorData,
   setProfile,
   departments,
-  deleteImage
+  deleteImage,
 };

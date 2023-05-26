@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  mobile: {
+  contact: {
     type: Number,
     required: true,
   },
@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  profile: {
+  image: {
     type: String,
   },
   documents: {

@@ -12,4 +12,5 @@ doctorRoute.get("/doctorData",validateDoctorToken,doctorController.doctorData);
 doctorRoute.post("/setprofile",upload.array("images"),validateDoctorToken,doctorController.setProfile);
 doctorRoute.get("/departments",validateDoctorToken,doctorController.departments)
 doctorRoute.delete("/deleteImage/:deleteData",validateDoctorToken,doctorController.deleteImage)
+
 module.exports = doctorRoute;

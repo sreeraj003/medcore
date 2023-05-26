@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const Doctor = require("../model/doctorModel");
 const Departments = require("../model/departmentModel");
+const Patients = require("../model/userModel");
 const { createAdminTokens } = require("../middlewares/jwt");
 const { dateTime } = require("../config/dateAndTime");
 
@@ -15,7 +16,6 @@ const login = async (req, res) => {
       if (passwordMatch) {
         if (!adminData.isBlocked) {
           const token = createAdminTokens(adminData._id);
-
           res.json({ adminData, token });
         } else {
           res.json("blocked");
@@ -40,7 +40,22 @@ const adminData = async (req, res) => {
 
 const doctors = async (req, res) => {
   try {
-    const doctorData = await Doctor.find({}, { password: 0 });
+    const doctorData = await Doctor.aggregate([
+      {
+        $lookup: {
+          from: "departments",
+          localField: "department",
+          foreignField: "_id",
+          as: "dept",
+        },
+      },
+      {
+        $project: {
+          password: 0,
+        },
+      },
+    ]);
+    console.log(doctorData);
     res.json(doctorData);
   } catch (error) {
     console.log(error);
@@ -62,7 +77,7 @@ const createDepartment = async (req, res) => {
       const dep = await new Departments({
         name: newDep,
         timeStamp: dateTime,
-        image:filename
+        image: filename,
       });
       const depData = await dep.save();
       if (depData) {
@@ -85,17 +100,65 @@ const manageDepartment = async (req, res) => {
       update = await Departments.findOneAndUpdate(
         { _id: id },
         { $set: { isBlocked: true } }
-      )
-        res.json("blocked")
+      );
+      res.json("blocked");
     } else {
       update = await Departments.findOneAndUpdate(
         { _id: id },
         { $set: { isBlocked: false } }
       );
-        res.json("unblocked")
-      }
+      res.json("unblocked");
+    }
     console.log(update);
-   
+  } catch (error) {
+    res.json("error");
+  }
+};
+
+const manageDoctor = async (req, res) => {
+  try {
+    const id = req.params.docId;
+    const type = req.body.action;
+    const Data = await Doctor.find({ _id: id });
+    console.log(Data);
+    if (type == "approve") {
+      if (Data[0].isApproved) {
+        const verification = await Doctor.findOneAndUpdate(
+          { _id: id },
+          { $set: { isApproved: false } }
+        );
+        res.json("disapproved");
+      } else {
+        const verification = await Doctor.findOneAndUpdate(
+          { _id: id },
+          { $set: { isApproved: true } }
+        );
+        res.json("approved");
+      }
+    } else {
+      if (Data[0].isBlocked == false) {
+        const block = await Doctor.findOneAndUpdate(
+          { _id: id },
+          { $set: { isBlocked: true } }
+        );
+        res.json("blocked");
+      } else {
+        const block = await Doctor.findOneAndUpdate(
+          { _id: id },
+          { $set: { isBlocked: false } }
+        );
+        res.json("unblocked");
+      }
+    }
+  } catch (error) {
+    res.json("error");
+  }
+};
+
+const patients = async (req, res) => {
+  try {
+    const patients = await Patients.find({}, { password: 0 });
+    res.json(patients);
   } catch (error) {
     res.json("error");
   }
@@ -108,4 +171,6 @@ module.exports = {
   departments,
   createDepartment,
   manageDepartment,
+  manageDoctor,
+  patients,
 };

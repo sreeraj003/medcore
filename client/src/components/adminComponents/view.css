@@ -1,0 +1,18 @@
+/* ViewDoc.css */
+.doctor-details-wrapper {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 5px;
+}
+.horizontal-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.horizontal-scroll-content {
+  display: inline-block;
+}
+.block:hover{
+      background-color: rgb(220, 0, 0)!important;
+}
