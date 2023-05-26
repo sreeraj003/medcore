@@ -64,7 +64,7 @@ function Departments() {
     },
     {
       name: "Image",
-      selector:(row) => <img className="m-2 ms-0" width={'100px'} src={import.meta.env.VITE_BASE_URL+`images/${row.image}`} alt="" /> 
+      selector: (row) => <img className="m-2 ms-0" width={'100px'} src={import.meta.env.VITE_BASE_URL + `images/${row.image}`} alt="" />
     },
     {
       name: "Action",
@@ -139,43 +139,32 @@ function Departments() {
           </div>
         </div>
       </div>
-      <div className='adminCont'>
-        <div className="row">
-          <div className="col-md-3 z-10 text-center bg-white side">
-            <AdminSideBar />
-          </div>
-          <div className="col-md-9 ">
-            <div className='row ps-2 pe-3' >
-              <div className="col-12 m-3">
 
-                <button type="button" className="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" >Create Department</button>
-              </div>
-              <div className="ms-1" style={{zIndex:'0'}}>
-                {
-                  createStatus == "error" ?
-                    <div className="alert alert-danger" role="alert">
-                      There was an error! cannot create depaprtment.
-                    </div>
-                    : createStatus == "success" ?
-                      <div className="alert alert-success" role="alert">
-                        Department created successfully.
-                      </div>
-                      : createStatus === 'exist' ?
-                        <div className="alert alert-danger" role="alert">
-                          Department already exist.
-                        </div>
-                        : createStatus === 'capLetter' ?
-                          <div className="alert alert-danger" role="alert">
-                            First letter of department should be capital.
-                          </div>
-                          : ''
-
-                }
-                <DataTables columns={columns} title='Departments' data={departmentList} />
-              </div>
+      <div>
+        <button type="button" className="btn mb-2 ms-1 btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" >Create Department</button>
+      </div>
+      <div className="ms-1" style={{ zIndex: '0' }}>
+        {
+          createStatus == "error" ?
+            <div className="alert alert-danger" role="alert">
+              There was an error! cannot create depaprtment.
             </div>
-          </div>
-        </div>
+            : createStatus == "success" ?
+              <div className="alert alert-success" role="alert">
+                Department created successfully.
+              </div>
+              : createStatus === 'exist' ?
+                <div className="alert alert-danger" role="alert">
+                  Department already exist.
+                </div>
+                : createStatus === 'capLetter' ?
+                  <div className="alert alert-danger" role="alert">
+                    First letter of department should be capital.
+                  </div>
+                  : ''
+
+        }
+        <DataTables columns={columns} title='Departments' data={departmentList} />
       </div>
     </>
   )

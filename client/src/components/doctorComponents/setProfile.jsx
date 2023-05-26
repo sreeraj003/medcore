@@ -39,7 +39,6 @@ function SetProfile() {
                         },
                     }
                 );
-
                 setDepartments(response.data);
             } catch (error) {
                 console.log(error);
@@ -49,12 +48,9 @@ function SetProfile() {
         fetchDepartments();
     }, []);
 
-    // useEffect(()=>{
 
-    // },[isDel])
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
 
         const formData = new FormData();
@@ -69,23 +65,13 @@ function SetProfile() {
         formData.append('images', profile);
         formData.append('prChange', prChange);
 
-
         if (docChange) {
             for (let i = 0; i < selectedImages.length; i++) {
                 formData.append('images', selectedImages[i]);
             }
         }
 
-        if (
-            !name ||
-            !age ||
-            !gender ||
-            !fee ||
-            !contact ||
-            !department ||
-            !address ||
-            !selectedImages
-        ) {
+        if (!name || !age || !gender || !fee || !contact || !department || !address || !selectedImages) {
             setMsg('Please fill all the required fields...!');
             return;
         }
@@ -328,7 +314,7 @@ function SetProfile() {
 
                                         </div>
                                     ))
-                                        : "FaTruckLoading..."
+                                        : "Ooopsie..!No data found."
                                     }
 
                                 </div>

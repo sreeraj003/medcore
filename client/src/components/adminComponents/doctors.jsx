@@ -1,9 +1,8 @@
-import AdminSideBar from "./AdminSideBar"
 import DataTables from "../dataTables"
 
 import axios from "axios"
 import { useEffect, useState } from "react"
-import ViewDoc from "./viewDoc"
+import View from "./view"
 function Doctors() {
   const [selectedDoc, setSelectedDoc] = useState('')
   const [doctorsList, setDoctorsList] = useState('')
@@ -47,7 +46,7 @@ function Doctors() {
     },
     {
       name: 'department',
-      selector: (row) => row.department
+      selector: (row) => row.dept[0].name
     },
     {
       name: "Action",
@@ -62,23 +61,11 @@ function Doctors() {
 
   return (
     <>
-      <div className='adminCont'>
-        <div className="row">
-          <div className="col-md-3 z-10 text-center bg-white side">
-            <AdminSideBar />
-          </div>
-          <div className="col-md-9 ">
-            <div className='row mt-4  ps-2 pe-3' >
-              <div className="col-12 m-1">
-                {
-                  selectedDoc ? <ViewDoc doctor={selectedDoc} setSelectedDoc={setSelectedDoc} /> :
-                    <DataTables columns={columns} title='Doctor' data={doctorsList} />
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {
+        selectedDoc ? <View user={selectedDoc} setSelected={setSelectedDoc} value="doc" /> :
+          <DataTables columns={columns} title='Doctor' data={doctorsList} />
+      }
+
     </>
   )
 }

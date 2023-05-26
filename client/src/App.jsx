@@ -9,7 +9,6 @@ import useAuth from './hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { setDoctorData } from './redux/doctorData';
 import { setUserData } from './redux/userData';
-
 import { setAdminData } from './redux/adminData';
 
 function App() {
@@ -71,15 +70,15 @@ function App() {
 
   return (
     <>
-    <div style={{minHeight:"95vh"}}>
-      <Router>
-        <Routes>
-          <Route path='/admin/*' element={<Admin />} />
-          <Route path='/doctor/*' element={<Doctor />} />
-          <Route path='/*' element={<User />} />
-        </Routes>
-      </Router>
-    </div>
+      <div style={{ minHeight: "95vh" }}>
+        <Router>
+          <Routes>
+            <Route path='/admin/*' element={<Admin />} />
+            <Route path='/doctor/*' element={<Doctor />} />
+            <Route path='/*' element={<User />} />
+          </Routes>
+        </Router>
+      </div>
     </>
 
   )

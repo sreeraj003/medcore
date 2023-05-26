@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
+    "file-saver": "^2.0.5",
     "formdata-polyfill": "^4.0.10",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",

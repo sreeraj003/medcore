@@ -47,7 +47,6 @@ function Login({ value }) {
                 } else if (res.data === 'blocked') {
                     setErrorMsg('This accout has been blocked.Please contact admin')
                 } else {
-
                     localStorage.setItem("doctorToken", res.data.token)
                     dispatch(setDoctorData(res.data.doctorData))
                     setDoctor(true)
@@ -61,6 +60,9 @@ function Login({ value }) {
                 }).then((res) => {
                     if (res.data === 'unauthorized') {
                         setErrorMsg('invalid email or password')
+                    }
+                    else if (res.data === 'blocked') {
+                        setErrorMsg('Your access has been blocked...!')
                     } else {
                         localStorage.setItem("adminToken", res.data.token)
                         dispatch(setAdminData(res.data.adminData))
@@ -74,8 +76,14 @@ function Login({ value }) {
                     password
                 }).then((res) => {
                     if (res.data === 'unauthorized') {
-                        setErrorMsg('invalid email or password')
-                    } else {
+                        setErrorMsg('invalid email or password...!')
+                    } else if (res.data === 'unverified') {
+                        setErrorMsg("Mail not verified please check your mail...!")
+                    } else if (res.data === 'blocked') {
+                        setErrorMsg('This account has been blocked.Please contact the support team...!')
+                    }
+                    else {
+                        console.log(res.data);
                         localStorage.setItem("userToken", res.data.token)
                         dispatch(setUserData(res.data.userData))
                         setUser(true)

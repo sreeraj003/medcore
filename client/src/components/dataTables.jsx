@@ -11,14 +11,14 @@ DataTables.proppTypes = {
 function DataTables(props) {
     return (
         <DataTable
-        style={{zIndex: '-1'}} 
+            style={{ zIndex: '-1' }}
             columns={props.columns}
             data={props.data}
             title={props.title}
             fixedHeader
             highlightOnHover
             pagination
-            
+
         />
     )
 }

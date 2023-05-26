@@ -1,5 +1,6 @@
 .setProfile {
   border-style: solid;
+  border-width: 1px;
   border-radius: 20px;
   border-color: green;
   margin-top: 5%;
@@ -17,5 +18,4 @@
 
 .horizontal-scroll-content {
   display: inline-block;
-  /* Adjust the width to accommodate your content */
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DoctorCard from '../DoctorCard';
-import { FaSearch } from 'react-icons/fa';
 
 function PageStructure() {
     const [docData, setDocData] = useState([]);
@@ -36,13 +35,13 @@ function PageStructure() {
     };
     const handleCategory = (e) => {
 
-          const filtered = docData.filter(
-            (doc) => doc.doctorData[0].name === e.target.value );
-          setFilteredData(filtered);
-          setIsSearch(true);
-       
-      };
-      
+        const filtered = docData.filter(
+            (doc) => doc.doctorData[0].name === e.target.value);
+        setFilteredData(filtered);
+        setIsSearch(true);
+
+    };
+
 
     return (
         <>
@@ -86,12 +85,12 @@ function PageStructure() {
                             onChange={(e) => handleSearcch(e)}
                             placeholder="Search doctors..."
                         />
-                        
+
                     </div>
                     {isSearch ? (
-                        <DoctorCard docData={filteredData}  />
+                        <DoctorCard docData={filteredData} />
                     ) : (
-                        <DoctorCard docData={docData}/>
+                        <DoctorCard docData={docData} />
                     )}
                 </div>
             </div>
