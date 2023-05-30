@@ -13,7 +13,7 @@ async function securePassword(password) {
     const hashPassword = await bcrypt.hash(password, 10);
     return hashPassword;
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 }
 
@@ -48,7 +48,7 @@ const signup = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -70,7 +70,7 @@ const verify = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -98,14 +98,14 @@ const login = async (req, res) => {
       res.json("unauthorized");
     }
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
 const userData = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req._id.id });
-    console.log(userData);
+
     res.json(userData);
   } catch (error) {}
 };
@@ -115,6 +115,7 @@ const findDoctors = async (req, res) => {
     const docs = await Doctor.aggregate([
       {
         $match: {
+          isApproved: true,
           isBlocked: false,
           isVerified: true,
         },
@@ -148,7 +149,6 @@ const departments = async (req, res) => {
 const setProfile = async (req, res) => {
   try {
     const { name, age, address, contact, gender } = req.body;
-    console.log(req.file);
     if (req.file) {
       const fileName = req.file.filename;
       const updatedData = await User.findOneAndUpdate(

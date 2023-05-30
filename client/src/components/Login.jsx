@@ -132,7 +132,7 @@ function Login({ value }) {
                                 <p className="small fw-bold mt-2 pt-1 mb-0"> Create an account? <span className='text-primary'>
                                     {
                                         value === 'doctor' ? <Link to={'/doctor/signup'}>Register</Link>
-                                            : value === "admin" ? ''
+                                            :value==='admin'?''
                                                 : <Link to={'/signup'}>Register</Link>
                                     }
                                 </span> </p>

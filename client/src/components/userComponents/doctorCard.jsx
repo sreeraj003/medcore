@@ -12,7 +12,7 @@ function DoctorCard({ docData }) {
               </div>
               <div className="card-body mb-0 ps-2" style={{ textAlign: "left", maxWidth: "13rem", left: 0 }}>
                 <h5 className='text-dark'>{el.name}</h5>
-                <p className='ms' style={{ fontSize: "13px", color: "black", opacity: "80%" }}>{el.doctorData[0].name} <br />{el.qualification}</p>
+                <p className='ms' style={{ fontSize: "13px", color: "black", opacity: "80%" }}>{el?.doctorData[0]?.name} <br />{el.qualification}</p>
               </div>
               <div className="row">
                 <div className="col-12 mb-2 d-flex justify-content-between">

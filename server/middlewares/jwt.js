@@ -12,9 +12,10 @@ const validateToken = (req, res, next) => {
     verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         res.json("unauthorized");
+      }else{
+        req._id = decoded;
+        next();
       }
-      req._id = decoded;
-      next();
     });
   } else {
     res.json("unauthorized");

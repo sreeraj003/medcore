@@ -5,8 +5,6 @@ import Navbar from "../components/navbar"
 import Login from "../components/Login"
 import BasePage from "../components/adminComponents/basePage"
 
-
-
 function Admin() {
   return (
     <>
@@ -14,11 +12,11 @@ function Admin() {
       <Routes>
         <Route path="/login" element={<Login value={'admin'} />} />
         <Route element={<RequireAdmin />}>
-          <Route path="/" element={<BasePage value={"Home"} />} />
-          <Route path="/doctors" element={<BasePage value={"doctors"} />} />
-          <Route path="/departments" element={<BasePage value={"departments"} />} />
-          <Route path="/patients" element={<BasePage value={"patients"} />} />
-          <Route path="/payments" element={<BasePage value={"payments"} />} />
+          <Route path="/" element={<BasePage value={"Home"} user={"admin"} />} />
+          <Route path="/doctors" element={<BasePage value={"doctors"} user={"admin"} />} />
+          <Route path="/departments" element={<BasePage value={"departments"} user={"admin"} />} />
+          <Route path="/patients" element={<BasePage value={"patients"} user={"admin"} />} />
+          <Route path="/payments" element={<BasePage value={"payments"} user={"admin"} />} />
         </Route>
         <Route path="/*" element={<Login value={'admin'} />} />
       </Routes>

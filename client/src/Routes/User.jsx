@@ -11,6 +11,7 @@ import Loader from '../components/loader'
 const PageStructure = lazy(() => import('../components/userComponents/pages/docSearchPageStructure'))
 const ProfilePageStructure = lazy(() => import('../components/userComponents/pages/userProfilePageStructure'))
 
+
 function User() {
   return (
     <>

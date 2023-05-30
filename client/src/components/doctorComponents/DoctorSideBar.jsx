@@ -5,9 +5,10 @@ import './doctor.css'
 import { IoIosPeople } from 'react-icons/io';
 import { MdPerson, MdOutlineSick, MdCalendarMonth } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-function DoctorSideBar({ value }) {
-
+function DoctorSideBar() {
+    const value = useSelector(state => state.doctor.data)
     const history = useNavigate()
 
     const handleDashboard = () => {
