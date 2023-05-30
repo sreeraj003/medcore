@@ -13,5 +13,6 @@ adminRoute.post("/createDepartment",upload.single("image"),validateAdminToken,ad
 adminRoute.patch("/manageDepartment",validateAdminToken,adminController.manageDepartment);
 adminRoute.patch("/manageDoctor/:docId",validateAdminToken,adminController.manageDoctor);
 adminRoute.get("/patients", validateAdminToken, adminController.patients);
+adminRoute.patch('/managePatient/:patientId',validateAdminToken,adminController.managePatient)
 
 module.exports = adminRoute;

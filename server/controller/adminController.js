@@ -6,6 +6,7 @@ const Departments = require("../model/departmentModel");
 const Patients = require("../model/userModel");
 const { createAdminTokens } = require("../middlewares/jwt");
 const { dateTime } = require("../config/dateAndTime");
+const User = require('../model/userModel')
 
 const login = async (req, res) => {
   try {
@@ -25,7 +26,7 @@ const login = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -34,7 +35,7 @@ const adminData = async (req, res) => {
     const data = await Admin.findOne({ _id: req._id.id });
     res.json(data);
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -55,10 +56,9 @@ const doctors = async (req, res) => {
         },
       },
     ]);
-    console.log(doctorData);
     res.json(doctorData);
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -94,7 +94,6 @@ const createDepartment = async (req, res) => {
 const manageDepartment = async (req, res) => {
   try {
     const { id, status } = req.body;
-    console.log(status);
     let update;
     if (status == false) {
       update = await Departments.findOneAndUpdate(
@@ -109,7 +108,6 @@ const manageDepartment = async (req, res) => {
       );
       res.json("unblocked");
     }
-    console.log(update);
   } catch (error) {
     res.json("error");
   }
@@ -120,7 +118,6 @@ const manageDoctor = async (req, res) => {
     const id = req.params.docId;
     const type = req.body.action;
     const Data = await Doctor.find({ _id: id });
-    console.log(Data);
     if (type == "approve") {
       if (Data[0].isApproved) {
         const verification = await Doctor.findOneAndUpdate(
@@ -164,6 +161,23 @@ const patients = async (req, res) => {
   }
 };
 
+const managePatient = async(req,res)=>{
+  try {
+    const {isuserBlocked}= req.body
+    const id = req.params.patientId
+    if(isuserBlocked==false){
+      const user = await User.findOneAndUpdate({_id:id},{$set:{isBlocked:true}})
+      res.json('blocked')
+    }else{
+      const user = await User.findOneAndUpdate({_id:id},{$set:{isBlocked:false}})
+      res.json('unblocked')
+    }
+  } catch (error) {
+    res.json("error")
+  }
+}
+
+
 module.exports = {
   login,
   adminData,
@@ -173,4 +187,5 @@ module.exports = {
   manageDepartment,
   manageDoctor,
   patients,
+  managePatient
 };

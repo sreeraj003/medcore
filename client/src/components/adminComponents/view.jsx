@@ -8,7 +8,7 @@ function View({ user, setSelected, value }) {
     const [msg, setMsg] = useState('')
     const [approveButton, setApproveButton] = useState('')
     const [blockButton, setBlockButton] = useState('')
-
+    const isuserBlocked = user.isBlocked
     useEffect(() => {
         if (value == "doc") {
             if (user.isApproved == false) setApproveButton('Approve')
@@ -16,15 +16,15 @@ function View({ user, setSelected, value }) {
         }
         if (user.isBlocked == false) setBlockButton("Block")
         else setBlockButton("Unblock")
-    })
+    },)
 
 
     const downloadHandler = (e) => {
-        const url = import.meta.env.VITE_BASE_URL + `images/${e.Target.value}`
+        const url = import.meta.env.VITE_BASE_URL + `images/${e.target.value}`
         saveAs(url, "certificates")
     }
 
-    const handleVerify = async (e, type) => {
+    const handleDoctor = async (e, type) => {
         const adminToken = localStorage.getItem('adminToken')
         await axios.patch(import.meta.env.VITE_BASE_URL + `admin/manageDoctor/${e.target.value}`, { action: type }, {
             headers: {
@@ -52,6 +52,30 @@ function View({ user, setSelected, value }) {
                 }, 4000)
             })
     }
+
+    const handlePatient = async (e) => {
+        const adminToken = localStorage.getItem('adminToken')
+        await axios.patch(import.meta.env.VITE_BASE_URL + `admin/managePatient/${e.target.value}`, { isuserBlocked: isuserBlocked }, {
+            headers: {
+                Authorization: `Bearer ${adminToken}`,
+            }
+        })
+            .then(res => {
+                if (res.data == "blocked") {
+                    setMsg("This account is blocked successfully.")
+                    user.isBlocked = true
+                } else if (res.data == "unblocked") {
+                    setMsg("This account has been unbloacked.")
+                    user.isBlocked = false
+                } else setMsg("There was an unexpected error.")
+
+                setSelected(user)
+                setTimeout(() => {
+                    setMsg('')
+                }, 4000)
+            })
+    }
+
     return (
         <>
             <div className='container' style={{ minHeight: '100vh' }}>
@@ -61,7 +85,7 @@ function View({ user, setSelected, value }) {
                             <button className='btn btn-outline-success bg-light' onClick={() => setSelected('')}>back</button>
                             <div className='text-center '>
                                 {
-                                    user.image ?
+                                    user?.image ?
                                         <img width={'200px'} src={import.meta.env.VITE_BASE_URL + `images/${user.image}`} alt="sdf" />
                                         :
                                         <img width={'200px'} src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg" alt="dedf" />
@@ -77,11 +101,12 @@ function View({ user, setSelected, value }) {
                                 }
                                 <div className="row">
                                     <div className="col-lg-6 text-start ">
-                                        <b>Email</b>:{user.email} <br />
-                                        <b>Contact</b>:{user.contact}<br />
-                                        <b>Age</b>:{user.age}<br />
-                                        <b>Gender</b>:{user.gender}<br />
-                                        <b>Created</b> : {user.timeStamp}<br />
+
+                                        <b>Email</b>:{user?.email} <br />
+                                        <b>Contact</b>:{user?.contact}<br />
+                                        <b>Age</b>:{user?.age}<br />
+                                        <b>Gender</b>:{user?.gender}<br />
+                                        <b>Created</b> : {user?.timeStamp}<br />
                                         {
                                             value == "doc" && <div> <b>Is-Approved</b> : {!user.isApproved ? "Not Approved" : "Approved"} <br /></div>
                                         }
@@ -92,13 +117,13 @@ function View({ user, setSelected, value }) {
                                     <div className="col-lg-6 text-start">
                                         {
                                             value == "doc" ? <div>
-                                                <b>Consultation fee</b>:{user.fee}<br />
-                                                <b>Department</b>:{user.dept[0].name}<br />
-                                                <b>Qualification</b>:{user.qualification}<br />
+                                                <b>Consultation fee</b>:{user?.fee}<br />
+                                                <b>Department</b>:{user?.dept[0]?.name}<br />
+                                                <b>Qualification</b>:{user?.qualification}<br />
                                                 Documents
                                                 <div className='horizontal-scroll-container d-flex flex-wrap'>
                                                     <div className="horizontal-scroll-content flex-raw d-flex">
-                                                        {user ? user.documents.map((doc, index) => (
+                                                        {user ? user?.documents?.map((doc, index) => (
 
                                                             <div key={0 - index} className='d-flex flex-column'>
                                                                 <img key={index}
@@ -123,7 +148,7 @@ function View({ user, setSelected, value }) {
                                                 </div>
                                             </div>
                                                 : <div>
-                                                    <b>Address</b>: {user.address}<br />
+                                                    <b>Address</b>: {user?.address}<br />
                                                 </div>
                                         }
 
@@ -132,10 +157,14 @@ function View({ user, setSelected, value }) {
                                 </div>
                                 <div className='mt-2'>
                                     {
-                                        value == "doc" &&
-                                        <button className='btn  btn-success me-2' value={user._id} onClick={(e) => handleVerify(e, "approve")}>{approveButton}</button>
+                                        value == "doc" ?
+                                            <>
+                                                <button className='btn  btn-success me-2' value={user._id} onClick={(e) => handleDoctor(e, "approve")}>{approveButton}</button>
+                                                <button className='btn block btn-danger' value={user._id} onClick={(e) => handleDoctor(e, "block")}>{blockButton}</button>
+                                            </>
+                                            :
+                                            <button className='btn block btn-danger' value={user._id} onClick={handlePatient}>{blockButton}</button>
                                     }
-                                    <button className='btn block btn-danger' value={user._id} onClick={(e) => handleVerify(e, "block")}>{blockButton}</button>
                                 </div>
                             </div>
                         </div>

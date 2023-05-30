@@ -3,6 +3,18 @@ import Profile from '../profile'
 import './lists.css'
 import Appointments from '../appointments'
 import Prescriptions from '../prescriptions'
+import axios from 'axios'
+const userToken = localStorage.getItem('userToken')
+
+axios.interceptors.request.use((request)=>{
+    request.headers = {
+        Authorization: `Bearer ${userToken}`,
+        'Content-Type': 'multipart/form-data',
+    }
+    return request
+  })
+  
+
 function ProfilePageStructure() {
 
     const [profile, setProfile] = useState(true)
@@ -33,10 +45,10 @@ function ProfilePageStructure() {
         <div className="row">
             <div className="col-4 col-md-3">
                 <div className="row text-center">
-                    <div class="list-group p-4  mt-5" >
-                        <div class="list-group-item btn btn-outline-success lists list-group-item-action text-wrap text-break" onClick={profileHandle}>Profile</div>
-                        <div class="list-group-item btn btn-outline-success lists list-group-item-action text-wrap text-break" onClick={appointHandle}>Appointments</div>
-                        <div class="list-group-item btn btn-outline-success lists list-group-item-action text-wrap text-break" onClick={prescriptHandle}>Prescriptions</div>
+                    <div className="list-group p-4  mt-5" >
+                        <div className="list-group-item btn btn-outline-success lists list-group-item-action text-wrap text-break" onClick={profileHandle}>Profile</div>
+                        <div className="list-group-item btn btn-outline-success lists list-group-item-action text-wrap text-break" onClick={appointHandle}>Appointments</div>
+                        <div className="list-group-item btn btn-outline-success lists list-group-item-action text-wrap text-break" onClick={prescriptHandle}>Prescriptions</div>
                     </div>
                 </div>
             </div>

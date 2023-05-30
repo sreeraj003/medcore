@@ -29,14 +29,8 @@ function Profile() {
         formData.append('contact', contact)
         formData.append("gender", gender)
 
-        const userToken = localStorage.getItem('userToken')
         try {
-            axios.put(import.meta.env.VITE_BASE_URL + 'setProfile', formData, {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    'Content-Type': 'multipart/form-data',
-                }
-            })
+            axios.put(import.meta.env.VITE_BASE_URL + 'setProfile', formData)
                 .then(res => {
                     if (res.data === 'error') {
                         setMsg("Something went wrong")

@@ -21,7 +21,7 @@ function Signup({ value }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!Name || !Email || Age < 0 || !Mobile || !Password) {
+        if (!Name || !Email || !Mobile || !Age || !Password) {
             setErrorMsg('Please fill all the blanks...!')
             return
         } else {
@@ -46,7 +46,7 @@ function Signup({ value }) {
                 return;
             }
 
-            if (Age < 1 || Age > 120) {
+            if (Age <= 0 || Age > 120  ) {
                 setErrorMsg('Please enter valid age...!')
                 return
             }

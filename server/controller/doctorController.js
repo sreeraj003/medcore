@@ -6,14 +6,14 @@ const { dateTime } = require("../config/dateAndTime");
 const mailSender = require("../config/nodeMailer");
 const { createDoctorTokens } = require("../middlewares/jwt");
 const Departments = require("../model/departmentModel");
-const mongoose = require("mongoose");
+const Schedule = require("../model/scheduleModel");
 
 async function securePassword(password) {
   try {
     const hashPassword = await bcrypt.hash(password, 10);
     return hashPassword;
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 }
 
@@ -48,7 +48,7 @@ const signup = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -70,7 +70,7 @@ const verify = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -98,7 +98,7 @@ const login = async (req, res) => {
       res.json("unauthorized");
     }
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -107,7 +107,7 @@ const doctorData = async (req, res) => {
     const data = await Doctor.findOne({ _id: req._id.id });
     res.json(data);
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -206,7 +206,7 @@ const setProfile = async (req, res) => {
     );
     res.json(ProfileData);
   } catch (error) {
-    console.log(error);
+    res.json("error");
   }
 };
 
@@ -233,6 +233,65 @@ const deleteImage = async (req, res) => {
   }
 };
 
+const schedule = async (req, res) => {
+  try {
+    const data = await Schedule.find({ doctor: req._id.id });
+    res.json(data);
+  } catch (error) {
+    res.json("error");
+  }
+};
+
+const manageSchedule = async (req, res) => {
+  try {
+    const { date, time, action } = req.body;
+    const docId = req._id.id;
+    const DocData = await Schedule.find({ doctor: docId });
+
+    if (action == "add") {
+      const exist = DocData.filter((el) => el.date == date);
+
+      if (exist != "") {
+        const ind = exist[0].time.indexOf(time);
+        if (ind == -1) {
+          let timeData = [...exist[0].time, ...time];
+          const datas = await Schedule.findOneAndUpdate(
+            { doctor: docId, date: date },
+            { $set: { time: timeData } }
+          );
+        }
+      } else {
+        const schedule = new Schedule({
+          doctor: docId,
+          date: date,
+          time: time,
+        });
+        await schedule.save();
+      }
+    } else {
+      const exist = DocData.filter((el) => el.date == date);
+      if (exist != "") {
+        if(exist[0].time.length==1){
+          const updated = await Schedule.deleteOne({doctor:docId,date:date}
+          );
+        }else{
+          const updated = await Schedule.findOneAndUpdate(
+          { doctor: docId, date: date },
+          { $pull: { time: time } }
+          );
+        }
+      }
+
+      const data = await Schedule.find({ doctor: docId });
+    }
+
+    const scheduleData = await Schedule.find({ doctor: docId });
+    res.json(scheduleData);
+  } catch (error) {
+    res.json("error");
+  }
+};
+
 module.exports = {
   signup,
   verify,
@@ -241,4 +300,6 @@ module.exports = {
   setProfile,
   departments,
   deleteImage,
+  schedule,
+  manageSchedule,
 };

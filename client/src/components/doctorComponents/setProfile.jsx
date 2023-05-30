@@ -82,7 +82,7 @@ function SetProfile() {
                 import.meta.env.VITE_BASE_URL + 'doctor/setprofile',
                 formData,
                 {
-                    headers: {
+                    headers: { 
                         Authorization: `Bearer ${doctorToken}`,
                         'Content-Type': 'multipart/form-data',
                     },

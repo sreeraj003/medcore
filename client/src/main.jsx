@@ -7,8 +7,6 @@ import Footer from "./components/Footer.jsx"
 
 import store from './redux/store.js'
 import Context from './context/authContext.jsx'
-// import { PersistGate } from "redux-persist/integration/react";
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
