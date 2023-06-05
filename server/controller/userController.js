@@ -7,6 +7,8 @@ const mailSender = require("../config/nodeMailer");
 const { createTokens } = require("../middlewares/jwt");
 const Doctor = require("../model/doctorModel");
 const Department = require("../model/departmentModel");
+const Schedule = require("../model/scheduleModel");
+const Appointment = require("../model/appointmentModel");
 
 async function securePassword(password) {
   try {
@@ -185,6 +187,89 @@ const setProfile = async (req, res) => {
   }
 };
 
+const docSchedule = async (req, res) => {
+  try {
+    const docId = req.params.docId;
+    const data = await Schedule.find({ doctor: docId }, { _id: 0, doctor: 0 });
+    const appoint = await Appointment.find(
+      { doctor: docId },
+      { date: 1, time: 1 }
+    );
+
+    const availableSlots = data.reduce((result, dataItem) => {
+      const { date, time } = dataItem;
+    
+      const existingSlot = result.find((slot) => slot.date === date);
+      const appointTimes = appoint
+        .filter((appointItem) => appointItem.date === date)
+        .map((appointItem) => appointItem.time);
+    
+      if (!existingSlot) {
+        result.push({ date, time: time.filter((slot) => !appointTimes.includes(slot)) });
+      } else {
+        existingSlot.time = existingSlot.time.filter((slot) => !appointTimes.includes(slot));
+      }
+    
+      return result;
+    }, []);
+    
+    console.log(availableSlots);
+    
+
+    // console.log(data + "---" + appoint);
+    res.json(availableSlots);
+  } catch (error) {
+    res.json("error");
+  }
+};
+
+const bookSlot = async (req, res) => {
+  try {
+    const { doctor, issues, fee, user, date, time } = req.body;
+    const appointment = new Appointment({
+      doctor: doctor,
+      user: user,
+      date: date,
+      time: time,
+      issues: issues,
+      amount: fee,
+      createdAt: dateTime,
+    });
+    appointment.save();
+
+    res.json("success");
+  } catch (error) {
+    res.json("error");
+  }
+};
+
+const loadAppointments = async (req, res) => {
+  try {
+    const id = req._id.id;
+    const appointments = await Appointment.aggregate([
+      { $match: { user: id } },
+      {
+        $lookup: {
+          from: 'doctors',
+          let: { searchId: { $toObjectId: '$doctor' } },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$_id', '$$searchId'] } } }
+          ],
+          as: 'docData'
+        }
+      },{
+        $sort:{date:-1,time:1}
+      }
+    ]);
+    res.json(appointments);
+  } catch (error) {
+    res.json('error');
+  }
+};
+
+
+
+
 module.exports = {
   signup,
   verify,
@@ -193,4 +278,7 @@ module.exports = {
   findDoctors,
   departments,
   setProfile,
+  docSchedule,
+  bookSlot,
+  loadAppointments
 };

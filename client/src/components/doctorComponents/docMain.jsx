@@ -1,8 +1,9 @@
 import React from 'react'
 import DoctorSideBar from "./DoctorSideBar"
 import Schedule from './schedule'
+import DocAppointments from './docAppointments'
 
-function DocMain({value}) {
+function DocMain({ value }) {
 
     return (
         <>
@@ -12,8 +13,14 @@ function DocMain({value}) {
                         <div className="col-md-3 text-center bg-white side col-lg-3">
                             <DoctorSideBar />
                         </div>
-                        <div className="col-md-9 p-5">
-                            {value=='schedule'?<Schedule/>:''}
+                        <div className="col-md-9 p-5" >
+                            {value == 'schedule' ?
+                                <Schedule />
+                                : value == "appointments" ?
+                                    <DocAppointments />
+                                    :''
+                        }
+
                         </div>
                     </div>
                 </div>

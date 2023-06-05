@@ -83,7 +83,7 @@ function Schedule() {
   }
   return (
     <>
-      <div className='container pb-2 bg-white'>
+      <div className='container pb-2 ms-auto bg-white'>
         <h2>My Schedule</h2>
         <div className='bg-white text-center '>
           {msg == 'Please fill date and time' || msg == 'error' ? 

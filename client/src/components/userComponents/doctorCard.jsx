@@ -1,6 +1,20 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setDoc } from '../../redux/selectedDoc';
+import { useNavigate } from 'react-router-dom';
 
 function DoctorCard({ docData }) {
+
+  const dispatch = useDispatch()
+  const history = useNavigate()
+
+  const handleCheck = (e) => {
+    console.log(e);
+    const data = e
+    dispatch(setDoc(data))
+    history('/appointments')
+  }
+
   return (
     <>
       <div className="d-flex p-3 flex-wrap gap-3">
@@ -20,11 +34,11 @@ function DoctorCard({ docData }) {
                     stars
                   </div>
                   <div>
-                    Rs.250
+                    Rs.{el.fee}
                   </div>
                 </div>
               </div>
-              <button className='btn mt-0 btn-outline-success'>Check</button>
+              <button className='btn mt-0 btn-outline-success' onClick={() => handleCheck(el)}>Check</button>
             </div>
           ))
         ) : (

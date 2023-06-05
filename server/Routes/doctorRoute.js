@@ -14,5 +14,6 @@ doctorRoute.get("/departments",validateDoctorToken,doctorController.departments)
 doctorRoute.delete("/deleteImage/:deleteData",validateDoctorToken,doctorController.deleteImage)
 doctorRoute.get('/schedule',validateDoctorToken,doctorController.schedule)
 doctorRoute.post('/setSchedule',validateDoctorToken,doctorController.manageSchedule)
+doctorRoute.get('/appointments',validateDoctorToken,doctorController.appointments)
 
 module.exports = doctorRoute;
