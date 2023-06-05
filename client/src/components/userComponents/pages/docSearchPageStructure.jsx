@@ -50,20 +50,21 @@ function PageStructure() {
                     <div className="outline-success mt-5">
                         <h3>Departments</h3>
                         <div className="text-start m-auto " style={{ maxWidth: '300px' }}>
-                            <ul class="list-group ms-auto ">
+                            <ul className="list-group ms-auto ">
                                 {department ? (
                                     department.map((dep) => (
-                                        <li class="list-group-item ps-1  pt-2 pb-2 p-0    ">
+                                        <li className="list-group-item ps-1  pt-2 pb-2 p-0" key={dep._id}>
                                             <input
-                                                class="form-check-input me-1"
+                                                className="form-check-input me-1"
                                                 type="radio"
                                                 name="listGroupRadio"
+                                                key={dep.name}
                                                 value={dep.name}
                                                 onClick={(e) => handleCategory(e)}
                                                 // onChange={(e) => handleCategory(e)}
                                                 id={dep.name}
                                             />
-                                            <label class="form-check-label" for={dep.name} >
+                                            <label className="form-check-label" htmlFor={dep.name} >
                                                 {dep.name}
                                             </label>
                                         </li>

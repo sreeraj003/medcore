@@ -2,7 +2,6 @@ import DataTables from "../dataTables"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import View from "./view"
-// import './tooltip.css'
 function Doctors() {
   const [selectedDoc, setSelectedDoc] = useState('')
   const [doctorsList, setDoctorsList] = useState('')
@@ -28,10 +27,10 @@ function Doctors() {
       name: 'ID',
       selector: (row) => row._id
     },
-      {
-        name: 'Name',
-        selector: (row) => <div className="tip " data-bs-toggle="tooltip" title={row.name}> {row.name}</div>
-      },
+    {
+      name: 'Name',
+      selector: (row) => <div className="tip " data-bs-toggle="tooltip" title={row.name}> {row.name}</div>
+    },
     {
       name: 'Fee',
       selector: (row) => row.fee && row.fee

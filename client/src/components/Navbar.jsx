@@ -40,7 +40,7 @@ function Navbar({ value }) {
             <div className="container-fluid">
                 <div className="d-flex justify-content-between align-items-center">
                     <div className="navbar-brand">
-                        <img className="medcore" src="/medcore.png" alt="" />
+                        <img className="medcore" onClick={() => history('/')} src="/medcore.png" alt="" />
                     </div>
                 </div>
                 {

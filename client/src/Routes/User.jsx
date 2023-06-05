@@ -8,8 +8,11 @@ import Navbar from '../components/navbar'
 import Home from '../components/userComponents/userHome'
 import Loader from '../components/loader'
 
+const Payment = lazy(() => import('../components/userComponents/payment'))
+const Appointment = lazy(() => import("../components/userComponents/appointment"))
 const PageStructure = lazy(() => import('../components/userComponents/pages/docSearchPageStructure'))
 const ProfilePageStructure = lazy(() => import('../components/userComponents/pages/userProfilePageStructure'))
+const Success = lazy(() => import('../components/userComponents/success'))
 
 
 function User() {
@@ -25,6 +28,9 @@ function User() {
             <Route path='/' element={<Home />} />
             <Route path='/findDoctor' element={<PageStructure />} />
             <Route path='/profile' element={<ProfilePageStructure />} />
+            <Route path='/appointments' element={<Appointment />} />
+            <Route path='/payment' element={<Payment />} />
+            <Route path='/success' element={<Success/>} />
           </Route>
         </Routes>
       </Suspense>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Profile from '../profile'
 import './lists.css'
-import Appointments from '../appointments'
 import Prescriptions from '../prescriptions'
+import UserAppointments from '../userAppointments'
 import axios from 'axios'
 const userToken = localStorage.getItem('userToken')
 
@@ -54,7 +54,7 @@ function ProfilePageStructure() {
             </div>
             <div className="col-8 col-md-9 bg-light">
                 {profile && <Profile />}
-                {appointments && <Appointments />}
+                {appointments && <UserAppointments />}
                 {prescriptions && <Prescriptions />}
             </div>
         </div>

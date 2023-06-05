@@ -7,6 +7,7 @@ const mailSender = require("../config/nodeMailer");
 const { createDoctorTokens } = require("../middlewares/jwt");
 const Departments = require("../model/departmentModel");
 const Schedule = require("../model/scheduleModel");
+const Appointment = require("../model/appointmentModel");
 
 async function securePassword(password) {
   try {
@@ -235,7 +236,7 @@ const deleteImage = async (req, res) => {
 
 const schedule = async (req, res) => {
   try {
-    const data = await Schedule.find({ doctor: req._id.id });
+    const data = await Schedule.find({ doctor: req._id.id }).sort({ date: -1 });
     res.json(data);
   } catch (error) {
     res.json("error");
@@ -271,13 +272,15 @@ const manageSchedule = async (req, res) => {
     } else {
       const exist = DocData.filter((el) => el.date == date);
       if (exist != "") {
-        if(exist[0].time.length==1){
-          const updated = await Schedule.deleteOne({doctor:docId,date:date}
-          );
-        }else{
+        if (exist[0].time.length == 1) {
+          const updated = await Schedule.deleteOne({
+            doctor: docId,
+            date: date,
+          });
+        } else {
           const updated = await Schedule.findOneAndUpdate(
-          { doctor: docId, date: date },
-          { $pull: { time: time } }
+            { doctor: docId, date: date },
+            { $pull: { time: time } }
           );
         }
       }
@@ -292,6 +295,29 @@ const manageSchedule = async (req, res) => {
   }
 };
 
+const appointments = async (req, res) => {
+  try {
+    const appointment = await Appointment.aggregate([
+      {
+        $match: { doctor: req._id.id },
+      },
+      {
+        $lookup: {
+          from: "users",
+          let: { searchId: { $toObjectId: "$user" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "userData",
+        },
+      },{
+        $sort:{date:-1,time:1}
+      }
+    ]);
+    res.json(appointment);
+  } catch (error) {
+    res.json(error);
+  }
+};
+
 module.exports = {
   signup,
   verify,
@@ -302,4 +328,5 @@ module.exports = {
   deleteImage,
   schedule,
   manageSchedule,
+  appointments
 };

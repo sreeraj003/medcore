@@ -6,7 +6,6 @@ import Otp from '../components/otp'
 import Login from '../components/Login'
 import SetProfile from '../components/doctorComponents/setProfile'
 import DocMain from '../components/doctorComponents/docMain'
-import Schedule from '../components/doctorComponents/schedule'
 
 function Doctor() {
   return (
@@ -20,6 +19,7 @@ function Doctor() {
           <Route path='/' element={<DocMain value={'home'}/>} />
           <Route path='/setprofile' element={<SetProfile />} />
           <Route path='/schedule' element={<DocMain value={'schedule'} />} />
+          <Route path='/appointments' element={<DocMain value={'appointments'} />} />
         </Route>
       </Routes>
     </>
