@@ -5,7 +5,9 @@ import { useEffect, useState } from "react"
 import View from "./view"
 function Patients() {
   const [selectedPatient, setSelectedPatient] = useState('')
-  const [patientsList, setPatientsList] = useState('')
+  const [patientsList, setPatientsList] = useState([])
+  const [search,setSearch] = useState('')
+  const [filteredData,setFilteredData] = useState([])
 
   const adminToken = localStorage.getItem('adminToken')
 
@@ -14,7 +16,10 @@ function Patients() {
       headers: {
         Authorization: `Bearer ${adminToken}`,
       }
-    }).then(res => setPatientsList(res.data))
+    }).then(res => {
+      setPatientsList(res.data)
+      setFilteredData(res.data)
+    })
   }
 
   const viewPatient = (row) => {
@@ -22,6 +27,15 @@ function Patients() {
     setSelectedPatient(doc[0])
   }
 
+  const handleSearch = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    setSearch(searchValue);
+    const filtered = patientsList.filter((patient) =>
+      patient.userName.toLowerCase().startsWith(searchValue)
+    );
+    console.log(filtered);
+    setFilteredData(filtered);
+  };
 
   const columns = [
     {
@@ -55,7 +69,19 @@ function Patients() {
     <>
       {
         selectedPatient ? <View user={selectedPatient} setSelected={setSelectedPatient} value="patient" /> :
-          <DataTables columns={columns} title='Patients' data={patientsList} />
+          (
+            <>
+              <h3>Patients</h3>
+              <input
+                type="text"
+                value={search}
+                onChange={handleSearch}
+                placeholder="Search..."
+                className="form-control w-25 mb-2"
+              />
+              <DataTables columns={columns} title='Patients' data={filteredData} />
+            </>
+          )
       }
 
     </>

@@ -22,11 +22,13 @@ function Payment() {
            
             const payment = await displayRazorpay(amount);
             if (payment) {
+
                 await axios.post(import.meta.env.VITE_BASE_URL + `bookslot`, appData,  {
                     headers: {
                       Authorization: `Bearer ${userToken}`
                     }
                   }).then(res=>{
+
                     
                     if(res.data=='success'){
                         history('/success')
