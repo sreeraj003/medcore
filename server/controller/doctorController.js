@@ -236,7 +236,7 @@ const deleteImage = async (req, res) => {
 
 const schedule = async (req, res) => {
   try {
-    const data = await Schedule.find({ doctor: req._id.id }).sort({ date: -1 });
+    const data = await Schedule.find({ doctor: req._id.id }).sort({ date: 1 });
     res.json(data);
   } catch (error) {
     res.json("error");

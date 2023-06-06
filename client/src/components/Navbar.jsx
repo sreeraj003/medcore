@@ -84,13 +84,12 @@ function Navbar({ value }) {
                                 </ul>
                                 : value == 'doctor' && doctor ?
                                     <ul className="dropdown-menu right-0" style={{ marginLeft: '-90px', width: '100px', textAlign: 'center' }}>
-                                        <li><Link className='link' to={'/profile'} >Profile</Link></li>
-                                        <li><Link className='link' to={'/appointments'} >Appointments</Link></li>
+                                        <li><Link className='link' to={'/doctor/setprofile'} >Profile</Link></li>
                                         <li><Link className='link' onClick={handleLogout}>Logout</Link></li>
                                     </ul>
                                     : value == 'admin' && admin ?
                                         <ul className="dropdown-menu right-0" style={{ marginLeft: '-90px', width: '100px', textAlign: 'center' }}>
-                                            <li><Link className='link' to={'/appointments'} >Appointments</Link></li>
+                                            <li><Link className='link' to={'/admin/appointments'} >Appointments</Link></li>
                                             <li><Link className='link' onClick={handleLogout}>Logout</Link></li>
                                         </ul>
                                         :

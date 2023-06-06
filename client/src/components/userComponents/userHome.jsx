@@ -1,7 +1,8 @@
 import axios from 'axios';
 import './userHome.css';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
+import { BsArrowRightCircle } from 'react-icons/bs';
 
 function Home() {
 
@@ -28,18 +29,31 @@ function Home() {
           <button className='border-2 btn-success btn find left-20 px-2 py-1' onClick={() => history('/findDoctor')}>Find doctor</button>
         </div>
       </div>
+      <div className="container card mt-5 mb-5 p-4">
+        <h3>Departments Available</h3>
+        <p>You can select the department you need to checkout.</p>
+        <Link to={'/findDoctor'}>Check all...</Link>
+        <div className="row">
+          {departments && departments.map(dep => (
+            <div className="col-md-3 text-center  col-sm-4 col-6 h-25">
+              <div className='card mt-3 dep mb-3'>
+                <img className=' depImage ' src={import.meta.env.VITE_BASE_URL + `images/${dep.image}`} alt="" />
+                <h4 className='mt-0 '>{dep.name}</h4>
+              </div>
+            </div>
+          ))
+          }
+        </div>
+      </div>
       <div className="container">
         <div className="row">
-          <div id="carouselExample" className="carousel slide" data-bs-ride="carousel">
-
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Next</span>
-            </button>
+          <div className="col-12 card p-4">
+            <h6>We provide you the best services</h6>
+            <p>We consider your entire wellness and we are intended to provide you the best doctors and services.</p>
+            <div className="card docCardImg">
+            <p className='m-5 par' ><b>Qualified and experienced doctors are available for each department. Book a slot for online consult.</b></p>
+            <BsArrowRightCircle className='arr'/>
+            </div>
           </div>
         </div>
       </div>

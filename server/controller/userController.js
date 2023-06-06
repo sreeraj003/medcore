@@ -195,7 +195,6 @@ const docSchedule = async (req, res) => {
       { doctor: docId },
       { date: 1, time: 1 }
     );
-
     const availableSlots = data.reduce((result, dataItem) => {
       const { date, time } = dataItem;
     
@@ -212,12 +211,14 @@ const docSchedule = async (req, res) => {
     
       return result;
     }, []);
-    
-    console.log(availableSlots);
-    
 
-    // console.log(data + "---" + appoint);
-    res.json(availableSlots);
+    const slot = availableSlots.filter(async(el)=>{
+      if(new Date(el.date)<new Date()){
+        await Schedule.deleteOne({date:el.date})
+      }
+      return new Date(el.date)>=new Date()
+    })        
+    res.json(slot);
   } catch (error) {
     res.json("error");
   }
@@ -226,6 +227,7 @@ const docSchedule = async (req, res) => {
 const bookSlot = async (req, res) => {
   try {
     const { doctor, issues, fee, user, date, time } = req.body;
+    console.log(req.body);
     const appointment = new Appointment({
       doctor: doctor,
       user: user,
@@ -234,7 +236,7 @@ const bookSlot = async (req, res) => {
       issues: issues,
       amount: fee,
       createdAt: dateTime,
-    });
+      });
     appointment.save();
 
     res.json("success");
