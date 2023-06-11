@@ -1,3 +1,4 @@
+import { lazy } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import RequireDoctor from '../context/auth/requireDoctor'
 import Signup from "../components/Signup"
@@ -6,6 +7,9 @@ import Otp from '../components/otp'
 import Login from '../components/Login'
 import SetProfile from '../components/doctorComponents/setProfile'
 import DocMain from '../components/doctorComponents/docMain'
+  
+const Success = lazy(()=>import("../components/doctorComponents/success"))
+const VideoCall = lazy(()=>import('../components/videoCall'))
 
 function Doctor() {
   return (
@@ -20,6 +24,10 @@ function Doctor() {
           <Route path='/setprofile' element={<SetProfile />} />
           <Route path='/schedule' element={<DocMain value={'schedule'} />} />
           <Route path='/appointments' element={<DocMain value={'appointments'} />} />
+          <Route path='/consult' element={<DocMain value={'consult'}/>} />
+          <Route path='/payments' element={<DocMain value={'payments'}/>} />
+          <Route path='/success' element={<Success/>} />
+          <Route path='/call/:room' element={<VideoCall value="doctor"/>} />
         </Route>
       </Routes>
     </>

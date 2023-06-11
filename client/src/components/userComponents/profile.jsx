@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserData } from '../../redux/userData'
 
@@ -82,7 +82,7 @@ function Profile() {
                     />
                     {msg == "Profile updated successfully" ?
                         <div className="alert mt-3 alert-success" role="alert">
-                            "Profile updated successfully"
+                            Profile updated successfully
                         </div>
                         : msg ?
                             <div className="alert mt-3 alert-danger" role="alert">

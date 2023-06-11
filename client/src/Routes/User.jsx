@@ -7,6 +7,8 @@ import Otp from '../components/otp'
 import Navbar from '../components/navbar'
 import Home from '../components/userComponents/userHome'
 import Loader from '../components/loader'
+import VideoCall from '../components/videoCall'
+import FeedBack from '../components/userComponents/feedBack'
 
 const Payment = lazy(() => import('../components/userComponents/payment'))
 const Appointment = lazy(() => import("../components/userComponents/appointment"))
@@ -31,6 +33,8 @@ function User() {
             <Route path='/appointments' element={<Appointment />} />
             <Route path='/payment' element={<Payment />} />
             <Route path='/success' element={<Success/>} />
+            <Route path='/feedBack' element={<FeedBack />} />
+            <Route path='/call/:room' element={<VideoCall value='user'/>} />
           </Route>
         </Routes>
       </Suspense>

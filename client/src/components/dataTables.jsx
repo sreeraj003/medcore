@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import DataTable from "react-data-table-component"
 import PropTypes from 'prop-types'
 import './dt.css'

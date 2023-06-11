@@ -2,7 +2,7 @@
 import { FaStethoscope } from 'react-icons/fa';
 import { BiNotepad } from 'react-icons/bi';
 import './doctor.css'
-import { IoIosPeople } from 'react-icons/io';
+import { IoLogoBitcoin } from 'react-icons/io';
 import { MdPerson, MdOutlineSick, MdCalendarMonth } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ function DoctorSideBar() {
     }
 
     const handleAdmins = () => {
-        history('/doctor/admins')
+        history('/doctor/payments')
     }
 
     return (
@@ -49,7 +49,7 @@ function DoctorSideBar() {
                             <div className='text-xl py-4 flex' onClick={handlePatient}><MdOutlineSick size={25} className='mr-4' /> Patients</div>
                             <div className='text-xl py-4 flex' onClick={handleDepartment}><BiNotepad size={25} className='mr-4' /> Prescriptions</div>
                             <div className='text-xl py-4 flex' onClick={handlePayments}><MdCalendarMonth size={25} className='mr-4' /> My Schedule</div>
-                            <div className='text-xl py-4 flex' onClick={handleAdmins}><IoIosPeople size={25} className='mr-4' /> Admins</div>
+                            <div className='text-xl py-4 flex' onClick={handleAdmins}><IoLogoBitcoin size={25} className='mr-4' /> Payments</div>
                         </div>
                     </nav>
                 </div>

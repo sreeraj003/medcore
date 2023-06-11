@@ -45,7 +45,7 @@ function Navbar({ value }) {
                 </div>
                 {
                     value === 'doctor' ? <>
-                        <button className='btn btn-outline-success text-dark doc_nav'  ><FaCalendar style={{ marginTop: '-7px' }} />Make appointments</button>
+                        {/* <button className='btn btn-outline-success text-dark doc_nav'  ><FaCalendar style={{ marginTop: '-7px' }} />Make appointments</button> */}
                         <button className='btn btn-outline-success text-dark doc_nav' ><BiNotepad style={{ marginTop: '-7px' }} />Write prescription</button>
                     </>
                         : ''
@@ -54,7 +54,7 @@ function Navbar({ value }) {
                 <div className='d-flex navMine'>
                     {
                         value === "doctor" ?
-                            <button className="btn  doc btn-outline-success ">Consult</button>
+                            <button className="btn  doc btn-outline-success" onClick={()=>history('/doctor/consult')}>Consult</button>
                             : value === 'admin' ?
                                 <div></div>
                                 :

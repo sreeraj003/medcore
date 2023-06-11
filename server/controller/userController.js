@@ -197,27 +197,32 @@ const docSchedule = async (req, res) => {
     );
     const availableSlots = data.reduce((result, dataItem) => {
       const { date, time } = dataItem;
-    
+
       const existingSlot = result.find((slot) => slot.date === date);
       const appointTimes = appoint
         .filter((appointItem) => appointItem.date === date)
         .map((appointItem) => appointItem.time);
-    
+
       if (!existingSlot) {
-        result.push({ date, time: time.filter((slot) => !appointTimes.includes(slot)) });
+        result.push({
+          date,
+          time: time.filter((slot) => !appointTimes.includes(slot)),
+        });
       } else {
-        existingSlot.time = existingSlot.time.filter((slot) => !appointTimes.includes(slot));
+        existingSlot.time = existingSlot.time.filter(
+          (slot) => !appointTimes.includes(slot)
+        );
       }
-    
+
       return result;
     }, []);
 
-    const slot = availableSlots.filter(async(el)=>{
-      if(new Date(el.date)<new Date()){
-        await Schedule.deleteOne({date:el.date})
+    const slot = availableSlots.filter(async (el) => {
+      if (new Date(el.date) < new Date()) {
+        await Schedule.deleteOne({ date: el.date });
       }
-      return new Date(el.date)>=new Date()
-    })        
+      return new Date(el.date) >= new Date();
+    });
     res.json(slot);
   } catch (error) {
     res.json("error");
@@ -227,7 +232,6 @@ const docSchedule = async (req, res) => {
 const bookSlot = async (req, res) => {
   try {
     const { doctor, issues, fee, user, date, time } = req.body;
-    console.log(req.body);
     const appointment = new Appointment({
       doctor: doctor,
       user: user,
@@ -236,7 +240,7 @@ const bookSlot = async (req, res) => {
       issues: issues,
       amount: fee,
       createdAt: dateTime,
-      });
+    });
     appointment.save();
 
     res.json("success");
@@ -252,25 +256,85 @@ const loadAppointments = async (req, res) => {
       { $match: { user: id } },
       {
         $lookup: {
-          from: 'doctors',
-          let: { searchId: { $toObjectId: '$doctor' } },
-          pipeline: [
-            { $match: { $expr: { $eq: ['$_id', '$$searchId'] } } }
-          ],
-          as: 'docData'
-        }
-      },{
-        $sort:{date:-1,time:1}
-      }
+          from: "doctors",
+          let: { searchId: { $toObjectId: "$doctor" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "docData",
+        },
+      },
+      {
+        $sort: { date: -1, time: 1 },
+      },
     ]);
     res.json(appointments);
   } catch (error) {
-    res.json('error');
+    res.json("error");
   }
 };
 
+const cancelAppoint = async (req, res) => {
+  try {
+    const { id } = req.params; // Access the id from req.body
+    await Appointment.findByIdAndUpdate(
+      { _id: id },
+      { $set: { isCancelled: true } }
+    );
+    res.json("cancelled");
+  } catch (error) {
+    console.log(error);
+    // Handle the error and send an appropriate response
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
 
-
+const searchDoc = async (req, res) => {
+  try {
+    const searchKey = req.params.searchKey;
+    let data =[]
+    if (searchKey == "all") {
+      data = await Doctor.aggregate([
+        {
+          $match: {
+            isApproved: true,
+            isBlocked: false,
+            isVerified: true,
+          },
+        },
+        {
+          $lookup: {
+            from: "departments",
+            localField: "department",
+            foreignField: "_id",
+            as: "doctorData",
+          },
+        },
+      ]);
+    } else {
+      data = await Doctor.aggregate([
+        {
+          $match: {
+            isApproved: true,
+            isBlocked: false,
+            isVerified: true,
+            name: { $regex: new RegExp(`^${searchKey}`, "i") },
+          },
+        },
+        {
+          $lookup: {
+            from: "departments",
+            localField: "department",
+            foreignField: "_id",
+            as: "doctorData",
+          },
+        },
+      ]);
+    }
+    // const data = await Doctor.find({ name: { $regex: new RegExp(`^${searchKey}`, 'i') } });
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   signup,
@@ -282,5 +346,7 @@ module.exports = {
   setProfile,
   docSchedule,
   bookSlot,
-  loadAppointments
+  loadAppointments,
+  cancelAppoint,
+  searchDoc,
 };

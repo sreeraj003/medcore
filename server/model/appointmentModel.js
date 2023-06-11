@@ -30,6 +30,10 @@ const appointmentSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isCancelled:{
+    type:Boolean,
+    default:false
+  }
 });
 
 module.exports = mongoose.model("appointment", appointmentSchema);

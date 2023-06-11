@@ -43,7 +43,7 @@ function ProfilePageStructure() {
     return (
 
         <div className="row">
-            <div className="col-4 col-md-3">
+            <div className="col-12 col-md-3">
                 <div className="row text-center">
                     <div className="list-group p-4  mt-5" >
                         <div className="list-group-item btn btn-outline-success lists list-group-item-action text-wrap text-break" onClick={profileHandle}>Profile</div>
@@ -52,7 +52,7 @@ function ProfilePageStructure() {
                     </div>
                 </div>
             </div>
-            <div className="col-8 col-md-9 bg-light">
+            <div className="col-12 col-md-9 bg-light">
                 {profile && <Profile />}
                 {appointments && <UserAppointments />}
                 {prescriptions && <Prescriptions />}

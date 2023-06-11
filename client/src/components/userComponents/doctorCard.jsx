@@ -1,7 +1,12 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setDoc } from '../../redux/selectedDoc';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types'
+
+
+DoctorCard.propTypes = {
+  docData: PropTypes.array
+}
 
 function DoctorCard({ docData }) {
 

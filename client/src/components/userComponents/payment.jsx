@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import {useEffect } from 'react'
 import './appointment.css'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -22,7 +22,7 @@ function Payment() {
            
             const payment = await displayRazorpay(amount);
             if (payment) {
-
+                console.log(appData);
                 await axios.post(import.meta.env.VITE_BASE_URL + `bookslot`, appData,  {
                     headers: {
                       Authorization: `Bearer ${userToken}`

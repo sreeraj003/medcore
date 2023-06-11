@@ -318,6 +318,65 @@ const appointments = async (req, res) => {
   }
 };
 
+const consult = async(req,res)=>{
+  try {
+    const appointment = await Appointment.aggregate([
+      {
+        $match: { doctor: req._id.id},
+      },
+      {
+        $lookup: {
+          from: "users",
+          let: { searchId: { $toObjectId: "$user" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "userData",
+        },
+      },
+      {
+        $sort:{date:-1,time:1}
+      }
+    ]);
+    const data = appointment.filter(app=>new Date(app.date)!=new Date())
+    res.json(data)
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const payments = async(req,res)=>{
+  try {
+    const pay = await Appointment.aggregate([
+      {
+        $match: { doctor: req._id.id },
+      },
+      {
+        $lookup: {
+          from: "users",
+          let: { searchId: { $toObjectId: "$user" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "userData",
+        },
+      },{
+        $sort:{date:-1,time:1}
+      }
+    ]);
+    res.json(pay)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const endAppointment = async(req,res)=>{
+  try {
+    const appId = req.params.appId
+    const deleteAppoint = await Appointment.findOneAndUpdate({_id:appId},{isAttended:true})
+    res.json('success')
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   signup,
   verify,
@@ -328,5 +387,8 @@ module.exports = {
   deleteImage,
   schedule,
   manageSchedule,
-  appointments
+  appointments,
+  consult,
+  payments,
+  endAppointment
 };
