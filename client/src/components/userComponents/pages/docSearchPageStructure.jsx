@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import DoctorCard from '../DoctorCard';
+import DoctorCard from '../doctorCard';
+import { BsSearch } from 'react-icons/bs'
 
 function PageStructure() {
     const [docData, setDocData] = useState([]);
@@ -9,6 +10,7 @@ function PageStructure() {
     const [isSearch, setIsSearch] = useState(false);
     const [department, setDepartments] = useState([]);
 
+    const userToken = localStorage.getItem('userToken')
 
     useEffect(() => {
         const fetchDoctors = async () => {
@@ -24,17 +26,30 @@ function PageStructure() {
         fetchDoctors();
     }, []);
 
-    const handleSearcch = (e) => {
+    const handleSearch = useCallback(async (e) => {
         e.preventDefault();
-        setSearch(e.target.value)
-        const filtered = docData.filter((doc) =>
-            doc.name.toLowerCase().startsWith(e.target.value.toLowerCase())
-        );
-        setFilteredData(filtered);
-        setIsSearch(true);
-    };
-    const handleCategory = (e) => {
+        if (!search) {
+            await axios.get(import.meta.env.VITE_BASE_URL + `searchDoc/all`, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`
+                }
+            }).then(res => {
+                setFilteredData(res.data)
+            })
+        } else {
 
+            await axios.get(import.meta.env.VITE_BASE_URL + `searchDoc/${search}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`
+                }
+            }).then(res => {
+                setFilteredData(res.data)
+            })
+        }
+        setIsSearch(true);
+    }, [search, userToken])
+
+    const handleCategory = (e) => {
         const filtered = docData.filter(
             (doc) => doc.doctorData[0].name === e.target.value);
         setFilteredData(filtered);
@@ -83,10 +98,10 @@ function PageStructure() {
                             className="my-auto  bg-light form-control"
                             style={{ maxWidth: '60%' }}
                             value={search}
-                            onChange={(e) => handleSearcch(e)}
+                            onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search doctors..."
                         />
-
+                        <button className='btn pt-0 ms-2 btn-success' onClick={handleSearch}><BsSearch /></button>
                     </div>
                     {isSearch ? (
                         <DoctorCard docData={filteredData} />

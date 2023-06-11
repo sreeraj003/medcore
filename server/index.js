@@ -2,16 +2,18 @@ require("./config/mongo").connect();
 const express = require("express");
 const app = express();
 const cors = require("./middlewares/cors");
-const path = require("path");
 const bodyParser = require("body-parser");
 const userRoute = require("./Routes/userRoute");
 const adminRoute = require("./Routes/adminRoute");
 const doctorRoute = require("./Routes/doctorRoute");
+const  {Server} = require('socket.io')
+const socketManager = require('./config/socket')
+
 
 app.use(cors);
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use("/images", express.static("images"));
 
@@ -19,6 +21,8 @@ app.use("/", userRoute);
 app.use("/admin", adminRoute);
 app.use("/doctor", doctorRoute);
 
-app.listen(8080, () => {
+const server = app.listen(8080, () => {
   console.log("connected");
 });
+const io = new Server(server,{cors:true})
+socketManager(io)

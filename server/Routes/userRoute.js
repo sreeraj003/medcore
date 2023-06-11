@@ -15,5 +15,7 @@ userRoute.put("/setProfile",upload.single("images"),validateToken,userController
 userRoute.get("/docSchedule/:docId", validateToken, userController.docSchedule);
 userRoute.post("/bookSlot", validateToken, userController.bookSlot);
 userRoute.get("/appointments",validateToken,userController.loadAppointments)
+userRoute.post("/cancelAppoint/:id",validateToken,userController.cancelAppoint)
+userRoute.get("/searchDoc/:searchKey",validateToken,userController.searchDoc)
 
 module.exports = userRoute;

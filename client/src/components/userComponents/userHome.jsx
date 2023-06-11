@@ -35,7 +35,7 @@ function Home() {
         <Link to={'/findDoctor'}>Check all...</Link>
         <div className="row">
           {departments && departments.map(dep => (
-            <div className="col-md-3 text-center  col-sm-4 col-6 h-25">
+            <div className="col-md-3 text-center  col-sm-4 col-6 h-25" key={dep._id}>
               <div className='card mt-3 dep mb-3'>
                 <img className=' depImage ' src={import.meta.env.VITE_BASE_URL + `images/${dep.image}`} alt="" />
                 <h4 className='mt-0 '>{dep.name}</h4>

@@ -2,6 +2,8 @@ import React from 'react'
 import DoctorSideBar from "./DoctorSideBar"
 import Schedule from './schedule'
 import DocAppointments from './docAppointments'
+import Consult from './consult'
+import Payments from './payments'
 
 function DocMain({ value }) {
 
@@ -18,8 +20,12 @@ function DocMain({ value }) {
                                 <Schedule />
                                 : value == "appointments" ?
                                     <DocAppointments />
-                                    :''
-                        }
+                                    : value == 'consult' ?
+                                    <Consult />
+                                    : value == 'payments' ?
+                                        <Payments />
+                                        : ''
+                            }
 
                         </div>
                     </div>
