@@ -28,8 +28,7 @@ function Payment() {
                       Authorization: `Bearer ${userToken}`
                     }
                   }).then(res=>{
-
-                    
+                   
                     if(res.data=='success'){
                         history('/success')
                     }
