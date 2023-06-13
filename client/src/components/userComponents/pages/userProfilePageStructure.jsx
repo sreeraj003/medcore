@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Profile from '../profile'
 import './lists.css'
 import Prescriptions from '../prescriptions'
