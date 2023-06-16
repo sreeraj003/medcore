@@ -11,7 +11,8 @@ function ProfilePageStructure() {
     const [prescriptions, setPrescriptions] = useState(false)
 
 
-    const profileHandle = () => {
+    const profileHandle = () =>{
+        console.log(profile);
         setProfile(true)
         setAppointments(false)
         setPrescriptions(false)
