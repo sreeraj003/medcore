@@ -1,9 +1,5 @@
 import  { useState } from 'react'
-<<<<<<< HEAD:client/src/components/userComponents/pages/userProfile/userProfilePageStructure.jsx
 import Profile from '../../profile'
-=======
-import Profile from '../profile'
->>>>>>> 92983364d4dbdde7304104855f531f40b93ecd45:client/src/components/userComponents/pages/userProfilePageStructure.jsx
 import './lists.css'
 import Prescriptions from '../../prescriptions'
 import UserAppointments from '../../userAppointments/userAppointments'
