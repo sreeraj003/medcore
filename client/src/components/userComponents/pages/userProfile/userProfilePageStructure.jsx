@@ -1,18 +1,17 @@
-import  { useState } from 'react'
+import { useState } from 'react'
 import Profile from '../../profile'
 import './lists.css'
 import Prescriptions from '../../prescriptions'
 import UserAppointments from '../../userAppointments/userAppointments'
 
 function ProfilePageStructure() {
-
     const [profile, setProfile] = useState(true)
     const [appointments, setAppointments] = useState(false)
     const [prescriptions, setPrescriptions] = useState(false)
 
 
-    const profileHandle = () =>{
-        console.log(profile);
+    const profileHandle = () => {
+
         setProfile(true)
         setAppointments(false)
         setPrescriptions(false)
