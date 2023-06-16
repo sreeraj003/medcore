@@ -17,5 +17,6 @@ userRoute.post("/bookSlot", validateToken, userController.bookSlot);
 userRoute.get("/appointments",validateToken,userController.loadAppointments)
 userRoute.post("/cancelAppoint/:id",validateToken,userController.cancelAppoint)
 userRoute.get("/searchDoc/:searchKey",validateToken,userController.searchDoc)
+userRoute.get("/prescriptions",validateToken,userController.prescriptions)
 
 module.exports = userRoute;

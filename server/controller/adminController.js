@@ -6,10 +6,12 @@ const Departments = require("../model/departmentModel");
 const Patients = require("../model/userModel");
 const { createAdminTokens } = require("../middlewares/jwt");
 const { dateTime } = require("../config/dateAndTime");
-const User = require('../model/userModel')
+const User = require("../model/userModel");
+const Medicine = require("../model/medicines");
 
 const login = async (req, res) => {
   try {
+    console.log(1);
     const { email, password } = req.body;
     const adminData = await Admin.findOne({ email: email });
     if (adminData) {
@@ -161,22 +163,66 @@ const patients = async (req, res) => {
   }
 };
 
-const managePatient = async(req,res)=>{
+const managePatient = async (req, res) => {
   try {
-    const {isuserBlocked}= req.body
-    const id = req.params.patientId
-    if(isuserBlocked==false){
-      const user = await User.findOneAndUpdate({_id:id},{$set:{isBlocked:true}})
-      res.json('blocked')
-    }else{
-      const user = await User.findOneAndUpdate({_id:id},{$set:{isBlocked:false}})
-      res.json('unblocked')
+    const { isuserBlocked } = req.body;
+    const id = req.params.patientId;
+    if (isuserBlocked == false) {
+      const user = await User.findOneAndUpdate(
+        { _id: id },
+        { $set: { isBlocked: true } }
+      );
+      res.json("blocked");
+    } else {
+      const user = await User.findOneAndUpdate(
+        { _id: id },
+        { $set: { isBlocked: false } }
+      );
+      res.json("unblocked");
     }
   } catch (error) {
-    res.json("error")
+    res.json("error");
   }
-}
+};
 
+const medicines = async (req, res) => {
+  try {
+    const medicines = await Medicine.find({isDeleted:false});
+    res.json(medicines);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const addMedicine = async (req, res) => {
+  try {
+    const { newMed, cost, doseData } = req.body;
+    const exist = await Medicine.findOne({ name: newMed });
+    if (exist) {
+      res.json("exist");
+    } else {
+      const med = new Medicine({
+        name: newMed,
+        dose: doseData,
+        cost: cost,
+        createdAt: dateTime,
+      });
+      med.save();
+      res.json("success");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteMedicine = async(req,res)=>{
+  try {
+    const update = await Medicine.findByIdAndUpdate({_id:req.body.id},{$set:{isDeleted:true}})
+    res.json('done')
+  } catch (error) {
+    res.json("error")
+  } 
+}
 
 module.exports = {
   login,
@@ -187,5 +233,8 @@ module.exports = {
   manageDepartment,
   manageDoctor,
   patients,
-  managePatient
+  managePatient,
+  medicines,
+  addMedicine,
+  deleteMedicine
 };

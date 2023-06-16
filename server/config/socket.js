@@ -6,7 +6,6 @@ module.exports = function (io) {
     // socket.emit()
     socket.on("room:join", (data) => {
       const { email, room } = data;
-console.log(room);
       emailToSocketIdMap.set(email, socket.id);
       socketIdToEmailMap.set(socket.id, email);
       io.to(room).emit("user:joined", { email, id: socket.id });

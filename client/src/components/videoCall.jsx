@@ -76,7 +76,6 @@ function VideoCall({ value }) {
 
   const sendStreams = useCallback(() => {
     setAccepted(true)
-    console.log(1);
     for (const track of myStream.getTracks()) {
       peer.peer.addTrack(track, myStream);
     }

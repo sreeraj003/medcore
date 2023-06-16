@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import './userAppointments.css';
 import axios from 'axios';
-import { useSocket } from '../../context/socket/socketProvider';
+import { useSocket } from '../../../context/socket/socketProvider';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 

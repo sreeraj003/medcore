@@ -4,29 +4,34 @@ import './admin.css'
 import { MdPerson, MdOutlineSick } from 'react-icons/md';
 import { BsCashCoin } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 function AdminSideBar() {
 
     const history = useNavigate()
 
-    const handleDashboard = () => {
+    const handleDashboard = useCallback(() => {
         history('/admin/')
-    }
+    },[history])
 
-    const handleDoctor = () => {
+    const handleDoctor = useCallback( () => {
         history('/admin/doctors')
-    }
+    },[history])
 
-    const handlePatient = () => {
+    const handlePatient = useCallback(() => {
         history('/admin/patients')
-    }
+    },[history])
 
-    const handleDepartment = () => {
+    const handleDepartment = useCallback(() => {
         history('/admin/departments')
-    }
+    },[history])
 
-    const handlePayments = () => {
+    const handlePayments = useCallback(() => {
         history('/admin/payments')
-    }
+    },[history])
+
+    const handleMedicines = useCallback(() =>{
+        history('/admin/medicines')
+    },[history])
 
     return (
         <>
@@ -42,6 +47,7 @@ function AdminSideBar() {
                             <div className='text-xl py-4 flex' onClick={handlePatient}><button className='btn'><MdOutlineSick size={25} className='mr-4' /> Patients</button></div>
                             <div className='text-xl py-4 flex' onClick={handleDepartment}><button className='btn'><BiBuildings size={25} className='mr-4' /> Department</button></div>
                             <div className='text-xl py-4 flex' onClick={handlePayments}><button className='btn'><BsCashCoin size={25} className='mr-4' /> Payments</button></div>
+                            <div className='text-xl py-4 flex' onClick={handleMedicines}><button className='btn'><BsCashCoin size={25} className='mr-4' /> Medicines</button></div>
                         </div>
                     </nav>
                 </div>

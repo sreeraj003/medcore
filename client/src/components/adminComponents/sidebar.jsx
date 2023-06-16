@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { FaStethoscope } from 'react-icons/fa'
 import { MdPerson, MdSick } from 'react-icons/md'
@@ -10,30 +10,35 @@ const Sidebar = () => {
   const [nav, setNav] = useState(false)
   const history = useNavigate()
 
-  const handleDashboard = () => {
+  const handleDashboard = useCallback(() => {
     setNav(!nav)
     history('/admin/')
-  }
+  },[history,nav])
 
-  const handleDoctor = () => {
+  const handleDoctor = useCallback(() => {
     setNav(!nav)
     history('/admin/doctors')
-  }
+  },[history,nav])
 
-  const handlePatient = () => {
+  const handlePatient = useCallback(() => {
     setNav(!nav)
     history('/admin/patients')
-  }
+  },[history, nav])
 
-  const handleDepartment = () => {
+  const handleDepartment = useCallback(() => {
     setNav(!nav)
     history('/admin/departments')
-  }
+  },[history, nav])
 
-  const handlePayments = () => {
+  const handlePayments = useCallback(() => {
     setNav(!nav)
     history('/admin/payments')
-  }
+  },[history, nav])
+  
+  const handleMedicines = useCallback(() =>{
+    setNav(!nav)
+    history('/admin/medicines')
+},[history, nav])
   return (
     <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white z-10' style={{zIndex:"10"}}>
 
@@ -53,11 +58,12 @@ const Sidebar = () => {
             </h2>
             <nav >
               <div className='flex flex-col  text-dark'>
-                <div className='text-xl py-4 flex' onClick={handleDashboard}><button className='btn'><MdPerson size={25} className='mr-4' /> Dashboard</button></div>
+                <div className='text-xl py-4 flex' onClick={handleDashboard}><button className='btn'><MdPerson size={25} className='mr-4' /> Dashboardkk</button></div>
                 <div className='text-xl py-4 flex' onClick={handleDoctor}><button className='btn'><FaStethoscope size={25} className='mr-4' /> Doctors</button></div>
                 <div className='text-xl py-4 flex' onClick={handlePatient}><button className='btn'><MdSick size={25} className='mr-4' /> Patients</button></div>
                 <div className='text-xl py-4 flex' onClick={handleDepartment}><button className='btn'><BiBuildings size={25} className='mr-4' /> Department</button></div>
                 <div className='text-xl py-4 flex' onClick={handlePayments}><button className='btn'><BsCashCoin size={25} className='mr-4' /> Payments</button></div>
+                <div className='text-xl py-4 flex' onClick={handleMedicines}><button className='btn'><BsCashCoin size={25} className='mr-4' /> Medicines</button></div>
               </div>
             </nav>
           </div>

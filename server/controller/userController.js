@@ -255,7 +255,7 @@ const loadAppointments = async (req, res) => {
     const appointments = await Appointment.aggregate([
       { $match: { user: id } },
       {
-        $lookup: {
+        $lookup: {  
           from: "doctors",
           let: { searchId: { $toObjectId: "$doctor" } },
           pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
@@ -290,7 +290,7 @@ const cancelAppoint = async (req, res) => {
 const searchDoc = async (req, res) => {
   try {
     const searchKey = req.params.searchKey;
-    let data =[]
+    let data = [];
     if (searchKey == "all") {
       data = await Doctor.aggregate([
         {
@@ -336,6 +336,27 @@ const searchDoc = async (req, res) => {
   }
 };
 
+const prescriptions = async (req, res) => {
+  try {
+    const data = await Appointment.aggregate([
+      {
+        $match: { user: req._id.id },
+      },
+      {
+        $lookup: {
+          from: "doctors",
+          let: { searchId: { $toObjectId: "$doctor" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "docData",
+        },
+      },
+    ]);
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   signup,
   verify,
@@ -349,4 +370,5 @@ module.exports = {
   loadAppointments,
   cancelAppoint,
   searchDoc,
+  prescriptions,
 };

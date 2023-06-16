@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { FaStethoscope } from 'react-icons/fa';
-import { BiNotepad } from 'react-icons/bi';
+import { BiNotepad,BiRupee } from 'react-icons/bi';
 import './docSidebar.css'
 import { MdPerson, MdOutlineSick, MdCalendarMonth } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
-import { IoIosPeople } from 'react-icons/io';
 
 
 const DocSidebar = () => {
@@ -45,7 +44,7 @@ const DocSidebar = () => {
     history('/doctor/admins')
   }
   return (
-    <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white z-10'>
+    <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white' style={{zIndex:10}}>
 
       {!nav ?
         <div className=' sm:flex items-center  docham bg-dark ms-0 mt-0 text-[18px]'>
@@ -68,7 +67,7 @@ const DocSidebar = () => {
                 <div className='text-xl py-4 flex' onClick={handlePatient}><MdOutlineSick size={25} className='mr-4' /> Patients</div>
                 <div className='text-xl py-4 flex' onClick={handlePrescriptions}><BiNotepad size={25} className='mr-4' /> Prescriptions</div>
                 <div className='text-xl py-4 flex' onClick={handleSchedule}><MdCalendarMonth size={25} className='mr-4' /> My Schedule</div>
-                <div className='text-xl py-4 flex' onClick={handleAdmins}><IoIosPeople size={25} className='mr-4' /> Admins</div>
+                <div className='text-xl py-4 flex' onClick={handleAdmins}><BiRupee size={25} className='mr-4' /> Admins</div>
               </div>
             </nav>
           </div>

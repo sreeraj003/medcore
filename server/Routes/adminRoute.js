@@ -14,5 +14,8 @@ adminRoute.patch("/manageDepartment",validateAdminToken,adminController.manageDe
 adminRoute.patch("/manageDoctor/:docId",validateAdminToken,adminController.manageDoctor);
 adminRoute.get("/patients", validateAdminToken, adminController.patients);
 adminRoute.patch('/managePatient/:patientId',validateAdminToken,adminController.managePatient)
+adminRoute.get('/medicines',validateAdminToken,adminController.medicines)
+adminRoute.post('/addMedicine',validateAdminToken,adminController.addMedicine)
+adminRoute.patch('/deleteMedicine',validateAdminToken,adminController.deleteMedicine)
 
 module.exports = adminRoute;

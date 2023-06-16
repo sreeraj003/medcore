@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSchedule } from '../../redux/doctorSchedule'
 import './schedule.css'
@@ -135,13 +135,13 @@ function Schedule() {
           <div>
             <div style={{ maxWidth: "200px" }}><span>Selected Time :</span> <br /> {freeTime.map(el => el + ',')}</div>
             {scheduleList ?
-              scheduleList.map(el => (
-                <div className="card text-start m-3 p-3">
+              scheduleList.map((el,index) => (
+                <div key={index} className="card text-start m-3 p-3">
                   <div>
                     <b style={{ fontSize: '20px' }}>Date : </b>{el.date}
                   </div>
                   <div>
-                    <h5>Time Slotes :</h5>{el.time.map(time => <div className='btn p-1 m-2 text-white bg-secondary'>{time}<button className='btn mt-0 ms-1 text-white' value={el.date + '_' + time} onClick={removeSlot}>X</button></div>)}
+                    <h5>Time Slotes :</h5>{el.time.map(time => <div className='btn p-1 m-2 text-white bg-secondary'key={time}>{time}<button className='btn mt-0 ms-1 text-white' value={el.date + '_' + time} onClick={removeSlot}>X</button></div>)}
                     <br />
                   </div>
                 </div>

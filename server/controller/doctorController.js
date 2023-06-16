@@ -8,6 +8,8 @@ const { createDoctorTokens } = require("../middlewares/jwt");
 const Departments = require("../model/departmentModel");
 const Schedule = require("../model/scheduleModel");
 const Appointment = require("../model/appointmentModel");
+const Users = require("../model/userModel");
+const Medicines = require("../model/medicines");
 
 async function securePassword(password) {
   try {
@@ -308,9 +310,10 @@ const appointments = async (req, res) => {
           pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
           as: "userData",
         },
-      },{
-        $sort:{date:-1,time:1}
-      }
+      },
+      {
+        $sort: { date: -1, time: 1 },
+      },
     ]);
     res.json(appointment);
   } catch (error) {
@@ -318,11 +321,11 @@ const appointments = async (req, res) => {
   }
 };
 
-const consult = async(req,res)=>{
+const consult = async (req, res) => {
   try {
     const appointment = await Appointment.aggregate([
       {
-        $match: { doctor: req._id.id},
+        $match: { doctor: req._id.id },
       },
       {
         $lookup: {
@@ -333,18 +336,17 @@ const consult = async(req,res)=>{
         },
       },
       {
-        $sort:{date:-1,time:1}
-      }
+        $sort: { date: -1, time: 1 },
+      },
     ]);
-    const data = appointment.filter(app=>new Date(app.date)!=new Date())
-    res.json(data)
-
+    const data = appointment.filter((app) => new Date(app.date) != new Date());
+    res.json(data);
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-const payments = async(req,res)=>{
+const payments = async (req, res) => {
   try {
     const pay = await Appointment.aggregate([
       {
@@ -357,25 +359,73 @@ const payments = async(req,res)=>{
           pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
           as: "userData",
         },
-      },{
-        $sort:{date:-1,time:1}
-      }
+      },
+      {
+        $sort: { date: -1, time: 1 },
+      },
     ]);
-    res.json(pay)
+    res.json(pay);
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-const endAppointment = async(req,res)=>{
+const endAppointment = async (req, res) => {
   try {
-    const appId = req.params.appId
-    const deleteAppoint = await Appointment.findOneAndUpdate({_id:appId},{isAttended:true})
-    res.json('success')
+    const appId = req.params.appId;
+    const deleteAppoint = await Appointment.findOneAndUpdate(
+      { _id: appId },
+      { isAttended: true }
+    );
+    res.json("success");
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+const prescriptions = async (req, res) => {
+  try {
+    const data = await Appointment.aggregate([
+      {
+        $match: { doctor: req._id.id },
+      },
+      {
+        $lookup: {
+          from: "users",
+          let: { searchId: { $toObjectId: "$user" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "userData",
+        },
+      },
+    ]);
+    res.json(data)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const medicines = async (req, res) => {
+  try {
+    const medData = await Medicines.find();
+    res.json(medData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const addPrescription = async (req, res) => {
+  try {
+    const data = req.body
+    const med = new Map();
+    for (let i = 0; i < data.length; i++) {
+      med.set(data[i].medicine, data[i].selectedDose);
+    }
+    const update = await Appointment.findOneAndUpdate({_id:data[0].id},{$set:{medicines:med}})
+    res.json('done')
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   signup,
@@ -390,5 +440,8 @@ module.exports = {
   appointments,
   consult,
   payments,
-  endAppointment
+  endAppointment,
+  prescriptions,
+  medicines,
+  addPrescription,
 };
