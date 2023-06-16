@@ -5,15 +5,15 @@ import Login from '../components/Login'
 import Signup from "../components/Signup"
 import Otp from '../components/otp'
 import Navbar from '../components/navbar'
-import Home from '../components/userComponents/userHome'
+import Home from '../components/userComponents/userHome/userHome'
 import Loader from '../components/loader'
 import VideoCall from '../components/videoCall'
 import FeedBack from '../components/userComponents/feedBack'
 
 const Payment = lazy(() => import('../components/userComponents/payment'))
-const Appointment = lazy(() => import("../components/userComponents/appointment"))
+const Appointment = lazy(() => import("../components/userComponents/appointments/appointment"))
 const PageStructure = lazy(() => import('../components/userComponents/pages/docSearchPageStructure'))
-const ProfilePageStructure = lazy(() => import('../components/userComponents/pages/userProfilePageStructure'))
+const ProfilePageStructure = lazy(() => import('../components/userComponents/pages/userProfile/userProfilePageStructure'))
 const Success = lazy(() => import('../components/userComponents/success'))
 
 

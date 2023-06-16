@@ -4,6 +4,7 @@ import { useSocket } from '../../context/socket/socketProvider'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setSlot } from '../../redux/consult'
+import { setData } from '../../redux/prescriptionData'
 
 function Consult() {
     const [consult, setConsult] = useState([])
@@ -31,6 +32,12 @@ function Consult() {
         }
         datacall()
     }, [docToken])
+
+    const handlePrescribe = useCallback((el)=>{
+        console.log(el);
+        dispatch(setData(el))
+        navigate('/doctor/createPrscription')
+    },[dispatch, navigate])
 
     const handleJoin = useCallback((id,room) => {
         dispatch(setSlot(id))
@@ -74,7 +81,8 @@ function Consult() {
                                      {
                                         <>
                                             { } <br />
-                                            {new Date(el.date) < new Date() ? 'Unavailable' : el.isAttended ? "Attended" : !el.isCancelled ? <> <button style={{ fontSize: "15px" }} className='btn ps-2 pe-2 btn-outline-success'  onClick={() => handleJoin(el._id,el._id+el.user)}>Join</button></>:'cancelled'}
+                                            {new Date(el.date) < new Date() ? 'Unavailable' : el.isAttended ? "Attended" : !el.isCancelled ? <> <button style={{ fontSize: "15px" }} className='btn ps-2 pe-2 btn-outline-success'  onClick={() => handleJoin(el._id,el._id+el.user)}>Join</button></>:'cancelled'} <br />
+                                            {!el.medicines ? <button className='btn btn-success p-2 ' style={{fontSize:'14px'}} onClick={()=>handlePrescribe(el)}>Prescribe</button> :"Presciption added"}
                                         </>
                                     }
                                 </div>

@@ -17,6 +17,7 @@ function Admin() {
           <Route path="/departments" element={<BasePage value={"departments"} user={"admin"} />} />
           <Route path="/patients" element={<BasePage value={"patients"} user={"admin"} />} />
           <Route path="/payments" element={<BasePage value={"payments"} user={"admin"} />} />
+          <Route path="/medicines" element={<BasePage value={"medicines"} user={"admin"} />} />
         </Route>
         <Route path="/*" element={<Login value={'admin'} />} />
       </Routes>

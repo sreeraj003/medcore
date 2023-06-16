@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './appointment.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { BsPlusLg } from 'react-icons/bs'
-import { setAppointment } from '../../redux/appointment'
+import { setAppointment } from '../../../redux/appointment'
 import axios from 'axios'
 
 function Appointment() {
@@ -17,6 +17,7 @@ function Appointment() {
     const [schedule, setSchedule] = useState([])
     const [sessionDate, setSessionDate] = useState('Date')
     const [sessionTime, setSessionTime] = useState('Time')
+    const [errMsg,setErrMsg] = useState('')
     const [timeList, setTimeList] = useState(['No data'])
     const [issues,setIssues]=useState('')
 
@@ -37,7 +38,7 @@ function Appointment() {
             }
         }
         datacall()
-    }, [])
+    }, [docData._id, docData.doctorData, history, userToken])
 
     const handleDate = (date) => {
         setSessionDate(date)
@@ -46,28 +47,34 @@ function Appointment() {
     }
 
     const handleSubmit = async () => {
-        const data = {
-            doctor: docData._id,
-            user: userData._id,
-            date: sessionDate,
-            time: sessionTime,
-            issues:issues,
-            fee: docData.fee
+        if(sessionDate=='Date'|| sessionTime=='Time'){
+            setErrMsg('Please select session date and time')
+        }else{
+
+            const data = {
+                doctor: docData._id,
+                user: userData._id,
+                date: sessionDate,
+                time: sessionTime,
+                issues:issues,
+                fee: docData.fee
+            }
+            dispatch(setAppointment(data))
+            history('/payment')
         }
-        dispatch(setAppointment(data))
-        history('/payment')
     }
 
     return (
         <>
-            <div className="mx-auto slice w-50 mt-5 ps-5 pe-5 pb-5 app-div">
+            <div className=" slice mx-auto text-center mt-5 ps-5 pe-5 pb-5 app-div" style={{maxWidth:"800px"}}>
+                            {errMsg? <div className='mt-3 alert-danger alert'>{errMsg}</div>:''}
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="row">
                             <div className="col-12 mt-5 text-center">
                                 <h4><b>Patient Details</b></h4>
                             </div>
-                            <div className="col-5 text-end">
+                            <div className="col-5   text-end">
                                 <p>         Name :</p>
                                 <p>          Age :</p>
                                 <p>       Gender :</p>
@@ -96,23 +103,21 @@ function Appointment() {
                                 <div className=''>
                                     <b>Session Timing </b>
                                     <div className="dropdown">
-                                        <button className="btn p-1 bg-light btn-outline-dark mt-2 text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ minWidth: '150px', fontSize: "14px" }}>
+                                        <button className="btn p-1 bg-light btn-outline-dark mt-2 text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ maxWidth: '150px',minWidth:'100px', fontSize: "14px" }}>
                                             {sessionDate}
                                         </button>
                                         <ul className="dropdown-menu">
                                             {schedule && schedule.map(el => {
-
-                                                return (<li><button className='btn p-0 bg-light listbutt' onClick={() => handleDate(el.date)}>{el.date}</button></li>)
-
+                                                return (<li key={el.date} ><button className='btn p-0 bg-light listbutt' onClick={() => handleDate(el.date)}>{el.date}</button></li>)
                                             })}
                                         </ul>
                                     </div>
                                     <div className="dropdown">
-                                        <button className="btn p-1 bg-light btn-outline-dark mt-2  text-dark dropdown-toggle" style={{ minWidth: '150px', fontSize: "14px" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button className="btn p-1 bg-light btn-outline-dark mt-2  text-dark dropdown-toggle" style={{maxWidth: '150px',minWidth:'100px', fontSize: "14px" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             {sessionTime}
                                         </button>
                                         <ul className="dropdown-menu">
-                                            {timeList && timeList.map(el => <li><button className='btn p-0  bg-light listbutt' onClick={() => setSessionTime(el)}>{el}</button></li>)}
+                                            {timeList && timeList.map(el => <li key={el}><button  className='btn p-0  bg-light listbutt' onClick={() => setSessionTime(el)}>{el}</button></li>)}
                                         </ul>
                                     </div>
                                 </div>

@@ -3,14 +3,17 @@ import './Navbar.css';
 import Sidebar from "./adminComponents/sidebar"
 import DocSidebar from './doctorComponents/docSidebar';
 import { IoIosContact } from 'react-icons/io';
-import { FaCalendar } from 'react-icons/fa';
 import { BiNotepad } from 'react-icons/bi'
 import useAuth from '../context/hooks/useAuth';
 import { setUserData } from '../redux/userData';
 import { setDoctorData } from '../redux/doctorData';
 import { setAdminData } from '../redux/adminData';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types'
 
+Navbar.propTypes = {
+    value:PropTypes.string
+}
 
 function Navbar({ value }) {
 
@@ -45,8 +48,7 @@ function Navbar({ value }) {
                 </div>
                 {
                     value === 'doctor' ? <>
-                        {/* <button className='btn btn-outline-success text-dark doc_nav'  ><FaCalendar style={{ marginTop: '-7px' }} />Make appointments</button> */}
-                        <button className='btn btn-outline-success text-dark doc_nav' ><BiNotepad style={{ marginTop: '-7px' }} />Write prescription</button>
+                        <button className='btn btn-outline-success text-dark doc_nav' onClick={()=>history('/doctor/prescriptions')} ><BiNotepad style={{ marginTop: '-7px' }} />Prescriptions</button>
                     </>
                         : ''
                 }
@@ -79,7 +81,6 @@ function Navbar({ value }) {
                             !value && user ?
                                 <ul className="dropdown-menu right-0" style={{ marginLeft: '-90px', width: '100px', textAlign: 'center' }}>
                                     <li><Link className='link' to={'/profile'} >Profile</Link></li>
-                                    <li><Link className='link' to={'/appointments'} >Appointments</Link></li>
                                     <li><Link className='link' onClick={handleLogout}>Logout</Link></li>
                                 </ul>
                                 : value == 'doctor' && doctor ?

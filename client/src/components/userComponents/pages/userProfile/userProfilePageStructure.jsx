@@ -1,28 +1,17 @@
-import  { useState } from 'react'
-import Profile from '../profile'
+import { useState } from 'react'
+import Profile from '../../profile'
 import './lists.css'
-import Prescriptions from '../prescriptions'
-import UserAppointments from '../userAppointments'
-import axios from 'axios'
-const userToken = localStorage.getItem('userToken')
-
-axios.interceptors.request.use((request)=>{
-    request.headers = {
-        Authorization: `Bearer ${userToken}`,
-        'Content-Type': 'multipart/form-data',
-    }
-    return request
-  })
-  
+import Prescriptions from '../../prescriptions'
+import UserAppointments from '../../userAppointments/userAppointments'
 
 function ProfilePageStructure() {
-
     const [profile, setProfile] = useState(true)
     const [appointments, setAppointments] = useState(false)
     const [prescriptions, setPrescriptions] = useState(false)
 
 
     const profileHandle = () => {
+
         setProfile(true)
         setAppointments(false)
         setPrescriptions(false)

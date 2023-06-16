@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import AdminSideBar from "./AdminSideBar"
 import DataTables from "../dataTables"
 import axios from "axios"
 import { validateCapitalLetter } from "../validator"

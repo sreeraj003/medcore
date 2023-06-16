@@ -1,13 +1,18 @@
-import React, { lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import Loader from '../loader';
 import AdminSideBar from "./AdminSideBar"
 import AdminHome from './adminHome';
+import PropTypes from 'prop-types'
+import Medicines from './medicines';
 
-const Doctors = lazy(() => wait(1000).then(() => import("../adminComponents/doctors")));
-const Departments = lazy(() => wait(1000).then(() => import("../adminComponents/departments")));
-const Patients = lazy(() => wait(1000).then(() => import("../adminComponents/patients")));
-const Payments = lazy(() => wait(1000).then(() => import("../adminComponents/payments")))
+BasePage.propTypes = {
+    value: PropTypes.string
+}
 
+const Doctors = lazy(() => import("../adminComponents/doctors"))
+const Departments = lazy(() => import("../adminComponents/departments"))
+const Patients = lazy(() => import("../adminComponents/patients"))
+const Payments = lazy(() => import("../adminComponents/payments"))
 function BasePage({ value }) {
     return (
 
@@ -35,7 +40,9 @@ function BasePage({ value }) {
                                                     :
                                                     value == "Home" ?
                                                         <AdminHome />
-                                                        : ''
+                                                        : value == 'medicines' ?
+                                                            <Medicines />
+                                                            : ''
 
                                 }
                             </Suspense>
@@ -45,13 +52,6 @@ function BasePage({ value }) {
             </div>
         </div>
     )
-}
-
-
-const wait = (time) => {
-    return new Promise(resolve => {
-        setTimeout(resolve, time)
-    })
 }
 
 export default BasePage

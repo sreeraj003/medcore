@@ -7,3 +7,13 @@
 .listbutt:hover {
   color: black !important;
 }
+
+.details{
+  color: black;
+}
+
+@media (max-width: 770px){
+  .details{
+    display: none;
+  }
+}

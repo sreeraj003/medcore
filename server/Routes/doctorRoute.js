@@ -17,6 +17,9 @@ doctorRoute.post('/setSchedule',validateDoctorToken,doctorController.manageSched
 doctorRoute.get('/appointments',validateDoctorToken,doctorController.appointments)
 doctorRoute.get('/consult',validateDoctorToken,doctorController.consult)
 doctorRoute.get('/payments',validateDoctorToken,doctorController.payments)
+doctorRoute.get('/prescriptions',validateDoctorToken,doctorController.prescriptions)
+doctorRoute.get('/medicines',validateDoctorToken,doctorController.medicines)
 doctorRoute.patch('/endAppointment/:appId',validateDoctorToken,doctorController.endAppointment)
+doctorRoute.patch('/addPrescription',validateDoctorToken,doctorController.addPrescription)
 
 module.exports = doctorRoute;
