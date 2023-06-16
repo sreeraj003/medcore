@@ -27,9 +27,15 @@ function Payment() {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
+<<<<<<< HEAD
                 }).then(res => {
 
                     if (res.data == 'success') {
+=======
+                  }).then(res=>{
+                   
+                    if(res.data=='success'){
+>>>>>>> 92983364d4dbdde7304104855f531f40b93ecd45
                         history('/success')
                     }
                 })
