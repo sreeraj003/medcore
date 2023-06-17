@@ -21,5 +21,7 @@ doctorRoute.get('/prescriptions',validateDoctorToken,doctorController.prescripti
 doctorRoute.get('/medicines',validateDoctorToken,doctorController.medicines)
 doctorRoute.patch('/endAppointment/:appId',validateDoctorToken,doctorController.endAppointment)
 doctorRoute.patch('/addPrescription',validateDoctorToken,doctorController.addPrescription)
+doctorRoute.get('/patients',validateDoctorToken,doctorController.patients)
+doctorRoute.get('/dash',validateDoctorToken,doctorController.dash)
 
 module.exports = doctorRoute;

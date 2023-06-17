@@ -8,6 +8,7 @@ const { createAdminTokens } = require("../middlewares/jwt");
 const { dateTime } = require("../config/dateAndTime");
 const User = require("../model/userModel");
 const Medicine = require("../model/medicines");
+const Appointments = require('../model/appointmentModel')
 
 const login = async (req, res) => {
   try {
@@ -224,6 +225,14 @@ const deleteMedicine = async(req,res)=>{
   } 
 }
 
+const appoints = async(req,res)=>{
+  try {
+    const data = await Appointments.find()
+    res.json(data)
+  } catch (error) {
+    console.log(error);
+  }
+}
 module.exports = {
   login,
   adminData,
@@ -236,5 +245,6 @@ module.exports = {
   managePatient,
   medicines,
   addMedicine,
-  deleteMedicine
+  deleteMedicine,
+  appoints
 };

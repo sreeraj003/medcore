@@ -17,5 +17,6 @@ adminRoute.patch('/managePatient/:patientId',validateAdminToken,adminController.
 adminRoute.get('/medicines',validateAdminToken,adminController.medicines)
 adminRoute.post('/addMedicine',validateAdminToken,adminController.addMedicine)
 adminRoute.patch('/deleteMedicine',validateAdminToken,adminController.deleteMedicine)
+adminRoute.get('/income',validateAdminToken,adminController.appoints)
 
 module.exports = adminRoute;

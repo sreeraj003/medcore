@@ -30,6 +30,7 @@ function Doctor() {
           <Route path='/call/:room' element={<VideoCall value="doctor"/>} />
           <Route path='/prescriptions' element={<DocMain value="prescription"/>} />
           <Route path='/createPrscription' element={<DocMain value="createPrescription"/>} />
+          <Route path='/patients' element={<DocMain value="patients"/>} />
         </Route>
       </Routes>
     </>
