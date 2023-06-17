@@ -6,6 +6,8 @@ import Payments from './payments'
 import PropTypes from 'prop-types'
 import Prescription from "./prescription"
 import CreatePrescription from "./createPrescription"
+import Patients from "./patients"
+import DoctorHome from "./doctorHome"
 
 DocMain.propTypes = {
     value: PropTypes.string
@@ -35,7 +37,11 @@ function DocMain({ value }) {
                                                 <Prescription />
                                                 : value == 'createPrescription' ?
                                                     <CreatePrescription />
-                                                    : ''
+                                                    : value == 'patients' ?
+                                                        <Patients />
+                                                        : value == 'home' ?
+                                                            <DoctorHome />
+                                                            : ''
 
                             }
 

@@ -427,6 +427,37 @@ const addPrescription = async (req, res) => {
   }
 };
 
+const patients = async(req,res)=>{
+  try {
+    const data = await Appointment.aggregate([
+      {
+        $match: { doctor: req._id.id },
+      },
+      {
+        $lookup: {
+          from: "users",
+          let: { searchId: { $toObjectId: "$user" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "userData",
+        },
+      },
+    ]);
+    res.json(data)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const dash = async(req,res)=>{
+  try {
+    const data = await Appointment.find({doctor:req._id.id})
+    console.log(data);
+    res.json(data)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   signup,
   verify,
@@ -444,4 +475,6 @@ module.exports = {
   prescriptions,
   medicines,
   addPrescription,
+  patients,
+  dash
 };

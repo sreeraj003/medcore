@@ -10,16 +10,7 @@ function Doctors() {
 
   const adminToken = localStorage.getItem('adminToken')
 
-  const doctorData = async () => {
-    await axios.get(import.meta.env.VITE_BASE_URL + 'admin/doctors', {
-      headers: {
-        Authorization: `Bearer ${adminToken}`,
-      }
-    }).then(res => {
-      setDoctorsList(res.data)
-      setFilteredData(res.data)
-    })
-  }
+  
 
   const viewDoc = (row) => {
     const doc = doctorsList.filter(el => el._id == row._id)
@@ -33,7 +24,6 @@ function Doctors() {
     const filtered = doctorsList.filter((doc) =>
       doc.name.toLowerCase().startsWith(searchValue)
     );
-    console.log(filtered);
     setFilteredData(filtered);
   };
 
@@ -71,8 +61,18 @@ function Doctors() {
 
 
   useEffect(() => {
+    const doctorData = async () => {
+      await axios.get(import.meta.env.VITE_BASE_URL + 'admin/doctors', {
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+        }
+      }).then(res => {
+        setDoctorsList(res.data)
+        setFilteredData(res.data)
+      })
+    }
     doctorData()
-  }, [])
+  }, [adminToken])
 
   return (
     <>

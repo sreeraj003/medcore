@@ -1,0 +1,125 @@
+import Chart from 'react-apexcharts'
+import PropTypes from 'prop-types'
+import { useState } from 'react'
+
+BarChart.propTypes = {
+    appoints: PropTypes.array
+}
+
+function BarChart({ appoints }) {
+
+    const [year, setYear] = useState(new Date().getFullYear())
+
+    let monthCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    appoints.forEach((el) => {
+        if(el.date.split('-')[0] == year){
+            if (el.date.split('-')[1] == '01') {
+                monthCount[0] += 1
+            } else if (el.date.split('-')[1] == '02') {
+                monthCount[1] += 1
+            } else if (el.date.split('-')[1] == '03') {
+                monthCount[2] += 1
+            } else if (el.date.split('-')[1] == '04') {
+                monthCount[3] += 1
+            } else if (el.date.split('-')[1] == '05') {
+                monthCount[4] += 1
+            } else if (el.date.split('-')[1] == '06') {
+                monthCount[5] += 1
+            } else if (el.date.split('-')[1] == '07') {
+                monthCount[6] += 1
+            } else if (el.date.split('-')[1] == '08') {
+                monthCount[7] += 1
+            } else if (el.date.split('-')[1] == '09') {
+                monthCount[8] += 1
+            } else if (el.date.split('-')[1] == '10') {
+                monthCount[9] += 1
+            } else if (el.date.split('-')[1] == '11') {
+                monthCount[10] += 1
+            } else if (el.date.split('-')[1] == '12') {
+                monthCount[11] += 1
+            }
+        }
+        })
+
+    return (
+        <>
+            <div className="container-fluid mb-5">
+                <div className="dropdown mb-4">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {year}
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li ><button className="dropdown-item btn" onClick={() => setYear('2022')}>2022</button></li>
+                        {
+                            appoints && appoints.map((el, index) => (
+                                <li key={index}><button className="dropdown-item btn" onClick={() => setYear(el.date.split('-')[0])}>{el.date.split('-')[0]}</button></li>
+                            ))
+                        }
+
+                    </ul>
+                </div>
+                <Chart
+                    type='bar'
+                    width={'100%'}
+                    height={500}
+                    
+                    series={[
+                        {
+                            name: 'Revenue',
+                            data: monthCount
+                        }
+                    ]}
+                    options={{
+                        title: {
+                            text: "Revenue Chart",
+                            style: { fontSize: 30 }
+                        },
+                        chart: { 
+                            background: '#ffffff',
+                          },
+                        colors: ["#00009F"],
+                        theme: { mode: "light" },
+                        xaxis: {
+                            tickPlacement: 'on',
+                            categories: [
+                                'jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'
+                            ],
+                            title: {
+                                text: 'Month',
+                                style: { fontSize: 20 }
+                            },
+                        },
+                        yaxis: {
+                            labels: {
+                                formatter: (val) => {
+                                    return `${val}`
+                                },
+                                style: { fontSize: "15", colors: ['#f900000'] },
+                            },
+                            title: {
+                                text: "No.of Appointments",
+                                style: { fontSize: 20 }
+                            }
+                        },
+                        legend: {
+                            show: true,
+                            position: 'right'
+                        },
+                        dataLabels: {
+                            formatter: (val) => {
+                                return `${val}`
+                            },
+                            style: {
+                                colors: [`#f4f4f40`],
+                                fontSize: 15
+                            }
+                        }
+                    }}
+                />
+            </div>
+        </>
+    )
+}
+
+export default BarChart
