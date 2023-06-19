@@ -6,21 +6,12 @@ import View from "./view"
 function Patients() {
   const [selectedPatient, setSelectedPatient] = useState('')
   const [patientsList, setPatientsList] = useState([])
-  const [search,setSearch] = useState('')
-  const [filteredData,setFilteredData] = useState([])
+  const [search, setSearch] = useState('')
+  const [filteredData, setFilteredData] = useState([])
 
   const adminToken = localStorage.getItem('adminToken')
 
-  const patinetsData = async () => {
-    await axios.get(import.meta.env.VITE_BASE_URL + 'admin/patients', {
-      headers: {
-        Authorization: `Bearer ${adminToken}`,
-      }
-    }).then(res => {
-      setPatientsList(res.data)
-      setFilteredData(res.data)
-    })
-  }
+
 
   const viewPatient = (row) => {
     const doc = patientsList.filter(el => el._id == row._id)
@@ -62,8 +53,18 @@ function Patients() {
 
 
   useEffect(() => {
+    const patinetsData = async () => {
+      await axios.get(import.meta.env.VITE_BASE_URL + 'admin/patients', {
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+        }
+      }).then(res => {
+        setPatientsList(res.data)
+        setFilteredData(res.data)
+      })
+    }
     patinetsData()
-  }, [])
+  }, [adminToken])
 
   return (
     <>

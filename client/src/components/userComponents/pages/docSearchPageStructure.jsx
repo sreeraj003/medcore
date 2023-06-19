@@ -72,6 +72,7 @@ function PageStructure() {
                                             <input
                                                 className="form-check-input me-1"
                                                 type="radio"
+
                                                 name="listGroupRadio"
                                                 key={dep.name}
                                                 value={dep.name}

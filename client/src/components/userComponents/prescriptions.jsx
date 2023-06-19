@@ -41,7 +41,10 @@ function Presciption() {
                     <h6>{el.time}</h6>
                   </div>
                   <div className="col-md-6">
-                    <DownloadButton el={el} user={userData} />
+                    {
+                      el.medicines &&
+                      <DownloadButton el={el} user={userData} />
+                    }
                   </div>
                 </div>
               </div>

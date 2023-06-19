@@ -5,7 +5,7 @@ import adminReducer from "./adminData";
 import scheduleReducer from "./doctorSchedule";
 import selectedDocReducer from "./selectedDoc";
 import appointmentReducer from "./appointment";
-import consultReducer from './consult'
+import consultReducer from "./consult";
 import prescriptionData from "./prescriptionData";
 
 export default configureStore({
@@ -16,7 +16,7 @@ export default configureStore({
     docSchedule: scheduleReducer,
     selectedDoc: selectedDocReducer,
     appointment: appointmentReducer,
-    consult:consultReducer,
-    prescription:prescriptionData
+    consult: consultReducer,
+    prescription: prescriptionData,
   },
 });

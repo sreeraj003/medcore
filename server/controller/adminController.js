@@ -8,7 +8,7 @@ const { createAdminTokens } = require("../middlewares/jwt");
 const { dateTime } = require("../config/dateAndTime");
 const User = require("../model/userModel");
 const Medicine = require("../model/medicines");
-const Appointments = require('../model/appointmentModel')
+const Appointments = require("../model/appointmentModel");
 
 const login = async (req, res) => {
   try {
@@ -188,7 +188,7 @@ const managePatient = async (req, res) => {
 
 const medicines = async (req, res) => {
   try {
-    const medicines = await Medicine.find({isDeleted:false});
+    const medicines = await Medicine.find({ isDeleted: false });
     res.json(medicines);
   } catch (error) {
     console.log(error);
@@ -216,23 +216,53 @@ const addMedicine = async (req, res) => {
   }
 };
 
-const deleteMedicine = async(req,res)=>{
+const deleteMedicine = async (req, res) => {
   try {
-    const update = await Medicine.findByIdAndUpdate({_id:req.body.id},{$set:{isDeleted:true}})
-    res.json('done')
+    const update = await Medicine.findByIdAndUpdate(
+      { _id: req.body.id },
+      { $set: { isDeleted: true } }
+    );
+    res.json("done");
   } catch (error) {
-    res.json("error")
-  } 
-}
+    res.json("error");
+  }
+};
 
-const appoints = async(req,res)=>{
+const appoints = async (req, res) => {
   try {
-    const data = await Appointments.find()
-    res.json(data)
+    const data = await Appointments.find();
+    res.json(data);
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+const payments = async (req, res) => {
+  try {
+    const data = await Appointments.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          let: { searchId: { $toObjectId: "$user" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "userData",
+        },
+      },
+      {
+        $lookup: {
+          from: "doctors",
+          let: { searchId: { $toObjectId: "$doctor" } },
+          pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
+          as: "docData",
+        },
+      },
+    ]);
+    console.log(data);
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   login,
   adminData,
@@ -246,5 +276,6 @@ module.exports = {
   medicines,
   addMedicine,
   deleteMedicine,
-  appoints
+  appoints,
+  payments,
 };
