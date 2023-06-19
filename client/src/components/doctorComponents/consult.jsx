@@ -80,9 +80,9 @@ function Consult() {
      
                                      {
                                         <>
-                                            { } <br />
+                                        
                                             {new Date(el.date) < new Date() ? 'Unavailable' : el.isAttended ? "Attended" : !el.isCancelled ? <> <button style={{ fontSize: "15px" }} className='btn ps-2 pe-2 btn-outline-success'  onClick={() => handleJoin(el._id,el._id+el.user)}>Join</button></>:'cancelled'} <br />
-                                            {!el.medicines ? <button className='btn btn-success p-2 ' style={{fontSize:'14px'}} onClick={()=>handlePrescribe(el)}>Prescribe</button> :"Presciption added"}
+                                            {!el.medicines ? <button className='btn btn-success p-2 mt-1' style={{fontSize:'14px'}} onClick={()=>handlePrescribe(el)}>Prescribe</button> :"Presciption added"}
                                         </>
                                     }
                                 </div>

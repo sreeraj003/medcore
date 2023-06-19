@@ -55,9 +55,10 @@ function MyPDF({ data, user }) {
             <hr />
             <Text style={styles.prescription}>Prescription</Text>
             {
+              Object.entries(data.medicines) &&
               Object.entries(data.medicines).map((el, index) => (
                 <Text style={styles.label} key={index}>
-                  {el[0]}:{el[1]}<br />
+                  { el[0] && el[0]}:{el[1]&&el[1]}<br />
                 </Text>
               ))
             }

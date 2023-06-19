@@ -39,7 +39,7 @@ function Prescriptions() {
       name: 'Medicines',
       selector: (row) => (
         <>
-          {Object.entries(row.medicines).map(([key, value]) => (
+          {row.medicines &&  Object.entries(row.medicines).map(([key, value]) => (
             <div key={key}>
               {key}: {value.split(' ')[0]}
             </div>

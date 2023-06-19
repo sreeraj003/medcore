@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types'
 
 Navbar.propTypes = {
-    value:PropTypes.string
+    value: PropTypes.string
 }
 
 function Navbar({ value }) {
@@ -43,12 +43,20 @@ function Navbar({ value }) {
             <div className="container-fluid">
                 <div className="d-flex justify-content-between align-items-center">
                     <div className="navbar-brand">
-                        <img className="medcore" onClick={() => history('/')} src="/medcore.png" alt="" />
+                        <img className="medcore" onClick={() => {
+                            value == 'doctor' ?
+                                history('/doctor/')
+                                : value == "admin" ?
+                                    history('/admin/')
+                                    :
+                                    history('/')
+
+                        }} src="/medcore.png" alt="" />
                     </div>
                 </div>
                 {
                     value === 'doctor' ? <>
-                        <button className='btn btn-outline-success text-dark doc_nav' onClick={()=>history('/doctor/prescriptions')} ><BiNotepad style={{ marginTop: '-7px' }} />Prescriptions</button>
+                        <button className='btn btn-outline-success text-dark doc_nav' onClick={() => history('/doctor/prescriptions')} ><BiNotepad style={{ marginTop: '-7px' }} />Prescriptions</button>
                     </>
                         : ''
                 }
@@ -56,7 +64,7 @@ function Navbar({ value }) {
                 <div className='d-flex navMine'>
                     {
                         value === "doctor" ?
-                            <button className="btn  doc btn-outline-success" onClick={()=>history('/doctor/consult')}>Consult</button>
+                            <button className="btn  doc btn-outline-success" onClick={() => history('/doctor/consult')}>Consult</button>
                             : value === 'admin' ?
                                 <div></div>
                                 :

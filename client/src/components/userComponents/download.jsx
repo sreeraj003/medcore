@@ -9,7 +9,6 @@ DownloadButton.propTypes={
 }
 
 function DownloadButton({ el, user }) {
-  console.log(Object.entries(el.medicines));
 
     return (
  <> 
