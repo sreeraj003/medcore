@@ -17,9 +17,9 @@ function Appointment() {
     const [schedule, setSchedule] = useState([])
     const [sessionDate, setSessionDate] = useState('Date')
     const [sessionTime, setSessionTime] = useState('Time')
-    const [errMsg,setErrMsg] = useState('')
+    const [errMsg, setErrMsg] = useState('')
     const [timeList, setTimeList] = useState(['No data'])
-    const [issues,setIssues]=useState('')
+    const [issues, setIssues] = useState('')
 
     const userToken = localStorage.getItem('userToken')
 
@@ -33,7 +33,13 @@ function Appointment() {
                         Authorization: `Bearer ${userToken}`,
                     }
                 }).then(res => {
-                    setSchedule(res.data)
+                    console.log(res.data);
+                    if (res.data == 'blocked') {
+                        history('/login')
+                        localStorage.removeItem('userToken')
+                    } else {
+                        setSchedule(res.data)
+                    }
                 })
             }
         }
@@ -47,16 +53,16 @@ function Appointment() {
     }
 
     const handleSubmit = async () => {
-        if(sessionDate=='Date'|| sessionTime=='Time'){
+        if (sessionDate == 'Date' || sessionTime == 'Time') {
             setErrMsg('Please select session date and time')
-        }else{
+        } else {
 
             const data = {
                 doctor: docData._id,
                 user: userData._id,
                 date: sessionDate,
                 time: sessionTime,
-                issues:issues,
+                issues: issues,
                 fee: docData.fee
             }
             dispatch(setAppointment(data))
@@ -66,8 +72,8 @@ function Appointment() {
 
     return (
         <>
-            <div className=" slice mx-auto text-center mt-5 ps-5 pe-5 pb-5 app-div" style={{maxWidth:"800px"}}>
-                            {errMsg? <div className='mt-3 alert-danger alert'>{errMsg}</div>:''}
+            <div className=" slice mx-auto text-center mt-5 ps-5 pe-5 pb-5 app-div" style={{ maxWidth: "800px" }}>
+                {errMsg ? <div className='mt-3 alert-danger alert'>{errMsg}</div> : ''}
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="row">
@@ -86,7 +92,7 @@ function Appointment() {
                                 <p>{userData?.age}</p>
                                 <p>{userData?.gender}</p>
                                 <p>{userData?.address}</p>
-                                <textarea name="issues" id="" value={issues} onChange={(e)=>setIssues(e.target.value)} className='form-control' cols="30" rows="5" placeholder='Enter your health issues here...' />
+                                <textarea name="issues" id="" value={issues} onChange={(e) => setIssues(e.target.value)} className='form-control' cols="30" rows="5" placeholder='Enter your health issues here...' />
                             </div>
                         </div>
                     </div>
@@ -103,7 +109,7 @@ function Appointment() {
                                 <div className=''>
                                     <b>Session Timing </b>
                                     <div className="dropdown">
-                                        <button className="btn p-1 bg-light btn-outline-dark mt-2 text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ maxWidth: '150px',minWidth:'100px', fontSize: "14px" }}>
+                                        <button className="btn p-1 bg-light btn-outline-dark mt-2 text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ maxWidth: '150px', minWidth: '100px', fontSize: "14px" }}>
                                             {sessionDate}
                                         </button>
                                         <ul className="dropdown-menu">
@@ -113,11 +119,11 @@ function Appointment() {
                                         </ul>
                                     </div>
                                     <div className="dropdown">
-                                        <button className="btn p-1 bg-light btn-outline-dark mt-2  text-dark dropdown-toggle" style={{maxWidth: '150px',minWidth:'100px', fontSize: "14px" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button className="btn p-1 bg-light btn-outline-dark mt-2  text-dark dropdown-toggle" style={{ maxWidth: '150px', minWidth: '100px', fontSize: "14px" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             {sessionTime}
                                         </button>
                                         <ul className="dropdown-menu">
-                                            {timeList && timeList.map(el => <li key={el}><button  className='btn p-0  bg-light listbutt' onClick={() => setSessionTime(el)}>{el}</button></li>)}
+                                            {timeList && timeList.map(el => <li key={el}><button className='btn p-0  bg-light listbutt' onClick={() => setSessionTime(el)}>{el}</button></li>)}
                                         </ul>
                                     </div>
                                 </div>

@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import RequireUser from '../context/auth/requireUser'
 import Login from '../components/Login'
 import Signup from "../components/Signup"
@@ -9,15 +9,45 @@ import Home from '../components/userComponents/userHome/userHome'
 import Loader from '../components/loader'
 import VideoCall from '../components/videoCall'
 import FeedBack from '../components/userComponents/feedBack'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import useAuth from '../hooks/useAuth'
 
 const Payment = lazy(() => import('../components/userComponents/payment'))
 const Appointment = lazy(() => import("../components/userComponents/appointments/appointment"))
 const PageStructure = lazy(() => import('../components/userComponents/pages/docSearchPageStructure'))
 const ProfilePageStructure = lazy(() => import('../components/userComponents/pages/userProfile/userProfilePageStructure'))
 const Success = lazy(() => import('../components/userComponents/success'))
-
+import { setUserData } from '../redux/userData'
 
 function User() {
+  const dispatch = useDispatch()
+  const {setUser} = useAuth()
+  const userToken = localStorage.getItem('userToken')
+  const history = useNavigate()
+  useEffect(()=>{
+    async function dataCall(){
+      if (userToken) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
+        await axios.get(import.meta.env.VITE_BASE_URL + `userData`)
+          .then(res => {
+            if (res.data) {
+              if (res.data !== 'unauthorized' || res.data !== 'blocked') {
+                dispatch(setUserData(res.data))
+                setUser(true)
+              }else{
+                history('/login')
+              }
+            }
+  
+          })
+      } else {
+        setUser(false)
+
+      }
+    }
+    dataCall()
+  },[dispatch, history, setUser, userToken])
   return (
     <>
       <Navbar />

@@ -9,12 +9,14 @@ const { dateTime } = require("../config/dateAndTime");
 const User = require("../model/userModel");
 const Medicine = require("../model/medicines");
 const Appointments = require("../model/appointmentModel");
+const mailSender = require("../config/nodeMailer");
 
 const login = async (req, res) => {
   try {
     console.log(1);
     const { email, password } = req.body;
     const adminData = await Admin.findOne({ email: email });
+    console.log(adminData);
     if (adminData) {
       const passwordMatch = await bcrypt.compare(password, adminData.password);
       if (passwordMatch) {
@@ -27,11 +29,13 @@ const login = async (req, res) => {
       } else {
         res.json("unauthorized");
       }
-    }
-  } catch (error) {
-    res.json("error");
+    }else {
+      res.json("unauthorized");
   }
-};
+} catch (error) {
+  res.json("error");
+}
+}
 
 const adminData = async (req, res) => {
   try {
@@ -121,31 +125,36 @@ const manageDoctor = async (req, res) => {
     const id = req.params.docId;
     const type = req.body.action;
     const Data = await Doctor.find({ _id: id });
+    const Email = Data[0].email
+    
     if (type == "approve") {
       if (Data[0].isApproved) {
         const verification = await Doctor.findOneAndUpdate(
           { _id: id },
           { $set: { isApproved: false } }
         );
+        await mailSender(Email, "Otp",'reject');
         res.json("disapproved");
       } else {
         const verification = await Doctor.findOneAndUpdate(
           { _id: id },
           { $set: { isApproved: true } }
         );
+        await mailSender(Email, "Otp",'approve');
         res.json("approved");
       }
     } else {
       if (Data[0].isBlocked == false) {
+        const reason = req.body.reason
         const block = await Doctor.findOneAndUpdate(
           { _id: id },
-          { $set: { isBlocked: true } }
+          { $set: { isBlocked: true,blockReason:reason } },
         );
         res.json("blocked");
       } else {
         const block = await Doctor.findOneAndUpdate(
           { _id: id },
-          { $set: { isBlocked: false } }
+          { $set: { isBlocked: false , blockReason:''} }
         );
         res.json("unblocked");
       }
@@ -278,4 +287,4 @@ module.exports = {
   deleteMedicine,
   appoints,
   payments,
-};
+}

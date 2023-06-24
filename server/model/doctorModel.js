@@ -64,6 +64,9 @@ const doctorSchema = new mongoose.Schema({
   token: {
     type: String,
   },
+  blockReason:{
+    type:String
+  }
 });
 
 module.exports = mongoose.model("doctor", doctorSchema);

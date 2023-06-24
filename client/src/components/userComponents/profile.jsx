@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserData } from '../../redux/userData'
+import { useNavigate } from 'react-router-dom'
 
 function Profile() {
 
     const userData = useSelector(state => state.user.data)
-
     const [preview, setPreview] = useState('')
     const [profile, setProfile] = useState(userData.image)
     const [name, setName] = useState(userData.userName)
@@ -15,7 +15,23 @@ function Profile() {
     const [contact, setContact] = useState(userData.contact);
     const [gender, setGender] = useState(userData.gender);
     const [age, setAge] = useState(userData.age);
-
+    const userToken = localStorage.getItem('userToken')
+    const history = useNavigate()
+    
+    useEffect(()=>{
+        async function dataCall(){
+            if (userToken) {
+              axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
+              await axios.get(import.meta.env.VITE_BASE_URL + `userData`)
+                .then(res => {
+                  if (res.data=='blocked') {
+                    history('/login')
+        
+                }})
+            }
+          }
+          dataCall()
+    })
 
     const dispatch = useDispatch()
 
@@ -34,7 +50,10 @@ function Profile() {
                 .then(res => {
                     if (res.data === 'error') {
                         setMsg("Something went wrong")
-                    } else {
+                    }else if(res.data == 'blocked'){
+                        history('/login')
+                        localStorage.removeItem('userToken')
+                    }else{
                         dispatch(setUserData(res.data))
                         setMsg('Profile updated successfully')
                         setTimeout(() => {
