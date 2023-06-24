@@ -14,7 +14,7 @@ function DownloadButton({ el, user }) {
  <> 
             <PDFDownloadLink document={<MyPdf data={el} user={user} />} fileName="Prescription.pdf">
                 {({ loading }) =>
-                    loading ? 'Loading document...' : <button className='btn btn-success' >Prescription <FiDownload /></button>
+                    loading ? 'Loading document...' : <button className='btn btn-success' ><FiDownload /></button>
                 }
             </PDFDownloadLink>
         </>

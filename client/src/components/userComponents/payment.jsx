@@ -28,9 +28,11 @@ function Payment() {
                         Authorization: `Bearer ${userToken}`
                     }
                   }).then(res=>{
-                   
                     if(res.data=='success'){
                         history('/success')
+                    }else if(res.data == 'blocked'){
+                        history('/login')
+                        localStorage.removeItem('userToken')
                     }
                 })
             } else {

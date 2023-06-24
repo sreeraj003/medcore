@@ -42,7 +42,7 @@ const signup = async (req, res) => {
       });
       const docData = await doctor.save();
       if (docData) {
-        await mailSender(Email, Otp);
+        await mailSender(Email, Otp,'signup');
         const data = {
           message: "Check mail",
           string: token,
@@ -451,7 +451,6 @@ const patients = async(req,res)=>{
 const dash = async(req,res)=>{
   try {
     const data = await Appointment.find({doctor:req._id.id})
-    console.log(data);
     res.json(data)
   } catch (error) {
     console.log(error);

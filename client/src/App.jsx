@@ -8,35 +8,23 @@ import Admin from './Routes/admin';
 import useAuth from './hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { setDoctorData } from './redux/doctorData';
-import { setUserData } from './redux/userData';
+
 import { setAdminData } from './redux/adminData';
 
 function App() {
 
-  const { setUser, setDoctor, setAdmin } = useAuth()
+  const {  setDoctor, setAdmin } = useAuth()
   const dispatch = useDispatch()
+
 
   useEffect(() => {
 
     datacall()
     async function datacall() {
-      const userToken = localStorage.getItem('userToken')
       const doctorToken = localStorage.getItem('doctorToken')
       const adminToken = localStorage.getItem('adminToken')
-      if (userToken) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
-        await axios.get(import.meta.env.VITE_BASE_URL + `userData`)
-          .then(res => {
-            if (res.data) {
-              if (res.data !== 'unauthorized') {
-                dispatch(setUserData(res.data))
-              }
-              setUser(true)
-            }
-          })
-      } else {
-        setUser(false)
-      }
+      
+
       if (doctorToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${doctorToken}`;
         await axios.get(import.meta.env.VITE_BASE_URL + `doctor/doctorData`)

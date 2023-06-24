@@ -14,6 +14,9 @@ function CreatePrescription() {
     const [selectedMed, setSelectedMed] = useState('')
     const [dose, setDose] = useState('')
     const [medDetails, setMedDetails] = useState(new Map())
+    const [mor, setMor] = useState(false)
+    const [aft, setAft] = useState(false)
+    const [evg, setEvg] = useState(false)
 
     useEffect(() => {
         if (selectedMed) {
@@ -34,30 +37,46 @@ function CreatePrescription() {
             medicine,
             selectedDose,
             id
-          }));
-        await axios.patch(import.meta.env.VITE_BASE_URL + 'doctor/addPrescription',payload, {
+        }));
+        await axios.patch(import.meta.env.VITE_BASE_URL + 'doctor/addPrescription', payload, {
             headers: {
                 Authorization: `Bearer ${doctorToken}`,
-                // "Content-Type":"application/json"
             }
-        }) .then(res=>{
-            if(res.data=='done'){
+        }).then(res => {
+            if (res.data == 'done') {
                 history('/doctor/consult')
             }
-        }) 
-    }, [doctorToken, medDetails, userData._id])
+        })
+    }, [doctorToken, history, medDetails, userData._id])
 
     const handleAddClick = useCallback(() => {
+        let med = ''
+        if (mor) {
+            med = '1'
+        } else {
+            med = '0'
+        }
+        if (aft) {
+            med = med + '-' + '1'
+        } else {
+            med = med + '-' + '0'
+        }
+        if (evg) {
+            med = med + '-' + '1'
+        } else {
+            med = med + '-' + '0'
+        }
+        
         if (selectedMed && dose) {
             setMedDetails(prev => {
                 const updated = new Map(prev)
-                updated.set(selectedMed.name, dose + 'mg ' + descriptionRef.current.value)
+                updated.set(selectedMed.name, dose + 'mg ' +med+' '+ descriptionRef.current.value)
                 return updated
             })
             setSelectedMed('');
             setDose('');
         }
-    }, [dose, selectedMed])
+    }, [aft, dose, evg, mor, selectedMed])
 
     const datacall = useCallback(async () => {
         await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/medicines', {
@@ -88,7 +107,7 @@ function CreatePrescription() {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-5">
+                    <div className="col-md-3">
                         <div className="dropdown">
                             <button className="mt-2     btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <b ref={medicineRef}>Medicine</b>
@@ -97,8 +116,6 @@ function CreatePrescription() {
                                 {
                                     medicines ? (medicines.map((med, index) => <li key={index}><a className="dropdown-item" onClick={() => setSelectedMed(med)}>{med.name}</a></li>)) : ''
                                 }
-
-
                             </ul>
                         </div>
                     </div>
@@ -114,7 +131,32 @@ function CreatePrescription() {
                             </ul>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3">
+                        <div className="d-flex" style={{ justifyContent: 'space-between' }}>
+                            <div className='mt-3'>
+                                <input className="form-check-input" onChange={() => setMor(!mor)} type="checkbox" value="" id="" />
+                                <label className="form-check-label" htmlFor="">
+                                    Mor
+                                </label>
+                            </div>
+                            <div className='mt-3'>
+
+                                <input className="form-check-input" onChange={() => setAft(!aft)} type="checkbox" value="" id="" />
+                                <label className="form-check-label" htmlFor="">
+                                    Aft
+                                </label>
+                            </div>
+                            <div className='mt-3'>
+
+                                <input className="form-check-input" onChange={() => setEvg(!evg)} type="checkbox" value="" id="" />
+                                <label className="form-check-label" htmlFor="">
+                                    Evg
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className="col-md-3">
                         <input className='form-control mt-2 ' ref={descriptionRef} placeholder='Description...' type="text" />
                     </div>
                     <button className='mx-auto mt-3 btn btn-success' onClick={handleAddClick} style={{ maxWidth: "100px" }}>Add</button>

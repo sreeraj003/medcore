@@ -25,19 +25,23 @@ function UserAppointments() {
                 }
             })
             .then(res => {
-                console.log(res);
-                const updatedArray = appointments.map((item) => {
-                    if (item._id === id) {
-                        console.log(1);
-                        return{
-                            ...item,
-                            isCancelled:true
+                if (res.data == 'blocked') {
+                    history('/login')
+                    localStorage.removeItem('userToken')
+                } else {
+                    const updatedArray =appointments.length!=0 && appointments.map((item) => {
+                        if (item._id === id) {
+                            console.log(1);
+                            return {
+                                ...item,
+                                isCancelled: true
+                            }
                         }
-                    }
-                    return item
-                })
-                console.log(updatedArray);
-                setAppointments(updatedArray)
+                        return item
+                    })
+                    console.log(updatedArray);
+                    setAppointments(updatedArray)
+                }
             }
             )
     }, [appointments, userToken])
@@ -51,7 +55,14 @@ function UserAppointments() {
                     }
                 })
                 .then(res => {
-                    setAppointments(res.data);
+                    console.log(res.data);
+                    if(res.data == 'blocked'){
+                        localStorage.removeItem('userToken')
+                        history('/login')
+                    }else{
+
+                        setAppointments(res.data);
+                    }
                 });
         }
         datacall();
@@ -80,7 +91,7 @@ function UserAppointments() {
         <>
             <div className="appoints text-center p-3 m-5">
                 <h2>Appointments</h2>
-                {appointments ? (
+                {appointments ? (appointments.length!=0 &&
                     appointments.map(el => (
                         <div className="appointCard text-center      mt-3 p-3" key={el._id}>
                             <div className="row">
@@ -97,7 +108,7 @@ function UserAppointments() {
                                     {
                                         <>
                                             { } <br />
-                                            {new Date(el.date) < new Date() ? 'Unavailable' : el.isAttended ? "Attended" : !el.isCancelled ? <><button className='btn bg-danger text-white ps-2 pe-2 ' onClick={() => handleCancelAppointment(el._id)} style={{ fontSize: "15px" }}>Cancel</button> <button style={{ fontSize: "15px" }} className='btn ps-2 pe-2 btn-outline-success' onClick={() => handleJoin(el._id+el.user)}>Join</button></>:'cancelled'}
+                                            {new Date(el.date) < new Date() ? 'Unavailable' : el.isAttended ? "Attended" : !el.isCancelled ? <><button className='btn bg-danger text-white ps-2 pe-2 ' onClick={() => handleCancelAppointment(el._id)} style={{ fontSize: "15px" }}>Cancel</button> <button style={{ fontSize: "15px" }} className='btn ps-2 pe-2 btn-outline-success' onClick={() => handleJoin(el._id + el.user)}>Join</button></> : 'cancelled'}
                                         </>
                                     }
 

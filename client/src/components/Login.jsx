@@ -11,9 +11,9 @@ import { setAdminData } from '../redux/adminData'
 import useAuth from '../context/hooks/useAuth'
 import { validateEmail } from './validator'
 
-// Login.Proptype = {
-//     value: Proptype.string
-// }
+Login.Proptype = {
+    value: Proptype.string
+}
 
 function Login({ value }) {
     const { setUser, setDoctor, setAdmin } = useAuth()
