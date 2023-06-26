@@ -54,7 +54,7 @@ function App() {
         setAdmin(false)
       }
     }
-  }, [])
+  }, [dispatch, setAdmin, setDoctor])
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import DataTables from "../dataTables"
 import axios from "axios"
 import { validateCapitalLetter } from "../validator"
@@ -13,7 +13,7 @@ function Departments() {
   const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('')
 
-  const departmentData = async () => {
+  const departmentData = useCallback(async () => {
     await axios.get(import.meta.env.VITE_BASE_URL + 'admin/departments', {
       headers: {
         Authorization: `Bearer ${adminToken}`,
@@ -23,7 +23,7 @@ function Departments() {
       setDepartList(res.data)
       setFilteredData(res.data)
     })
-  }
+  },[adminToken])
 
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -122,7 +122,7 @@ function Departments() {
 
   useEffect(() => {
     departmentData()
-  }, [])
+  }, [departmentData])
 
   return (
     <>

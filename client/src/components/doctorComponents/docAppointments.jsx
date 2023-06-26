@@ -9,15 +9,7 @@ function DocAppointments() {
 
   const doctorToken = localStorage.getItem('doctorToken');
 
-  const getAppointments = async () => {
-    const res = await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/appointments', {
-      headers: {
-        Authorization: `Bearer ${doctorToken}`
-      }
-    });
-    setFilteredData(res.data)
-    setAppointments(res.data);
-  };
+
 
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -65,8 +57,17 @@ function DocAppointments() {
   ];
 
   useEffect(() => {
+    const getAppointments = async () => {
+      const res = await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/appointments', {
+        headers: {
+          Authorization: `Bearer ${doctorToken}`
+        }
+      });
+      setFilteredData(res.data)
+      setAppointments(res.data);
+    };
     getAppointments();
-  }, []);
+  }, [doctorToken]);
 
   return (
     <>
