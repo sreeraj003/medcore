@@ -37,8 +37,7 @@ const doctorSchema = new mongoose.Schema({
     type: String,
   },
   isApproved:{
-    type:Boolean,
-    default:false
+    type:String,
   },
   isBlocked: {
     type: Boolean,

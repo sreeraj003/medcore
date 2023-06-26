@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { FaStethoscope } from 'react-icons/fa';
-import { BiNotepad,BiRupee } from 'react-icons/bi';
+import { BiNotepad, BiRupee } from 'react-icons/bi';
 import './doctor.css'
 import { MdPerson, MdOutlineSick, MdCalendarMonth } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
@@ -36,7 +36,7 @@ function DoctorSideBar() {
 
     return (
         <>
-            <div className='bg-black z-10 docSide top-0 left-0' style={{zIndex:10, left: '0%', top: '10%' }}>
+            <div className='bg-black z-10 docSide top-0 left-0' style={{ zIndex: 10, left: '0%', top: '10%' }}>
                 <div className='sidebar  bg-white fixed top-0 right-0 h-100 z-10 '>
                     <h2 className=' p-4 text-dark'>
                         Wellcome<br /><span className='text-success'><h1>{value.name}</h1></span>

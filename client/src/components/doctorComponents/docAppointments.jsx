@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DataTables from '../dataTables';
 import axios from 'axios';
 
@@ -22,14 +22,14 @@ function DocAppointments() {
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
     setSearch(searchValue);
-  
+
     const filtered = appointments.filter((appointment) =>
       appointment.userData[0].userName.toLowerCase().startsWith(searchValue)
     );
     console.log(filtered);
     setFilteredData(filtered);
   };
-  
+
 
   const columns = [
     {

@@ -11,7 +11,7 @@ function Departments() {
   const [image, setImage] = useState([])
   const [preview, setPreView] = useState('')
   const [filteredData, setFilteredData] = useState([]);
-  const [search,setSearch] = useState('')
+  const [search, setSearch] = useState('')
 
   const departmentData = async () => {
     await axios.get(import.meta.env.VITE_BASE_URL + 'admin/departments', {
@@ -19,16 +19,16 @@ function Departments() {
         Authorization: `Bearer ${adminToken}`,
       }
     }).then(res => {
-    
+
       setDepartList(res.data)
-    setFilteredData(res.data)
+      setFilteredData(res.data)
     })
   }
 
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
     setSearch(searchValue);
-  
+
     const filtered = departmentList.filter((dep) =>
       dep.name.toLowerCase().startsWith(searchValue)
     );
@@ -182,13 +182,13 @@ function Departments() {
 
         }
         <h3>Departments</h3>
-      <input
-        type="text"
-        value={search}
-        onChange={handleSearch}
-        placeholder="Search..."
-        className="form-control w-25 mb-2"
-      />
+        <input
+          type="text"
+          value={search}
+          onChange={handleSearch}
+          placeholder="Search..."
+          className="form-control w-25 mb-2"
+        />
         <DataTables columns={columns} title='Departments' data={filteredData} />
       </div>
     </>

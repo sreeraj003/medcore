@@ -66,11 +66,11 @@ function CreatePrescription() {
         } else {
             med = med + '-' + '0'
         }
-        
+
         if (selectedMed && dose) {
             setMedDetails(prev => {
                 const updated = new Map(prev)
-                updated.set(selectedMed.name, dose + 'mg ' +med+' '+ descriptionRef.current.value)
+                updated.set(selectedMed.name, dose + 'mg ' + med + ' ' + descriptionRef.current.value)
                 return updated
             })
             setSelectedMed('');

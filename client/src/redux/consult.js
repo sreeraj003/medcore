@@ -1,16 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";  
+import { createSlice } from "@reduxjs/toolkit";
 
 const consultSlice = createSlice({
-    name:'consult',
-    initialState:{
-        slot:''
+  name: "consult",
+  initialState: {
+    slot: "",
+  },
+  reducers: {
+    setSlot: (state, action) => {
+      state.slot = action.payload;
     },
-    reducers:{
-        setSlot:(state,action)=>{
-            state.slot = action.payload
-        }
-    }
-})
+  },
+});
 
-export const {setSlot} = consultSlice.actions
-export default consultSlice.reducer
+export const { setSlot } = consultSlice.actions;
+export default consultSlice.reducer;

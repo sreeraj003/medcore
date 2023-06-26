@@ -22,7 +22,7 @@ function DataTables(props) {
                 fixedHeader
                 highlightOnHover
                 pagination
-                
+
             />
         </Suspense>
     )

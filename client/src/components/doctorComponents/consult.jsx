@@ -14,7 +14,7 @@ function Consult() {
 
     const dispatch = useDispatch()
     const email = useSelector(state => state.doctor.data.email)
-    
+
 
     useEffect(() => {
         async function datacall() {
@@ -33,13 +33,13 @@ function Consult() {
         datacall()
     }, [docToken])
 
-    const handlePrescribe = useCallback((el)=>{
+    const handlePrescribe = useCallback((el) => {
         console.log(el);
         dispatch(setData(el))
         navigate('/doctor/createPrscription')
-    },[dispatch, navigate])
+    }, [dispatch, navigate])
 
-    const handleJoin = useCallback((id,room) => {
+    const handleJoin = useCallback((id, room) => {
         dispatch(setSlot(id))
         console.log(room);
         socket.emit("room:join", { email, room })
@@ -77,12 +77,12 @@ function Consult() {
                                     <p>{el.time}</p>
                                 </div>
                                 <div className="col-sm-3">
-     
-                                     {
+
+                                    {
                                         <>
-                                        
-                                            {new Date(el.date) < new Date() ? 'Unavailable' : el.isAttended ? "Attended" : !el.isCancelled ? <> <button style={{ fontSize: "15px" }} className='btn ps-2 pe-2 btn-outline-success'  onClick={() => handleJoin(el._id,el._id+el.user)}>Join</button></>:'cancelled'} <br />
-                                            {!el.medicines ? <button className='btn btn-success p-2 mt-1' style={{fontSize:'14px'}} onClick={()=>handlePrescribe(el)}>Prescribe</button> :"Presciption added"}
+
+                                            {new Date(el.date) < new Date() ? 'Unavailable' : el.isAttended ? "Attended" : !el.isCancelled ? <> <button style={{ fontSize: "15px" }} className='btn ps-2 pe-2 btn-outline-success' onClick={() => handleJoin(el._id, el._id + el.user)}>Join</button></> : 'cancelled'} <br />
+                                            {!el.medicines ? <button className='btn btn-success p-2 mt-1' style={{ fontSize: '14px' }} onClick={() => handlePrescribe(el)}>Prescribe</button> : "Presciption added"}
                                         </>
                                     }
                                 </div>

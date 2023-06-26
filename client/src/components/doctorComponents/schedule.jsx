@@ -6,7 +6,7 @@ import './schedule.css'
 function Schedule() {
 
   const timeSlots = ['8.00 AM', '8.30 AM', '9.00 AM', '9.30 AM', '10.00 AM', '10.30 AM', "11.00 AM", "11.30 AM", "12.00 PM", '12.30 PM', '1.00 PM', '1.30 PM', '2.00 PM', '2.30 PM', '3.00 PM', '3.30 PM', '4.00 PM', '4.30 PM', '5.00 PM', '5.30 PM', '6.00 PM', '6.30 PM', '7.00 PM', '7.30 PM', '8.00 PM', '8.30 PM', '9.00 PM', '9.30 PM', '10.00 PM']
-
+  const days = ["Monday", 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const [freeDate, setFreeDate] = useState('')
   const [freeTime, setFreeTime] = useState([])
   const [msg, setMsg] = useState('')
@@ -31,7 +31,8 @@ function Schedule() {
         })
     }
     dataCall()
-  }, [])
+  }, [dispatch, doctorToken])
+
 
   const handleSchedule = async (e) => {
     e.preventDefault()
@@ -86,15 +87,25 @@ function Schedule() {
       <div className='container pb-2 ms-auto bg-white'>
         <h2>My Schedule</h2>
         <div className='bg-white text-center '>
-          {msg == 'Please fill date and time' || msg == 'error' ? 
-          <div className='alert alert-danger'>{msg}</div>
-          :!msg? '' : <div className='alert alert-success'>{msg}</div>
-            
+          {msg == 'Please fill date and time' || msg == 'error' ?
+            <div className='alert alert-danger'>{msg}</div>
+            : !msg ? '' : <div className='alert alert-success'>{msg}</div>
+
           }
           <div className='d-flex p-3' style={{ maxWidth: '100%', justifyContent: 'center' }} >
             <div className="row">
               <div className="col-md-6">
-                <input type="date" value={freeDate} onChange={(e) => setFreeDate(e.target.value)} className='form-control' />
+                <div className="dropdown">
+                  <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {freeDate ? freeDate : 'Day'}
+                  </button>
+                  <ul className="dropdown-menu">
+                    {days && days.map((el, index) =>
+                      <li key={index}><a className="dropdown-item" onClick={() => setFreeDate(el)} href="#">{el}</a></li>
+                    )
+                    }
+                  </ul>
+                </div>
               </div>
               <div className="col-md-6">
                 <div className="dropdown">
@@ -135,13 +146,13 @@ function Schedule() {
           <div>
             <div style={{ maxWidth: "200px" }}><span>Selected Time :</span> <br /> {freeTime.map(el => el + ',')}</div>
             {scheduleList ?
-              scheduleList.map((el,index) => (
+              scheduleList.map((el, index) => (
                 <div key={index} className="card text-start m-3 p-3">
                   <div>
                     <b style={{ fontSize: '20px' }}>Date : </b>{el.date}
                   </div>
                   <div>
-                    <h5>Time Slotes :</h5>{el.time.map(time => <div className='btn p-1 m-2 text-white bg-secondary'key={time}>{time}<button className='btn mt-0 ms-1 text-white' value={el.date + '_' + time} onClick={removeSlot}>X</button></div>)}
+                    <h5>Time Slotes :</h5>{el.time.map(time => <div className='btn p-1 m-2 text-white bg-secondary' key={time}>{time}<button className='btn mt-0 ms-1 text-white' value={el.date + '_' + time} onClick={removeSlot}>X</button></div>)}
                     <br />
                   </div>
                 </div>

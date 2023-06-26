@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function Payments() {
   const [payments, setPayments] = useState('')
-  
+
   const getPayments = async () => {
     const doctorToken = localStorage.getItem('doctorToken');
     const res = await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/payments', {
@@ -22,8 +22,8 @@ function Payments() {
     },
 
     {
-      name:'Date',
-      selector:(row)=><div>{row.createdAt && row.createdAt.split(' ')[0]}</div>
+      name: 'Date',
+      selector: (row) => <div>{row.createdAt && row.createdAt.split(' ')[0]}</div>
     },
     {
       name: 'Amount',
@@ -38,7 +38,7 @@ function Payments() {
   return (
     <>
       <h3>Payments</h3>
-      
+
       <DataTables
         columns={columns}
         title="Appointments"

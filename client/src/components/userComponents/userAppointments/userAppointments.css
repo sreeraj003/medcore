@@ -1,17 +1,16 @@
-.appoints{
-    border-radius: 20px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-
+.appoints {
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
 }
-.appointCard{
-    border-radius: 10px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgb(23, 116, 35);
+.appointCard {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(23, 116, 35);
 }
 
-.subText{
-    color: rgb(98, 98, 98);
+.subText {
+  color: rgb(98, 98, 98);
 }

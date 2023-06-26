@@ -126,23 +126,23 @@ const manageDoctor = async (req, res) => {
     const type = req.body.action;
     const Data = await Doctor.find({ _id: id });
     const Email = Data[0].email
-    
-    if (type == "approve") {
-      if (Data[0].isApproved) {
+    console.log(type); 
+    if (type == "reject") {
         const verification = await Doctor.findOneAndUpdate(
           { _id: id },
-          { $set: { isApproved: false } }
+          { $set: { isApproved: 'rejected' } }
         );
         await mailSender(Email, "Otp",'reject');
         res.json("disapproved");
-      } else {
+      }
+      else if(type == "approve"){
         const verification = await Doctor.findOneAndUpdate(
           { _id: id },
-          { $set: { isApproved: true } }
-        );
+          { $set: { isApproved: 'approved' } }
+          );
+          console.log(1);
         await mailSender(Email, "Otp",'approve');
         res.json("approved");
-      }
     } else {
       if (Data[0].isBlocked == false) {
         const reason = req.body.reason

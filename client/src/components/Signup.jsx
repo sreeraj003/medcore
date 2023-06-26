@@ -46,7 +46,7 @@ function Signup({ value }) {
                 return;
             }
 
-            if (Age <= 0 || Age > 120  ) {
+            if (Age <= 0 || Age > 120) {
                 setErrorMsg('Please enter valid age...!')
                 return
             }

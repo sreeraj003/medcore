@@ -6,10 +6,8 @@ const bodyParser = require("body-parser");
 const userRoute = require("./Routes/userRoute");
 const adminRoute = require("./Routes/adminRoute");
 const doctorRoute = require("./Routes/doctorRoute");
-const  {Server} = require('socket.io')
-const socketManager = require('./config/socket')
-
-
+const { Server } = require("socket.io");
+const socketManager = require("./config/socket");
 
 app.use(cors);
 
@@ -25,5 +23,5 @@ app.use("/doctor", doctorRoute);
 const server = app.listen(8080, () => {
   console.log("connected");
 });
-const io = new Server(server,{cors:true})
-socketManager(io)
+const io = new Server(server, { cors: true });
+socketManager(io);

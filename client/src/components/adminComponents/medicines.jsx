@@ -57,14 +57,14 @@ function Medicines() {
         setMedicineList(prevMedicines =>
           prevMedicines.filter(medicine => medicine._id !== row._id)
         );
-  
+
         setFilteredData(prevFilteredData =>
           prevFilteredData.filter(medicine => medicine._id !== row._id)
         );
       }
     });
   }, [adminToken]);
-  
+
   const columns = [
     {
       name: 'Name',

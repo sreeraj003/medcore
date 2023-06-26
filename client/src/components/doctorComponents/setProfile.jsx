@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './setProfile.css';
 import axios from 'axios';
 import { setDoctorData } from '../../redux/doctorData';
@@ -82,7 +82,7 @@ function SetProfile() {
                 import.meta.env.VITE_BASE_URL + 'doctor/setprofile',
                 formData,
                 {
-                    headers: { 
+                    headers: {
                         Authorization: `Bearer ${doctorToken}`,
                         'Content-Type': 'multipart/form-data',
                     },
@@ -159,7 +159,7 @@ function SetProfile() {
                         />
                         {msg == "Profile updated successfully" ?
                             <div className="alert mt-3 alert-success" role="alert">
-                                "Profile updated successfully"
+                                Profile updated successfully
                             </div>
                             : msg ?
                                 <div className="alert mt-3 alert-danger" role="alert">
