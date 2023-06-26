@@ -85,11 +85,15 @@ const login = async (req, res) => {
       const passwordMatch = await bcrypt.compare(password, doctorData.password);
       if (passwordMatch) {
         if (doctorData.isVerified === true) {
-          if (!doctorData.isBlocked) {
-            const token = createDoctorTokens(doctorData._id);
-            res.json({ doctorData, token });
-          } else {
-            res.json("blocked");
+          if(doctorData.isApproved){
+            if (!doctorData.isBlocked) {
+              const token = createDoctorTokens(doctorData._id);
+              res.json({ doctorData, token });
+            } else {
+              res.json("blocked");
+            }
+          }else{
+            res.json('notApproved')
           }
         } else {
           res.json("unverified");

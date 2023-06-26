@@ -46,6 +46,8 @@ function Login({ value }) {
                     setErrorMsg('Email not verified.Please check your mail')
                 } else if (res.data === 'blocked') {
                     setErrorMsg('This accout has been blocked.Please contact admin')
+                }else if(res.data =='notApproved'){
+                    setErrorMsg('This account is not yet approved by the admins.PLease wait till we notify you by mail')
                 } else {
                     localStorage.setItem("doctorToken", res.data.token)
                     dispatch(setDoctorData(res.data.doctorData))
