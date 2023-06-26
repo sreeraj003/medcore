@@ -1,16 +1,16 @@
 import DataTables from "../dataTables"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import View from "./view"
 function Doctors() {
   const [selectedDoc, setSelectedDoc] = useState('')
   const [doctorsList, setDoctorsList] = useState([])
-  const [search,setSearch] = useState('')
-  const [filteredData,setFilteredData] = useState([])
+  const [search, setSearch] = useState('')
+  const [filteredData, setFilteredData] = useState([])
 
   const adminToken = localStorage.getItem('adminToken')
 
-  
+
 
   const viewDoc = (row) => {
     const doc = doctorsList.filter(el => el._id == row._id)
@@ -20,13 +20,28 @@ function Doctors() {
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
     setSearch(searchValue);
-  
+
     const filtered = doctorsList.filter((doc) =>
       doc.name.toLowerCase().startsWith(searchValue)
     );
     setFilteredData(filtered);
   };
 
+  const approved = useCallback(() => {
+    setFilteredData(doctorsList.filter(el => el.isApproved == 'approved'))
+  }, [doctorsList])
+
+  const pending = useCallback(() => {
+    setFilteredData(doctorsList.filter(el => el.isApproved == ''))
+  }, [doctorsList])
+
+  const rejected = useCallback(() => {
+    setFilteredData(doctorsList.filter(el => el.isApproved == 'rejected'))
+  }, [doctorsList])
+
+  const all = () => {
+    setFilteredData(doctorsList)
+  }
 
   const columns = [
     {
@@ -67,6 +82,7 @@ function Doctors() {
           Authorization: `Bearer ${adminToken}`,
         }
       }).then(res => {
+
         setDoctorsList(res.data)
         setFilteredData(res.data)
       })
@@ -82,6 +98,32 @@ function Doctors() {
           (
             <>
               <h3>Doctors</h3>
+              <div className="d-flex">
+                <div className="form-check ms-3" >
+                  <input className="form-check-input" onChange={approved} type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                  <label className="form-check-label" htmlFor="flexRadioDefault1">
+                    Approved
+                  </label>
+                </div>
+                <div className="form-check ms-3">
+                  <input className="form-check-input" onChange={pending} type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                  <label className="form-check-label" htmlFor="flexRadioDefault2">
+                    Pending
+                  </label>
+                </div>
+                <div className="form-check ms-3">
+                  <input className="form-check-input" onChange={rejected} type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                  <label className="form-check-label" htmlFor="flexRadioDefault2">
+                    Rejected
+                  </label>
+                </div>
+                <div className="form-check ms-3">
+                  <input className="form-check-input" onChange={all} type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                  <label className="form-check-label" htmlFor="flexRadioDefault2">
+                    All
+                  </label>
+                </div>
+              </div>
               <input
                 type="text"
                 value={search}

@@ -13,6 +13,6 @@
 .horizontal-scroll-content {
   display: inline-block;
 }
-.block:hover{
-      background-color: rgb(220, 0, 0)!important;
+.block:hover {
+  background-color: rgb(220, 0, 0) !important;
 }

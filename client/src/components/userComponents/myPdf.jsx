@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
-  prescription:{
+  prescription: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,
-    marginTop:"20px"
+    marginTop: "20px"
   }
 });
 
@@ -51,18 +51,18 @@ function MyPDF({ data, user }) {
           </View>
         </View>
 
-          <View>
-            <hr />
-            <Text style={styles.prescription}>Prescription</Text>
-            {
-              Object.entries(data.medicines) &&
-              Object.entries(data.medicines).map((el, index) => (
-                <Text style={styles.label} key={index}>
-                  { el[0] && el[0]}:{el[1]&&el[1]}<br />
-                </Text>
-              ))
-            }
-          </View>
+        <View>
+          <hr />
+          <Text style={styles.prescription}>Prescription</Text>
+          {
+            Object.entries(data.medicines) &&
+            Object.entries(data.medicines).map((el, index) => (
+              <Text style={styles.label} key={index}>
+                {el[0] && el[0]}:{el[1] && el[1]}<br />
+              </Text>
+            ))
+          }
+        </View>
       </Page>
     </Document>
   );

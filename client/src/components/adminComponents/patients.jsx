@@ -11,8 +11,6 @@ function Patients() {
 
   const adminToken = localStorage.getItem('adminToken')
 
-
-
   const viewPatient = (row) => {
     const doc = patientsList.filter(el => el._id == row._id)
     setSelectedPatient(doc[0])

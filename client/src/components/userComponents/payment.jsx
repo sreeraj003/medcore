@@ -27,10 +27,10 @@ function Payment() {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
-                  }).then(res=>{
-                    if(res.data=='success'){
+                }).then(res => {
+                    if (res.data == 'success') {
                         history('/success')
-                    }else if(res.data == 'blocked'){
+                    } else if (res.data == 'blocked') {
                         history('/login')
                         localStorage.removeItem('userToken')
                     }
@@ -44,7 +44,7 @@ function Payment() {
     };
 
     return (
-        <div className="slice m-3 mx-auto mt-5 mb-5 p-2 app-div" style={{maxWidth:'1200px'}}>
+        <div className="slice m-3 mx-auto mt-5 mb-5 p-2 app-div" style={{ maxWidth: '1200px' }}>
             <div className="container">
                 <div className="row">
                     <div className="col-lg-6">

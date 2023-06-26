@@ -5,10 +5,10 @@ function Success() {
 
     const history = useNavigate()
 
-    useEffect(()=>{
-        setTimeout(()=>{
+    useEffect(() => {
+        setTimeout(() => {
             history('/')
-        },3000)
+        }, 3000)
 
         return (
             clearTimeout()

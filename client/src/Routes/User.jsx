@@ -22,11 +22,11 @@ import { setUserData } from '../redux/userData'
 
 function User() {
   const dispatch = useDispatch()
-  const {setUser} = useAuth()
+  const { setUser } = useAuth()
   const userToken = localStorage.getItem('userToken')
   const history = useNavigate()
-  useEffect(()=>{
-    async function dataCall(){
+  useEffect(() => {
+    async function dataCall() {
       if (userToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
         await axios.get(import.meta.env.VITE_BASE_URL + `userData`)
@@ -35,11 +35,11 @@ function User() {
               if (res.data !== 'unauthorized' || res.data !== 'blocked') {
                 dispatch(setUserData(res.data))
                 setUser(true)
-              }else{
+              } else {
                 history('/login')
               }
             }
-  
+
           })
       } else {
         setUser(false)
@@ -47,7 +47,7 @@ function User() {
       }
     }
     dataCall()
-  },[dispatch, history, setUser, userToken])
+  }, [dispatch, history, setUser, userToken])
   return (
     <>
       <Navbar />
@@ -62,9 +62,9 @@ function User() {
             <Route path='/profile' element={<ProfilePageStructure />} />
             <Route path='/appointments' element={<Appointment />} />
             <Route path='/payment' element={<Payment />} />
-            <Route path='/success' element={<Success/>} />
+            <Route path='/success' element={<Success />} />
             <Route path='/feedBack' element={<FeedBack />} />
-            <Route path='/call/:room' element={<VideoCall value='user'/>} />
+            <Route path='/call/:room' element={<VideoCall value='user' />} />
           </Route>
         </Routes>
       </Suspense>

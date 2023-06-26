@@ -11,7 +11,8 @@ function Prescriptions() {
     await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/prescriptions', {
       headers: {
         Authorization: `Bearer ${doctorToken}`,
-      }}).then(res => {
+      }
+    }).then(res => {
       console.log(res.data);
       setFilteredData(res.data)
     })
@@ -39,7 +40,7 @@ function Prescriptions() {
       name: 'Medicines',
       selector: (row) => (
         <>
-          {row.medicines &&  Object.entries(row.medicines).map(([key, value]) => (
+          {row.medicines && Object.entries(row.medicines).map(([key, value]) => (
             <div key={key}>
               {key}: {value.split(' ')[0]}
             </div>

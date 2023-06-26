@@ -13,7 +13,7 @@ function BarChart({ appoints }) {
     let monthCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     appoints.forEach((el) => {
-        if(el.date.split('-')[0] == year){
+        if (el.date.split('-')[0] == year) {
             if (el.date.split('-')[1] == '01') {
                 monthCount[0] += 1
             } else if (el.date.split('-')[1] == '02') {
@@ -40,7 +40,7 @@ function BarChart({ appoints }) {
                 monthCount[11] += 1
             }
         }
-        })
+    })
 
     return (
         <>
@@ -63,7 +63,7 @@ function BarChart({ appoints }) {
                     type='bar'
                     width={'100%'}
                     height={500}
-                    
+
                     series={[
                         {
                             name: 'Revenue',
@@ -75,9 +75,9 @@ function BarChart({ appoints }) {
                             text: "Revenue Chart",
                             style: { fontSize: 30 }
                         },
-                        chart: { 
+                        chart: {
                             background: '#ffffff',
-                          },
+                        },
                         colors: ["#00009F"],
                         theme: { mode: "light" },
                         xaxis: {

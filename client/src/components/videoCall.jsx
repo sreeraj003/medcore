@@ -9,7 +9,7 @@ import { BsFillTelephoneFill, BsFillTelephoneXFill, BsMicFill, BsMicMuteFill } f
 import PropTypes from 'prop-types'
 
 VideoCall.propTypes = {
-  value:PropTypes.string
+  value: PropTypes.string
 }
 
 function VideoCall({ value }) {

@@ -6,10 +6,10 @@ import { FaIdCard } from "react-icons/fa"
 
 function DoctorHome() {
 
-  const [income,setIncome] = useState('')
-  const [patients,setPatients] = useState('')
+  const [income, setIncome] = useState('')
+  const [patients, setPatients] = useState('')
   const doctorToken = localStorage.getItem('doctorToken')
-  const [docAppoint,setDocAppoint] = useState([])
+  const [docAppoint, setDocAppoint] = useState([])
 
   useEffect(() => {
     async function dataCall() {
@@ -17,7 +17,7 @@ function DoctorHome() {
         headers: {
           Authorization: `Bearer ${doctorToken}`
         }
-      }).then(res=>{
+      }).then(res => {
         setDocAppoint(res.data)
         const inc = res.data.reduce((acc, occ) => {
           return acc = acc + occ.amount
@@ -27,10 +27,10 @@ function DoctorHome() {
       })
     }
     dataCall()
-  },[doctorToken])
+  }, [doctorToken])
   return (
     <>
-    <div className="col-md-9 col-lg-9 m-0">
+      <div className="col-md-9 col-lg-9 m-0">
         <div className='row m-auto' >
           <div className="col-lg-6">
             <div className='dataButton m-4'>
@@ -41,13 +41,13 @@ function DoctorHome() {
           </div>
           <div className="col-lg-6">
             <div className='dataButton m-4'>
-              <h5><FaIdCard  /> Total appointments</h5>
+              <h5><FaIdCard /> Total appointments</h5>
               <h4>{patients && patients}</h4>
             </div>
           </div>
 
         </div>
-        <BarChart appoints={docAppoint}/>
+        <BarChart appoints={docAppoint} />
       </div>
 
     </>

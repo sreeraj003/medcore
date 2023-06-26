@@ -13,7 +13,7 @@ import { setAdminData } from './redux/adminData';
 
 function App() {
 
-  const {  setDoctor, setAdmin } = useAuth()
+  const { setDoctor, setAdmin } = useAuth()
   const dispatch = useDispatch()
 
 
@@ -23,7 +23,7 @@ function App() {
     async function datacall() {
       const doctorToken = localStorage.getItem('doctorToken')
       const adminToken = localStorage.getItem('adminToken')
-      
+
 
       if (doctorToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${doctorToken}`;

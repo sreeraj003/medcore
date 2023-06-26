@@ -29,7 +29,7 @@ function UserAppointments() {
                     history('/login')
                     localStorage.removeItem('userToken')
                 } else {
-                    const updatedArray =appointments.length!=0 && appointments.map((item) => {
+                    const updatedArray = appointments.length != 0 && appointments.map((item) => {
                         if (item._id === id) {
                             console.log(1);
                             return {
@@ -56,10 +56,10 @@ function UserAppointments() {
                 })
                 .then(res => {
                     console.log(res.data);
-                    if(res.data == 'blocked'){
+                    if (res.data == 'blocked') {
                         localStorage.removeItem('userToken')
                         history('/login')
-                    }else{
+                    } else {
 
                         setAppointments(res.data);
                     }
@@ -91,7 +91,7 @@ function UserAppointments() {
         <>
             <div className="appoints text-center p-3 m-5">
                 <h2>Appointments</h2>
-                {appointments ? (appointments.length!=0 &&
+                {appointments ? (appointments.length != 0 &&
                     appointments.map(el => (
                         <div className="appointCard text-center      mt-3 p-3" key={el._id}>
                             <div className="row">

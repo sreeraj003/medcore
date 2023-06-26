@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaStethoscope } from 'react-icons/fa';
-import { BiNotepad,BiRupee } from 'react-icons/bi';
+import { BiNotepad, BiRupee } from 'react-icons/bi';
 import './docSidebar.css'
 import { MdPerson, MdOutlineSick, MdCalendarMonth } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +44,7 @@ const DocSidebar = () => {
     history('/doctor/admins')
   }
   return (
-    <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white' style={{zIndex:10}}>
+    <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white' style={{ zIndex: 10 }}>
 
       {!nav ?
         <div className=' sm:flex items-center  docham bg-dark ms-0 mt-0 text-[18px]'>

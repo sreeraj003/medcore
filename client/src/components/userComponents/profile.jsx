@@ -17,20 +17,21 @@ function Profile() {
     const [age, setAge] = useState(userData.age);
     const userToken = localStorage.getItem('userToken')
     const history = useNavigate()
-    
-    useEffect(()=>{
-        async function dataCall(){
+
+    useEffect(() => {
+        async function dataCall() {
             if (userToken) {
-              axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
-              await axios.get(import.meta.env.VITE_BASE_URL + `userData`)
-                .then(res => {
-                  if (res.data=='blocked') {
-                    history('/login')
-        
-                }})
+                axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
+                await axios.get(import.meta.env.VITE_BASE_URL + `userData`)
+                    .then(res => {
+                        if (res.data == 'blocked') {
+                            history('/login')
+
+                        }
+                    })
             }
-          }
-          dataCall()
+        }
+        dataCall()
     })
 
     const dispatch = useDispatch()
@@ -50,10 +51,10 @@ function Profile() {
                 .then(res => {
                     if (res.data === 'error') {
                         setMsg("Something went wrong")
-                    }else if(res.data == 'blocked'){
+                    } else if (res.data == 'blocked') {
                         history('/login')
                         localStorage.removeItem('userToken')
-                    }else{
+                    } else {
                         dispatch(setUserData(res.data))
                         setMsg('Profile updated successfully')
                         setTimeout(() => {

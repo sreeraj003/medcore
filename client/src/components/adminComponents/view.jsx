@@ -14,16 +14,11 @@ View.propTypes = {
 function View({ user, setSelected, value }) {
 
     const [msg, setMsg] = useState('')
-    const [approveButton, setApproveButton] = useState('')
     const [blockButton, setBlockButton] = useState('')
     const [reason, setReason] = useState('')
     const docIdRef = useRef()
     const isuserBlocked = user.isBlocked
     useEffect(() => {
-        if (value == "doc") {
-            if (user.isApproved == false) setApproveButton('Approve')
-            else setApproveButton('Disapprove')
-        }
         if (user.isBlocked == false) setBlockButton("Block")
         else setBlockButton("Unblock")
     }, [user.isApproved, user.isBlocked, value])
@@ -41,7 +36,7 @@ function View({ user, setSelected, value }) {
         } else {
             id = e.target.value
         }
-        
+
         const adminToken = localStorage.getItem('adminToken')
         if (reason) {
             await axios.patch(import.meta.env.VITE_BASE_URL + `admin/manageDoctor/${id}`, { action: type, reason }, {
@@ -78,11 +73,11 @@ function View({ user, setSelected, value }) {
             })
                 .then(res => {
                     if (res.data == "approved") {
-                        setMsg("This account has been verified successfully")
-                        user.isApproved = true
+                        setMsg("This account has been approved successfully")
+                        user.isApproved = "approved"
                     } else if (res.data == "disapproved") {
                         setMsg("The account has been unverified.")
-                        user.isApproved = false
+                        user.isApproved = 'rejected'
                     } else if (res.data == "blocked") {
                         setMsg("This account is blocked successfully.")
                         user.isBlocked = true
@@ -229,9 +224,11 @@ function View({ user, setSelected, value }) {
                                     {
                                         value == "doc" ?
                                             <>
-                                                {!user.isApproved && <button className='btn  btn-success me-2' value={user._id} onClick={(e) => handleDoctor(e, "approve")}>{approveButton}</button>}
-                                                {!user.isBlocked && user.isApproved && <button className='btn block btn-danger' data-bs-toggle="modal" ref={docIdRef} data-bs-target="#exampleModal" value={user._id}>{blockButton}</button>}
-                                                {user.isBlocked && user.isApproved && <button className='btn block btn-danger' ref={docIdRef} onClick={(e) => handleDoctor(e, 'block')} value={user._id}>{blockButton}</button>}
+                                                {!user.isApproved && <button className='btn  btn-success me-2' value={user._id} onClick={(e) => handleDoctor(e, "approve")}>Approve</button>}
+                                                {!user.isApproved && <button className='btn  btn-danger me-2' value={user._id} onClick={(e) => handleDoctor(e, "reject")}>Reject</button>}
+                                                {!user.isBlocked && user.isApproved == 'approved' && <button className='btn block btn-danger' data-bs-toggle="modal" ref={docIdRef} data-bs-target="#exampleModal" value={user._id}>{blockButton}</button>}
+                                                {user.isBlocked && user.isApproved == 'approved' && <button className='btn block btn-danger' ref={docIdRef} onClick={(e) => handleDoctor(e, 'block')} value={user._id}>{blockButton}</button>}
+                                                {user.isApproved == 'rejected' && "rejected"}
                                             </>
                                             :
                                             <button className='btn block btn-danger' value={user._id} onClick={handlePatient}>{blockButton}</button>

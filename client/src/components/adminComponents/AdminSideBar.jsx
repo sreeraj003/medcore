@@ -11,27 +11,27 @@ function AdminSideBar() {
 
     const handleDashboard = useCallback(() => {
         history('/admin/')
-    },[history])
+    }, [history])
 
-    const handleDoctor = useCallback( () => {
+    const handleDoctor = useCallback(() => {
         history('/admin/doctors')
-    },[history])
+    }, [history])
 
     const handlePatient = useCallback(() => {
         history('/admin/patients')
-    },[history])
+    }, [history])
 
     const handleDepartment = useCallback(() => {
         history('/admin/departments')
-    },[history])
+    }, [history])
 
     const handlePayments = useCallback(() => {
         history('/admin/payments')
-    },[history])
+    }, [history])
 
-    const handleMedicines = useCallback(() =>{
+    const handleMedicines = useCallback(() => {
         history('/admin/medicines')
-    },[history])
+    }, [history])
 
     return (
         <>

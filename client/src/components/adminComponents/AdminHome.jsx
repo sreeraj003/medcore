@@ -30,7 +30,7 @@ function AdminHome() {
     }
     dataCall()
   }, [adminToken])
-  
+
 
   return (
     <>
@@ -51,7 +51,7 @@ function AdminHome() {
           </div>
 
         </div>
-        <BarChart appoints={appointments}/>
+        <BarChart appoints={appointments} />
       </div>
 
     </>

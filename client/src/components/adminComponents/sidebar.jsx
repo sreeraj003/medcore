@@ -13,34 +13,34 @@ const Sidebar = () => {
   const handleDashboard = useCallback(() => {
     setNav(!nav)
     history('/admin/')
-  },[history,nav])
+  }, [history, nav])
 
   const handleDoctor = useCallback(() => {
     setNav(!nav)
     history('/admin/doctors')
-  },[history,nav])
+  }, [history, nav])
 
   const handlePatient = useCallback(() => {
     setNav(!nav)
     history('/admin/patients')
-  },[history, nav])
+  }, [history, nav])
 
   const handleDepartment = useCallback(() => {
     setNav(!nav)
     history('/admin/departments')
-  },[history, nav])
+  }, [history, nav])
 
   const handlePayments = useCallback(() => {
     setNav(!nav)
     history('/admin/payments')
-  },[history, nav])
-  
-  const handleMedicines = useCallback(() =>{
+  }, [history, nav])
+
+  const handleMedicines = useCallback(() => {
     setNav(!nav)
     history('/admin/medicines')
-},[history, nav])
+  }, [history, nav])
   return (
-    <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white z-10' style={{zIndex:"10"}}>
+    <div className='fixed bg-white top-0 navbar flex justify-between items-center p-4 text-white z-10' style={{ zIndex: "10" }}>
 
       {!nav ?
         <div className=' sm:flex items-center  ham bg-dark ms-0 mt-0 text-[18px]'>
