@@ -229,9 +229,9 @@ function View({ user, setSelected, value }) {
                                     {
                                         value == "doc" ?
                                             <>
-                                                <button className='btn  btn-success me-2' value={user._id} onClick={(e) => handleDoctor(e, "approve")}>{approveButton}</button>
-                                                {!user.isBlocked && <button className='btn block btn-danger' data-bs-toggle="modal" ref={docIdRef} data-bs-target="#exampleModal" value={user._id}>{blockButton}</button>}
-                                                {user.isBlocked && <button className='btn block btn-danger' ref={docIdRef} onClick={(e) => handleDoctor(e, 'block')} value={user._id}>{blockButton}</button>}
+                                                {!user.isApproved && <button className='btn  btn-success me-2' value={user._id} onClick={(e) => handleDoctor(e, "approve")}>{approveButton}</button>}
+                                                {!user.isBlocked && user.isApproved && <button className='btn block btn-danger' data-bs-toggle="modal" ref={docIdRef} data-bs-target="#exampleModal" value={user._id}>{blockButton}</button>}
+                                                {user.isBlocked && user.isApproved && <button className='btn block btn-danger' ref={docIdRef} onClick={(e) => handleDoctor(e, 'block')} value={user._id}>{blockButton}</button>}
                                             </>
                                             :
                                             <button className='btn block btn-danger' value={user._id} onClick={handlePatient}>{blockButton}</button>
