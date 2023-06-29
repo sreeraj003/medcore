@@ -3,7 +3,6 @@ module.exports = function (io) {
   const socketIdToEmailMap = new Map();
 
   io.on("connection", (socket) => {
-    // socket.emit()
     socket.on("room:join", (data) => {
       const { email, room } = data;
       emailToSocketIdMap.set(email, socket.id);
@@ -36,7 +35,6 @@ module.exports = function (io) {
         socketIdToEmailMap.delete(socketId);
       }
 
-      // Disconnect the specified socket
       const targetSocket = io.sockets.sockets.get(socketId);
       if (targetSocket) {
         targetSocket.disconnect();

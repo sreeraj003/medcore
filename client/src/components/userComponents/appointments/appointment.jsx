@@ -49,6 +49,7 @@ function Appointment() {
     const handleDate = (date) => {
         setSessionDate(date)
         const list = schedule.filter(el => el.date == date)
+        console.log(list[0].time);
         setTimeList(list[0].time)
     }
 
@@ -72,8 +73,9 @@ function Appointment() {
 
     return (
         <>
-            <div className=" slice mx-auto text-center mt-5 ps-5 pe-5 pb-5 app-div" style={{ maxWidth: "800px" }}>
+            <div className=" slice mx-auto text-center mt-5 p-4 app-div" style={{ maxWidth: "800px" }}>
                 {errMsg ? <div className='mt-3 alert-danger alert'>{errMsg}</div> : ''}
+                   <h3><b> Book Your Appointments</b></h3>
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="row">
@@ -123,7 +125,7 @@ function Appointment() {
                                             {sessionTime}
                                         </button>
                                         <ul className="dropdown-menu">
-                                            {timeList && timeList.map(el => <li key={el}><button className='btn p-0  bg-light listbutt' onClick={() => setSessionTime(el)}>{el}</button></li>)}
+                                            {timeList && timeList.map((el,index) => <li key={index}><button className='btn p-0  bg-light listbutt' onClick={() => setSessionTime(el)}>{el}</button></li>)}
                                         </ul>
                                     </div>
                                 </div>
@@ -131,7 +133,7 @@ function Appointment() {
                         </div>
                     </div>
                     <div className="col-12 mt-4 d-flex justify-content-center align-items-center">
-                        <button className='btn p-1 btn-outline-success' onClick={handleSubmit}>Book Slot <BsPlusLg style={{ marginTop: '-2px' }} /></button>
+                        <button className='btn p-1 btn-outline-success' onClick={handleSubmit}>Book Appointment <BsPlusLg style={{ marginTop: '-2px' }} /></button>
                     </div>
                 </div>
             </div>

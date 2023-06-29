@@ -257,6 +257,8 @@ const manageSchedule = async (req, res) => {
     const docId = req._id.id;
     const DocData = await Schedule.find({ doctor: docId });
 
+    
+
     if (action == "add") {
       const exist = DocData.filter((el) => el.date == date);
 

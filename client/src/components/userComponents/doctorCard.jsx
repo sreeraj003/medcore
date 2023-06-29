@@ -19,6 +19,7 @@ function DoctorCard({ docData }) {
     dispatch(setDoc(data))
     history('/appointments')
   }
+  console.log(docData);
 
   return (
     <>
@@ -36,14 +37,14 @@ function DoctorCard({ docData }) {
               <div className="row">
                 <div className="col-12 mb-2 d-flex justify-content-between">
                   <div>
-                    stars
+                    
                   </div>
                   <div>
                     Rs.{el.fee}
                   </div>
                 </div>
               </div>
-              <button className='btn mt-0 btn-outline-success' onClick={() => handleCheck(el)}>Check</button>
+              <button className='btn mt-0 btn-outline-success' onClick={() => handleCheck(el)}>Book</button>
             </div>
           ))
         ) : (

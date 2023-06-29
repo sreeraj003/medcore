@@ -117,7 +117,7 @@ const findDoctors = async (req, res) => {
     const docs = await Doctor.aggregate([
       {
         $match: {
-          isApproved: true,
+          isApproved: 'approved',
           isBlocked: false,
           isVerified: true,
         },
@@ -132,7 +132,7 @@ const findDoctors = async (req, res) => {
       },
     ]);
     const deps = await Department.find({ isBlocked: false });
-
+console.log(docs);
     res.json({ docs, deps });
   } catch (error) {
     res.json("error");

@@ -2,7 +2,6 @@ require("./config/mongo").connect();
 const express = require("express");
 const app = express();
 const cors = require("./middlewares/cors");
-const bodyParser = require("body-parser");
 const userRoute = require("./Routes/userRoute");
 const adminRoute = require("./Routes/adminRoute");
 const doctorRoute = require("./Routes/doctorRoute");

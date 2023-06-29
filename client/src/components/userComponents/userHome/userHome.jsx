@@ -1,8 +1,7 @@
 import axios from 'axios';
 import './userHome.css';
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { BsArrowRightCircle } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
 
@@ -33,7 +32,6 @@ function Home() {
       <div className="container card mt-5 mb-5 p-4">
         <h3>Departments Available</h3>
         <p>You can select the department you need to checkout.</p>
-        <Link to={'/findDoctor'}>Check all...</Link>
         <div className="row">
           {departments && departments.map(dep => (
             <div className="col-md-3 text-center  col-sm-4 col-6 h-25" key={dep._id}>
@@ -48,12 +46,11 @@ function Home() {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-12 card p-4" onClick={() => history('/findDoctor')}>
+          <div className="col-12 card p-4">
             <h6>We provide you the best services</h6>
             <p>We consider your entire wellness and we are intended to provide you the best doctors and services.</p>
             <div className="card docCardImg">
               <p className='m-5 par' ><b>Qualified and experienced doctors are available for each department. Book a slot for online consult.</b></p>
-              <BsArrowRightCircle className='arr' />
             </div>
           </div>
         </div>

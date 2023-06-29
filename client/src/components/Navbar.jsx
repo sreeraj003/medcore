@@ -68,7 +68,7 @@ function Navbar({ value }) {
                             : value === 'admin' ?
                                 <div></div>
                                 :
-                                <button className="btn doc btn-outline-success" onClick={() => history('/findDoctor')}>Find Doctor</button>
+                                <button className="btn doc btn-outline-success" onClick={() => history('/findDoctor')}>Doctors</button>
                     }
 
                     <div>{'   '}</div>
