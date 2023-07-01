@@ -43,12 +43,12 @@ function DoctorSideBar() {
                     </h2>
                     <nav >
                         <div className='flex flex-col  text-dark ps-5 text-start'>
-                            <div className='text-xl py-4 flex' onClick={handleDashboard}  ><MdPerson size={25} className='mr-4' /> Dashboard</div>
-                            <div className='text-xl py-4 flex' onClick={handleDoctor}><FaStethoscope size={25} className='mr-4' /> Appointments</div>
-                            <div className='text-xl py-4 flex' onClick={handlePatient}><MdOutlineSick size={25} className='mr-4' /> Patients</div>
-                            <div className='text-xl py-4 flex' onClick={handleDepartment}><BiNotepad size={25} className='mr-4' /> Prescriptions</div>
-                            <div className='text-xl py-4 flex' onClick={handlePayments}><MdCalendarMonth size={25} className='mr-4' /> My Schedule</div>
-                            <div className='text-xl py-4 flex' onClick={handleAdmins}><BiRupee size={25} className='mr-4' /> Payments</div>
+                            <div className='text-xl sideItem  py-4 flex' onClick={handleDashboard}  ><button className='btn buttons'><MdPerson size={25} className='mr-4' /> Dashboard</button></div>
+                            <div className='text-xl sideItem py-4 flex' onClick={handleDoctor}><button className='btn buttons'><FaStethoscope size={25} className='mr-4' /> Appointments</button></div>
+                            <div className='text-xl sideItem py-4 flex' onClick={handlePatient}><button className='btn buttons'><MdOutlineSick size={25} className='mr-4' /> Patients</button></div>
+                            <div className='text-xl sideItem py-4 flex' onClick={handleDepartment}><button className='btn buttons'><BiNotepad size={25} className='mr-4' /> Prescriptions</button></div>
+                            <div className='text-xl sideItem py-4 flex' onClick={handlePayments}><button className='btn buttons'><MdCalendarMonth size={25} className='mr-4' /> My Schedule</button></div>
+                            <div className='text-xl sideItem py-4 flex' onClick={handleAdmins}><button className='btn buttons'><BiRupee size={25} className='mr-4' /> Payments</button></div>
                         </div>
                     </nav>
                 </div>

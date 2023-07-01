@@ -32,6 +32,14 @@ async function mailSender(mail, data, operation) {
         subject: "Request approved",
         text: `Congratulations.Your request for enrolling as doctor has been apporved. Now you can login to you account and can save thosands.Happy consulting`,
       };
+    } else if (operation == "forgotPassword") {
+      console.log(1)
+      details = {
+        from: process.env.MAIL_ID,
+        to: mail,
+        subject: "forgot password",
+        text: `your otp for changing password is - ${data}.Please do not share your otp or password with anyone.`,
+      };
     }
 
     const mails = mailTransporter.sendMail(details, (err) => {

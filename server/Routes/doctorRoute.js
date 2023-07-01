@@ -23,5 +23,8 @@ doctorRoute.patch('/endAppointment/:appId',validateDoctorToken,doctorController.
 doctorRoute.patch('/addPrescription',validateDoctorToken,doctorController.addPrescription)
 doctorRoute.get('/patients',validateDoctorToken,doctorController.patients)
 doctorRoute.get('/dash',validateDoctorToken,doctorController.dash)
+doctorRoute.get("/forgotPassword/:email",doctorController.forgotPassword)
+doctorRoute.patch("/verifyOtp",doctorController.verifyOtp)
+doctorRoute.patch("/resetPassword",doctorController.resetPassword)
 
 module.exports = doctorRoute;

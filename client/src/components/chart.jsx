@@ -12,6 +12,8 @@ function BarChart({ appoints }) {
 
     let monthCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+    const distinctYears = Array.from(new Set(appoints.map(el => el.createdAt.split(' ')[0].split('-')[2])))
+
     appoints.forEach((el) => {
         if (el.date.split('-')[0] == year) {
             if (el.date.split('-')[1] == '01') {
@@ -52,8 +54,8 @@ function BarChart({ appoints }) {
                     <ul className="dropdown-menu">
                         <li ><button className="dropdown-item btn" onClick={() => setYear('2022')}>2022</button></li>
                         {
-                            appoints && appoints.map((el, index) => (
-                                <li key={index}><button className="dropdown-item btn" onClick={() => setYear(el.date.split('-')[0])}>{el.date.split('-')[0]}</button></li>
+                            distinctYears && distinctYears.map((el, index) => (
+                                <li key={index}><button className="dropdown-item btn" onClick={() => setYear(el)}>{el}</button></li>
                             ))
                         }
 

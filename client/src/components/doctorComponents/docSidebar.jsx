@@ -62,12 +62,12 @@ const DocSidebar = () => {
             </h2>
             <nav >
               <div className='flex flex-col  text-dark'>
-                <div className='text-xl py-4 flex' onClick={handleDashboard}  ><MdPerson size={25} className='mr-4' /> Dashboard</div>
-                <div className='text-xl py-4 flex' onClick={handleAppointments}><FaStethoscope size={25} className='mr-4' /> Appointments</div>
-                <div className='text-xl py-4 flex' onClick={handlePatient}><MdOutlineSick size={25} className='mr-4' /> Patients</div>
-                <div className='text-xl py-4 flex' onClick={handlePrescriptions}><BiNotepad size={25} className='mr-4' /> Prescriptions</div>
-                <div className='text-xl py-4 flex' onClick={handleSchedule}><MdCalendarMonth size={25} className='mr-4' /> My Schedule</div>
-                <div className='text-xl py-4 flex' onClick={handleAdmins}><BiRupee size={25} className='mr-4' /> Admins</div>
+                <div className='text-xl sideItem py-4 flex' onClick={handleDashboard}  ><MdPerson size={25} className='mr-4' /> Dashboard</div>
+                <div className='text-xl sideItem py-4 flex' onClick={handleAppointments}><FaStethoscope size={25} className='mr-4' /> Appointments</div>
+                <div className='text-xl sideItem py-4 flex' onClick={handlePatient}><MdOutlineSick size={25} className='mr-4' /> Patients</div>
+                <div className='text-xl sideItem py-4 flex' onClick={handlePrescriptions}><BiNotepad size={25} className='mr-4' /> Prescriptions</div>
+                <div className='text-xl sideItem py-4 flex' onClick={handleSchedule}><MdCalendarMonth size={25} className='mr-4' /> My Schedule</div>
+                <div className='text-xl sideItem py-4 flex' onClick={handleAdmins}><BiRupee size={25} className='mr-4' /> Admins</div>
               </div>
             </nav>
           </div>

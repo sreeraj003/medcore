@@ -18,10 +18,10 @@ function BasePage({ value }) {
 
         <div className='adminCont'>
             <div className="row">
-                <div className="col-md-3 z-10 text-center bg-white side">
+                <div className="col-md-3 z-10 text-start ps-5 m- bg-white side">
                     <AdminSideBar />
                 </div>
-                <div className="col-md-9 ">
+                <div className="col-md-9 p- ">
                     <div className='row mt-4  ps-2 pe-3' >
                         <div className="col-12 m-1">
                             <Suspense fallback={<Loader />}>

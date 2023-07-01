@@ -41,7 +41,7 @@ const signup = async (req, res) => {
 
       const userData = await user.save();
       if (userData) {
-        await mailSender(Email, otp);
+        await mailSender(Email, otp, "signup");
         const data = {
           message: "Check mail",
           string: string,
@@ -75,6 +75,25 @@ const verify = async (req, res) => {
     res.json("error");
   }
 };
+const verifyOtp = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    const user = await User.findOne({ email: email });
+    console.log(otp)
+    if (user.otp != otp) {
+      res.json("invalid");
+    }else{
+      await User.findOneAndUpdate(
+        { email:email },
+        { $set: { otp: "" } }
+      );
+      res.json('valid')
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const login = async (req, res) => {
   try {
@@ -104,6 +123,35 @@ const login = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const emailData = await User.findOne({ email: email }, { email: 1 });
+    if (emailData) {
+      const otp = Math.floor(1000 + Math.random() * 9000);
+      await User.findOneAndUpdate({ email: email }, { $set: { otp: otp } });
+      await mailSender(emailData.email, otp, "forgotPassword");
+      res.json("success");
+    }else{
+      res.json('not found')
+    }
+    console.log(emailData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const resetPassword = async(req,res)=>{
+  try {
+    let {email,password} = req.body 
+    const pass = await securePassword(password)
+    await User.findOneAndUpdate({email:email},{$set:{password:pass}}).then(
+      res.json('success'))
+  } catch (error) {
+    res.json("error")
+  }
+}
+
 const userData = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req._id.id });
@@ -117,7 +165,7 @@ const findDoctors = async (req, res) => {
     const docs = await Doctor.aggregate([
       {
         $match: {
-          isApproved: 'approved',
+          isApproved: "approved",
           isBlocked: false,
           isVerified: true,
         },
@@ -132,7 +180,7 @@ const findDoctors = async (req, res) => {
       },
     ]);
     const deps = await Department.find({ isBlocked: false });
-console.log(docs);
+    console.log(docs);
     res.json({ docs, deps });
   } catch (error) {
     res.json("error");
@@ -255,7 +303,7 @@ const loadAppointments = async (req, res) => {
     const appointments = await Appointment.aggregate([
       { $match: { user: id } },
       {
-        $lookup: {  
+        $lookup: {
           from: "doctors",
           let: { searchId: { $toObjectId: "$doctor" } },
           pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$searchId"] } } }],
@@ -371,4 +419,7 @@ module.exports = {
   cancelAppoint,
   searchDoc,
   prescriptions,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
 };

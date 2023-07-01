@@ -125,19 +125,19 @@ function Login({ value }) {
 
                             <div className="d-flex justify-content-between align-items-center">
 
-                                <a href="#!" className="text-body">Forgot password?</a>
+                                {value != 'admin' && <Link to={value == "doctor" ? '/doctor/forgotPassword' : '/forgotPassword'} className="text-body">Forgot password?</Link>}
                             </div>
 
                             <div className="text-center text-lg-start mt-4 pt-2">
                                 <button type="button" className="btn btn-success btn-lg"
                                     style={{ "paddingLeft": "2.5rem", "paddingRight": "2.5rem" }} onClick={handleSubmit}>Login</button>
-                                <p className="small fw-bold mt-2 pt-1 mb-0"> Create an account? <span className='text-primary'>
+                                {value != 'admin' && <p className="small fw-bold mt-2 pt-1 mb-0"> Create an account? <span className='text-primary'>
                                     {
                                         value === 'doctor' ? <Link to={'/doctor/signup'}>Register</Link>
-                                            : value === 'admin' ? ''
-                                                : <Link to={'/signup'}>Register</Link>
+                                            : <Link to={'/signup'}>Register</Link>
                                     }
                                 </span> </p>
+                                }
                             </div>
                         </form>
                     </div>

@@ -5,7 +5,7 @@ import { MdPerson, MdSick } from 'react-icons/md'
 import { BiBuildings } from 'react-icons/bi';
 import './sidebar.css'
 import { useNavigate } from 'react-router-dom';
-import { BsCashCoin } from 'react-icons/bs';
+import { BsCashCoin, BsFileMedical } from 'react-icons/bs';
 const Sidebar = () => {
   const [nav, setNav] = useState(false)
   const history = useNavigate()
@@ -63,7 +63,7 @@ const Sidebar = () => {
                 <div className='text-xl py-4 flex' onClick={handlePatient}><button className='btn'><MdSick size={25} className='mr-4' /> Patients</button></div>
                 <div className='text-xl py-4 flex' onClick={handleDepartment}><button className='btn'><BiBuildings size={25} className='mr-4' /> Department</button></div>
                 <div className='text-xl py-4 flex' onClick={handlePayments}><button className='btn'><BsCashCoin size={25} className='mr-4' /> Payments</button></div>
-                <div className='text-xl py-4 flex' onClick={handleMedicines}><button className='btn'><BsCashCoin size={25} className='mr-4' /> Medicines</button></div>
+                <div className='text-xl py-4 flex' onClick={handleMedicines}><button className='btn'><BsFileMedical size={25} className='mr-4' /> Medicines</button></div>
               </div>
             </nav>
           </div>

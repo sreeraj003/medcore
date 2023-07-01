@@ -19,6 +19,8 @@ const PageStructure = lazy(() => import('../components/userComponents/pages/docS
 const ProfilePageStructure = lazy(() => import('../components/userComponents/pages/userProfile/userProfilePageStructure'))
 const Success = lazy(() => import('../components/userComponents/success'))
 import { setUserData } from '../redux/userData'
+import ForgotPassword from '../components/forgotPassword'
+import ResetPassword from '../components/resetPassword'
 
 function User() {
   const dispatch = useDispatch()
@@ -56,6 +58,9 @@ function User() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/verify/:token' element={<Otp />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/forgotPassword' element={<ForgotPassword />} />
+        <Route path='/newPassword/:email' element={<ResetPassword />} />4
+
           <Route element={<RequireUser />}>
             <Route path='/' element={<Home />} />
             <Route path='/findDoctor' element={<PageStructure />} />

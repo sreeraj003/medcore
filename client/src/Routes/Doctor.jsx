@@ -7,6 +7,8 @@ import Otp from '../components/otp'
 import Login from '../components/Login'
 import SetProfile from '../components/doctorComponents/setProfile'
 import DocMain from '../components/doctorComponents/docMain'
+import ForgotPassword from '../components/forgotPassword'
+import ResetPassword from '../components/resetPassword'
 
 const Success = lazy(() => import("../components/doctorComponents/success"))
 const VideoCall = lazy(() => import('../components/videoCall'))
@@ -18,7 +20,9 @@ function Doctor() {
       <Routes>
         <Route path='/signup' element={<Signup value={'doctor'} />} />
         <Route path='/verify/:token' element={<Otp value={'doctor'} />} />
-        <Route path='/login' element={<Login value={'doctor'} />} />4
+        <Route path='/login' element={<Login value={'doctor'} />} />
+        <Route path='/forgotPassword' element={<ForgotPassword value={'doctor'} />} />
+        <Route path='/newPassword/:email' element={<ResetPassword value={'doctor'} />} />
         <Route element={<RequireDoctor />} >
           <Route path='/' element={<DocMain value={'home'} />} />
           <Route path='/setprofile' element={<SetProfile />} />

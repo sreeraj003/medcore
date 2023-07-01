@@ -109,6 +109,53 @@ const login = async (req, res) => {
   }
 };
 
+const verifyOtp = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    const user = await Doctor.findOne({ email: email });
+    if (user.otp != otp) {
+      res.json("invalid");
+    }else{
+      await Doctor.findOneAndUpdate(
+        { email:email },
+        { $set: { otp: "" } }
+      );
+      res.json('valid')
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const forgotPassword = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const emailData = await Doctor.findOne({ email: email }, { email: 1 });
+    if (emailData) {
+      const otp = Math.floor(1000 + Math.random() * 9000);
+      await Doctor.findOneAndUpdate({ email: email }, { $set: { otp: otp } });
+      await mailSender(emailData.email, otp, "forgotPassword");
+      res.json("success");
+    }else{
+      res.json('not found')
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const resetPassword = async(req,res)=>{
+  try {
+    let {email,password} = req.body 
+    const pass = await securePassword(password)
+    await Doctor.findOneAndUpdate({email:email},{$set:{password:pass}}).then(
+      res.json('success'))
+  } catch (error) {
+    res.json("error")
+  }
+}
+
 const doctorData = async (req, res) => {
   try {
     const data = await Doctor.findOne({ _id: req._id.id });
@@ -256,8 +303,6 @@ const manageSchedule = async (req, res) => {
     const { date, time, action } = req.body;
     const docId = req._id.id;
     const DocData = await Schedule.find({ doctor: docId });
-
-    
 
     if (action == "add") {
       const exist = DocData.filter((el) => el.date == date);
@@ -535,5 +580,8 @@ module.exports = {
   medicines,
   addPrescription,
   patients,
-  dash
+  dash,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
 };
