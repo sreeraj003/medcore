@@ -8,7 +8,7 @@ const { createDoctorTokens } = require("../middlewares/jwt");
 const Departments = require("../model/departmentModel");
 const Schedule = require("../model/scheduleModel");
 const Appointment = require("../model/appointmentModel");
-const Users = require("../model/userModel");
+// const Users = require("../model/userModel");
 const Medicines = require("../model/medicines");
 
 async function securePassword(password) {

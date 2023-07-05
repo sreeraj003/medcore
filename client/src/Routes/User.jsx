@@ -59,10 +59,10 @@ function User() {
           <Route path='/verify/:token' element={<Otp />} />
           <Route path='/login' element={<Login />} />
           <Route path='/forgotPassword' element={<ForgotPassword />} />
-        <Route path='/newPassword/:email' element={<ResetPassword />} />4
+          <Route path='/' element={<Home />} />
+          <Route path='/newPassword/:email' element={<ResetPassword />} />4
 
           <Route element={<RequireUser />}>
-            <Route path='/' element={<Home />} />
             <Route path='/findDoctor' element={<PageStructure />} />
             <Route path='/profile' element={<ProfilePageStructure />} />
             <Route path='/appointments' element={<Appointment />} />

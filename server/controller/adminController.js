@@ -10,6 +10,15 @@ const User = require("../model/userModel");
 const Medicine = require("../model/medicines");
 const Appointments = require("../model/appointmentModel");
 const mailSender = require("../config/nodeMailer");
+const fs = require('fs');
+const cloudinary = require('cloudinary').v2
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  secure: true,
+});
 
 const login = async (req, res) => {
   try {
@@ -73,18 +82,31 @@ const departments = async (req, res) => {
   const data = await Departments.find();
   res.json(data);
 };
+const deleteImageFromDisk = (imagePath) => {
+  fs.unlink(imagePath, (error) => {
+   if (error) {
+     console.error('Failed to delete image from disk:', error);
+   } else {
+     console.log('Image deleted from disk:', imagePath);
+   }
+ });
+};
 
 const createDepartment = async (req, res) => {
   try {
     const { newDep } = req.body;
+    console.log(req.file);
     const filename = req.file.filename;
+    const result = await cloudinary.uploader.upload(req.file.path)
+    const imagePath = req.file.path
+    await deleteImageFromDisk(imagePath)
     const exist = await Departments.find({ name: newDep });
     if (exist != "") res.json("error");
     else {
       const dep = await new Departments({
         name: newDep,
         timeStamp: dateTime,
-        image: filename,
+        image: result.url,
       });
       const depData = await dep.save();
       if (depData) {

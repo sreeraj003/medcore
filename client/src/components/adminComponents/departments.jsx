@@ -81,7 +81,7 @@ function Departments() {
     },
     {
       name: "Image",
-      selector: (row) => <img className="m-2 ms-0" width={'100px'} src={import.meta.env.VITE_BASE_URL + `images/${row.image}`} alt="" />
+      selector: (row) => <img className="m-2 ms-0" width={'100px'} src={row.image} alt="" />
     },
     {
       name: "Action",
@@ -104,6 +104,7 @@ function Departments() {
       await axios.post(import.meta.env.VITE_BASE_URL + 'admin/createDepartment', formData, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
+          
         }
       }).then(res => {
         setStatus(res.data)

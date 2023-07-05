@@ -32,7 +32,7 @@ const signup = async (req, res) => {
         userName: Name,
         email: Email,
         age: Age,
-        mobile: Mobile,
+        contact: Mobile,
         password: hashedPassword,
         otp: otp,
         token: string,
@@ -66,7 +66,7 @@ const verify = async (req, res) => {
       } else {
         await User.findOneAndUpdate(
           { token: token },
-          { $set: { token: "", otp: "", is_verified: true } }
+          { $set: { token: "", otp: "", isVerified: true } }
         );
         res.json("verified");
       }
