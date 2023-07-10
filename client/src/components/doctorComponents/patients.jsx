@@ -8,7 +8,6 @@ function Patients() {
     const [search, setSearch] = useState('')
     const [filteredData, setFilteredData] = useState([])
 
-    const doctorToken = localStorage.getItem("doctorToken")
     const prescriptionData = useCallback(async () => {
         await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/patients', {
             // headers: {
@@ -19,7 +18,7 @@ function Patients() {
             setPatientsData(res.data)
             setFilteredData(res.data)
         })
-    }, [doctorToken])
+    }, [])
 
     const columns = [
 

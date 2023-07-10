@@ -4,7 +4,6 @@ import axios from "axios"
 
 function Prescriptions() {
 
-  const doctorToken = localStorage.getItem("doctorToken")
   const [filteredData, setFilteredData] = useState([]);
 
   const prescriptionData = useCallback(async () => {
@@ -16,7 +15,7 @@ function Prescriptions() {
       console.log(res.data);
       setFilteredData(res.data)
     })
-  }, [doctorToken])
+  }, [])
 
 
   const columns = [
