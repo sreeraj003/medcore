@@ -27,6 +27,19 @@ function User() {
   const { setUser } = useAuth()
   const userToken = localStorage.getItem('userToken')
   const history = useNavigate()
+
+  axios.interceptors.request.use(
+    (config) => {
+      if (userToken) {
+        config.headers['Authorization'] = `Bearer ${userToken}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
   useEffect(() => {
     async function dataCall() {
       if (userToken) {

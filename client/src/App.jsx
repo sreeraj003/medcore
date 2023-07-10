@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Doctor from './Routes/doctor';
 import User from "./Routes/User"
-import Admin from './Routes/admin';
+import Admin from './Routes/Admin';
 import useAuth from './hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { setDoctorData } from './redux/doctorData';

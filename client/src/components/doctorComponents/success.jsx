@@ -17,7 +17,7 @@ function Success() {
       <div className='text-center mt-5'>
         <h1>You have completed the consultation</h1>
         <button className="btn btn-success" onClick={handleHome}>Home</button>
-        <button className="btn btn-success" onClick={handlePrescription}>Write Prescription</button>
+        <button className="btn btn-success ms-2" onClick={handlePrescription}>Write Prescription</button>
       </div>
     </>
   )

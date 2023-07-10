@@ -11,9 +11,9 @@ function Patients() {
     const doctorToken = localStorage.getItem("doctorToken")
     const prescriptionData = useCallback(async () => {
         await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/patients', {
-            headers: {
-                Authorization: `Bearer ${doctorToken}`,
-            }
+            // headers: {
+            //     Authorization: `Bearer ${doctorToken}`,
+            // }
         }).then(res => {
             console.log(res.data);
             setPatientsData(res.data)

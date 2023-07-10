@@ -4,8 +4,21 @@ import RequireAdmin from "../context/Auth/requireAdmin"
 import Navbar from "../components/navbar"
 import Login from "../components/Login"
 import BasePage from "../components/adminComponents/basePage"
+import axios from "axios"
 
 function Admin() {
+  axios.interceptors.request.use(
+    (config) => {
+      const adminToken = localStorage.getItem('adminToken');
+      if (adminToken) {
+        config.headers['Authorization'] = `Bearer ${adminToken}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   return (
     <>
       <Navbar value='admin' />

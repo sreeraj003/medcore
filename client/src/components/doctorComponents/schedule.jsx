@@ -96,7 +96,7 @@ function Schedule() {
             <div className="row">
               <div className="col-md-6">
                 <div className="dropdown">
-                  <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button className="btn dropd dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     {freeDate ? freeDate : 'Day'}
                   </button>
                   <ul className="dropdown-menu">
@@ -109,7 +109,7 @@ function Schedule() {
               </div>
               <div className="col-md-6">
                 <div className="dropdown">
-                  <button type="button" className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button type="button" className="btn dropd dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Slot
                   </button>
                   <ul className="dropdown-menu  dropdown-toggle-split">
@@ -152,7 +152,7 @@ function Schedule() {
                     <b style={{ fontSize: '20px' }}>Date : </b>{el.date}
                   </div>
                   <div>
-                    <h5>Time Slotes :</h5>{el.time.map(time => <div className='btn p-1 m-2 text-white bg-secondary' key={time}>{time}<button className='btn mt-0 ms-1 text-white' value={el.date + '_' + time} onClick={removeSlot}>X</button></div>)}
+                    <h5>Time Slotes :</h5>{el.time.map(time => <div className='btn p-1 m-2 text-white dropd' key={time}>{time}<button className='btn mt-0 ms-1 text-danger' value={el.date + '_' + time} onClick={removeSlot}>X</button></div>)}
                     <br />
                   </div>
                 </div>

@@ -4,6 +4,9 @@
   border-width: 1px;
   border-color: black;
 }
+.listbutt{
+  font-size: 13px;
+}
 .listbutt:hover {
   color: black !important;
 }
@@ -16,4 +19,22 @@
   .details{
     display: none;
   }
+}
+.dateDrop{
+  --bs-dropdown-min-width:6.5rem!important;
+/* width: 100px!important; */
+}
+
+.appLink{
+text-decoration: none;
+color: black;
+}
+
+.drpp:hover{
+  color: black!important;
+}
+
+.appLink:hover{
+text-decoration: none;
+color: black;
 }

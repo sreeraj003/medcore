@@ -6,11 +6,11 @@ function Payments() {
   const [payments, setPayments] = useState('')
 
   const getPayments = async () => {
-    const doctorToken = localStorage.getItem('doctorToken');
+    // const doctorToken = localStorage.getItem('doctorToken');
     const res = await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/payments', {
-      headers: {
-        Authorization: `Bearer ${doctorToken}`
-      }
+      // headers: {
+      //   Authorization: `Bearer ${doctorToken}`
+      // }
     });
     setPayments(res.data);
   };

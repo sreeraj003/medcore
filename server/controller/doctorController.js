@@ -310,7 +310,7 @@ const manageSchedule = async (req, res) => {
       if (exist != "") {
         const ind = exist[0].time.indexOf(time);
         if (ind == -1) {
-          let timeData = [...exist[0].time, ...time];
+          let timeData = [...time];
           const datas = await Schedule.findOneAndUpdate(
             { doctor: docId, date: date },
             { $set: { time: timeData } }

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function CreatePrescription() {
     const userData = useSelector(state => state.prescription.data)
@@ -14,11 +14,16 @@ function CreatePrescription() {
     const [selectedMed, setSelectedMed] = useState('')
     const [dose, setDose] = useState('')
     const [medDetails, setMedDetails] = useState(new Map())
+    const navigate = useNavigate()
     const [mor, setMor] = useState(false)
     const [aft, setAft] = useState(false)
     const [evg, setEvg] = useState(false)
 
+    console.log(userData);
     useEffect(() => {
+        if(!userData.userData){
+            navigate('/doctor/consult')
+        }
         if (selectedMed) {
             medicineRef.current.innerHTML = selectedMed.name
         } else {
@@ -29,7 +34,7 @@ function CreatePrescription() {
         } else {
             doseRef.current.innerHTML = "Dose"
         }
-    }, [dose, selectedMed])
+    }, [dose, navigate, selectedMed, userData])
 
     const handleUpload = useCallback(async () => {
         const id = userData._id
@@ -97,36 +102,36 @@ function CreatePrescription() {
             <div className='bg-white p-4'>
                 <div className="row ">
                     <div className="col-md-6">
-                        <h4>Patient : {userData.userData[0].userName}</h4>
-                        <h5>Date : {userData.date}</h5>
-                        <h5>Time : {userData.time}</h5>
+                        <h4>Patient : {userData.userData?userData?.userData[0]?.userName:''}</h4>
+                        <h5>Date : {userData?.date}</h5>
+                        <h5>Time : {userData?.time}</h5>
                     </div>
                     <div className="col-md-6">
                         <h5>Health issue :</h5>
-                        <p>{userData.issues}</p>
+                        <p>{userData?.issues}</p>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-3">
                         <div className="dropdown">
-                            <button className="mt-2     btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="mt-2     btn btn-white btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <b ref={medicineRef}>Medicine</b>
                             </button>
                             <ul className="dropdown-menu">
                                 {
-                                    medicines ? (medicines.map((med, index) => <li key={index}><a className="dropdown-item" onClick={() => setSelectedMed(med)}>{med.name}</a></li>)) : ''
+                                    medicines ? (medicines.map((med, index) => <li key={index}><Link className="dropdown-item" onClick={() => setSelectedMed(med)}>{med?.name}</Link></li>)) : ''
                                 }
                             </ul>
                         </div>
                     </div>
                     <div className="col-md-3">
                         <div className="dropdown">
-                            <button className="mt-2 btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="mt-2 btn btn-white btn-outline-dark  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <b ref={doseRef}>Dose</b>
                             </button>
                             <ul className="dropdown-menu">
                                 {
-                                    selectedMed ? (selectedMed.dose.map((med) => <li key={med}><a className="dropdown-item" onClick={() => setDose(med)}>{med}</a></li>)) : ''
+                                    selectedMed ? (selectedMed.dose.map((med) => <li key={med} className='w-25'><Link  className="dropdown-item" onClick={() => setDose(med)}>{med}</Link></li>)) : ''
                                 }
                             </ul>
                         </div>

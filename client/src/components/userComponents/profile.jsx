@@ -21,7 +21,7 @@ function Profile() {
     useEffect(() => {
         async function dataCall() {
             if (userToken) {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
+                // axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
                 await axios.get(import.meta.env.VITE_BASE_URL + `userData`)
                     .then(res => {
                         if (res.data == 'blocked') {

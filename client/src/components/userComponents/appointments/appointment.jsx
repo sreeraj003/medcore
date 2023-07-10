@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './appointment.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BsPlusLg } from 'react-icons/bs'
 import { setAppointment } from '../../../redux/appointment'
 import axios from 'axios'
@@ -90,10 +90,10 @@ function Appointment() {
                                 <p>Health issues :</p>
                             </div>
                             <div className="col-7">
-                                <p>{userData?.userName}</p>
+                                <p>{userData.userName?userData.userName:' '}</p>
                                 <p>{userData?.age}</p>
-                                <p>{userData?.gender}</p>
-                                <p>{userData?.address}</p>
+                                <p>{userData.gender?userData.gender:' '}</p>
+                                <p>{userData.address?userData.address:' '}</p>
                                 <textarea name="issues" id="" value={issues} onChange={(e) => setIssues(e.target.value)} className='form-control' cols="30" rows="5" placeholder='Enter your health issues here...' />
                             </div>
                         </div>
@@ -111,21 +111,21 @@ function Appointment() {
                                 <div className=''>
                                     <b>Session Timing </b>
                                     <div className="dropdown">
-                                        <button className="btn p-1 bg-light btn-outline-dark mt-2 text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ maxWidth: '150px', minWidth: '100px', fontSize: "14px" }}>
+                                        <button className="btn p-1 bg-light btn-outline-dark mt-2 text-dark drpp dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ maxWidth: '150px', minWidth: '100px', fontSize: "14px" }}>
                                             {sessionDate}
                                         </button>
-                                        <ul className="dropdown-menu">
+                                        <ul className="dropdown-menu dateDrop">
                                             {schedule && schedule.map(el => {
-                                                return (<li key={el.date} ><button className='btn p-0 bg-light listbutt' onClick={() => handleDate(el.date)}>{el.date}</button></li>)
+                                                return (<li key={el.date} > <Link className='appLink' onClick={() => handleDate(el.date)}>{el.date}</Link></li>)
                                             })}
                                         </ul>
                                     </div>
                                     <div className="dropdown">
-                                        <button className="btn p-1 bg-light btn-outline-dark mt-2  text-dark dropdown-toggle" style={{ maxWidth: '150px', minWidth: '100px', fontSize: "14px" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button className="btn drpp p-1 bg-light btn-outline-dark mt-2  text-dark dropdown-toggle" style={{ maxWidth: '150px', minWidth: '100px', fontSize: "14px" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             {sessionTime}
                                         </button>
-                                        <ul className="dropdown-menu">
-                                            {timeList && timeList.map((el,index) => <li key={index}><button className='btn p-0  bg-light listbutt' onClick={() => setSessionTime(el)}>{el}</button></li>)}
+                                        <ul className="dateDrop dropdown-menu">
+                                            {timeList && timeList.map((el,index) => <li key={index}><Link className='appLink' onClick={() => setSessionTime(el)}>{el}</Link></li>)}
                                         </ul>
                                     </div>
                                 </div>

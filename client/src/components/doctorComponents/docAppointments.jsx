@@ -30,11 +30,6 @@ function DocAppointments() {
       sortable: true
     },
     {
-      name: 'Date',
-      selector: (row) => row.date,
-      sortable: true
-    },
-    {
       name: 'Patient',
       selector: (row) => row.userData[0].userName
     },
@@ -50,7 +45,7 @@ function DocAppointments() {
       name: 'Status',
       selector: (row) => (
         <div>
-          {row.isAttended ? 'Attended' : new Date(row.date) < new Date() ? 'Unavailable' : 'Pending'}
+          {row.isAttended ? 'Attended' : new Date(row.createdAt) < new Date() ? 'Unavailable' : 'Pending'}
         </div>
       )
     }

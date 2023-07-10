@@ -9,9 +9,9 @@ function Prescriptions() {
 
   const prescriptionData = useCallback(async () => {
     await axios.get(import.meta.env.VITE_BASE_URL + 'doctor/prescriptions', {
-      headers: {
-        Authorization: `Bearer ${doctorToken}`,
-      }
+      // headers: {
+      //   Authorization: `Bearer ${doctorToken}`,
+      // }
     }).then(res => {
       console.log(res.data);
       setFilteredData(res.data)
@@ -34,7 +34,7 @@ function Prescriptions() {
     },
     {
       name: 'Date',
-      selector: (row) => row.date
+      selector: (row) => row.createdAt.split(' ')[0]
     },
     {
       name: 'Medicines',

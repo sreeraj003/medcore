@@ -15,30 +15,30 @@ function BarChart({ appoints }) {
     const distinctYears = Array.from(new Set(appoints.map(el => el.createdAt.split(' ')[0].split('-')[2])))
 
     appoints.forEach((el) => {
-        if (el.date.split('-')[0] == year) {
-            if (el.date.split('-')[1] == '01') {
+        if (el.createdAt.split(' ')[0].split('-')[2] == year) {
+            if (el.createdAt.split(' ')[0].split('-')[1] == '1') {
                 monthCount[0] += 1
-            } else if (el.date.split('-')[1] == '02') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '2') {
                 monthCount[1] += 1
-            } else if (el.date.split('-')[1] == '03') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '3') {
                 monthCount[2] += 1
-            } else if (el.date.split('-')[1] == '04') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '4') {
                 monthCount[3] += 1
-            } else if (el.date.split('-')[1] == '05') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '5') {
                 monthCount[4] += 1
-            } else if (el.date.split('-')[1] == '06') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '6') {
                 monthCount[5] += 1
-            } else if (el.date.split('-')[1] == '07') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '7') {
                 monthCount[6] += 1
-            } else if (el.date.split('-')[1] == '08') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '8') {
                 monthCount[7] += 1
-            } else if (el.date.split('-')[1] == '09') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '9') {
                 monthCount[8] += 1
-            } else if (el.date.split('-')[1] == '10') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '10') {
                 monthCount[9] += 1
-            } else if (el.date.split('-')[1] == '11') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '11') {
                 monthCount[10] += 1
-            } else if (el.date.split('-')[1] == '12') {
+            } else if (el.createdAt.split(' ')[0].split('-')[1] == '12') {
                 monthCount[11] += 1
             }
         }

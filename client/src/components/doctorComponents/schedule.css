@@ -10,3 +10,20 @@
 .dropdown-menu li:hover {
   background-color: #f2f2f2;
 }
+
+.dropd{
+  background-color: white;
+  color: black!important;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: black;
+}
+.dropd:hover{
+  background-color: white;
+  color: black!important;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: black;
+}
