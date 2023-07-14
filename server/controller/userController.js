@@ -79,7 +79,6 @@ const verifyOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
     const user = await User.findOne({ email: email });
-    console.log(otp)
     if (user.otp != otp) {
       res.json("invalid");
     }else{
@@ -135,7 +134,6 @@ const forgotPassword = async (req, res) => {
     }else{
       res.json('not found')
     }
-    console.log(emailData);
   } catch (error) {
     console.log(error);
   }
@@ -180,12 +178,25 @@ const findDoctors = async (req, res) => {
       },
     ]);
     const deps = await Department.find({ isBlocked: false });
-    console.log(docs);
     res.json({ docs, deps });
   } catch (error) {
     res.json("error");
   }
 };
+
+const checkSlot = async(req,res)=>{
+  const {user,day,time,doctor} = req.body
+  try {
+    const data = await Appointment.find({doctor:doctor,date:day,time:time})
+    if(data.length>0){
+      res.json('unavailable')
+    }else{
+      res.json('available')
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 const departments = async (req, res) => {
   try {
@@ -343,7 +354,7 @@ const searchDoc = async (req, res) => {
       data = await Doctor.aggregate([
         {
           $match: {
-            isApproved: true,
+            isApproved: 'approved',
             isBlocked: false,
             isVerified: true,
           },
@@ -361,7 +372,7 @@ const searchDoc = async (req, res) => {
       data = await Doctor.aggregate([
         {
           $match: {
-            isApproved: true,
+            isApproved: 'approved',
             isBlocked: false,
             isVerified: true,
             name: { $regex: new RegExp(`^${searchKey}`, "i") },
@@ -422,4 +433,5 @@ module.exports = {
   forgotPassword,
   verifyOtp,
   resetPassword,
+  checkSlot
 };

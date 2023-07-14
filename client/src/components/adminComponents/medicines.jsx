@@ -9,16 +9,16 @@ function Medicines() {
   const [dose, setDose] = useState('')
   const [doseData, setDoseData] = useState([])
   const [cost, setCost] = useState('')
-  const adminToken = localStorage.getItem("adminToken")
   const [createStatus, setStatus] = useState('')
   const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('')
+  const [err,setErr] = useState('')
 
   const departmentData = useCallback(async () => {
     await axios.get(import.meta.env.VITE_BASE_URL + 'admin/medicines', {
-      headers: {
-        Authorization: `Bearer ${adminToken}`,
-      }
+      // headers: {
+      //   Authorization: `Bearer ${adminToken}`,
+      // }
     }).then(res => {
       if (res.data == 'exist') {
         setStatus('exist')
@@ -27,7 +27,7 @@ function Medicines() {
         setFilteredData(res.data)
       }
     })
-  }, [adminToken])
+  }, [])
 
   const handleSearch = useCallback((e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -44,9 +44,9 @@ function Medicines() {
     await axios.patch(import.meta.env.VITE_BASE_URL + `admin/deleteMedicine`, {
       id: row._id
     }, {
-      headers: {
-        Authorization: `Bearer ${adminToken}`,
-      }
+      // headers: {
+      //   Authorization: `Bearer ${adminToken}`,
+      // }
     }).then(res => {
       if (res.data === 'error') {
         setStatus('error');
@@ -63,7 +63,7 @@ function Medicines() {
         );
       }
     });
-  }, [adminToken]);
+  }, []);
 
   const columns = [
     {
@@ -100,10 +100,18 @@ function Medicines() {
       console.log(doseData);
       const isValid = validateCapitalLetter(newMed)
       if (isValid) {
+        if(cost.toString()<0){
+          setErr('please enter proper cost')
+          return
+        }
+        if(dose.toString()<0){
+          setErr('please enter proper dose')
+          return
+        }
         await axios.post(import.meta.env.VITE_BASE_URL + 'admin/addMedicine', { newMed: newMed, cost: cost, doseData: doseData }, {
-          headers: {
-            Authorization: `Bearer ${adminToken}`,
-          }
+          // headers: {
+          //   Authorization: `Bearer ${adminToken}`,
+          // }
         }).then(res => {
           setStatus(res.data)
           setTimeout(() => {
@@ -139,6 +147,10 @@ function Medicines() {
               <h1 className="modal-title fs-5" id="exampleModalLabel">Create Department</h1>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            {
+              err?
+              <div className="alert">{err}</div>:''
+            }
             <div className="modal-body">
               <label htmlFor="depName ">Medicine Name</label>
               <p style={{ opacity: '60%', fontSize: '10px' }} className="mb-0">Please note that the first letter should be capital</p>

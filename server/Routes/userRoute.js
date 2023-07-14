@@ -17,10 +17,11 @@ userRoute.get("/docSchedule/:docId", validateToken,authUser, userController.docS
 userRoute.post("/bookSlot", validateToken,authUser, userController.bookSlot);
 userRoute.get("/appointments",validateToken,authUser,userController.loadAppointments)
 userRoute.post("/cancelAppoint/:id",validateToken,authUser,userController.cancelAppoint)
-userRoute.get("/searchDoc/:searchKey",validateToken,authUser,userController.searchDoc)
+userRoute.get("/searchDoc/:searchKey",userController.searchDoc)
 userRoute.get("/prescriptions",validateToken,authUser,userController.prescriptions)
 userRoute.get("/forgotPassword/:email",userController.forgotPassword)
 userRoute.patch("/verifyOtp",userController.verifyOtp)
 userRoute.patch("/resetPassword",userController.resetPassword)
+userRoute.post("/checkSlot",validateToken,userController.checkSlot)
 
 module.exports = userRoute;
